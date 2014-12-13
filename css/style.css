@@ -1,0 +1,17 @@
+#canvas {
+    width: 60%;
+    height: 600px
+}
+
+#settings-container {
+    display: inline-block;
+}
+
+#settings {
+    position: absolute;
+    top: 0;
+}
+
+#info {
+    margin-left: 20px;
+}
