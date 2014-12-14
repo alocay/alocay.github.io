@@ -1,9 +1,14 @@
-var Battery = (function () {
-    function Battery(position) {
-        this.position = position;
-		this.totalLife = 100;
+var Flashlight = (function () {
+    function Flashlight() {
+		this.battery = new Battery();
 		this.currentLife = 100;
     }
 	
-    return Battery;
+	Flashlight.prototype.setFov = function(fov) {
+		this.fieldOfView = fov;
+	};
+	
+	
+	
+    return Flashlight;
 })();

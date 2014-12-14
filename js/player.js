@@ -4,6 +4,13 @@ var Player = (function (_super) {
         _super.call(this, position, radius, ms, mf, fov);
 		this.targetLocation = null;
 		this.isFlashlightOn = true;
+		this.fovRangeOptions = [
+			{fov: 180, range: 75},
+			{fov: 60, range: 200},
+			{fov: 30, range: 300},
+			{fov: 5, range: 600},
+		];
+		this.cuurentFovOption = 1;
     }
 	
 	Player.prototype.run = function (environment) {
@@ -28,6 +35,12 @@ var Player = (function (_super) {
 			}
 		}
 	}
+	
+	Player.prototype.cycleThroughFov = function() {
+		this.cuurentFovOption = (this.cuurentFovOption + 1) % this.fovRangeOptions.length;
+		this.fieldOfView = this.fovRangeOptions[this.cuurentFovOption].fov;
+		this.fieldOfViewDistance = this.fovRangeOptions[this.cuurentFovOption].range;
+	};
 	
     return Player;
 })(Mob);
