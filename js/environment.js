@@ -88,7 +88,7 @@ var Environment = (function () {
 			strokeColor: 'black'
 		});
 		
-		//this.compoundVisionPath.fillColor = 'black';
+		this.compoundVisionPath.fillColor = 'black';
         
         for(var i = 0; i < this.enemies.length; i++) {
             this.enemies[i].run(this);
