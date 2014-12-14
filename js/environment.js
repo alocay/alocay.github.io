@@ -4,6 +4,8 @@ var Environment = (function () {
 		this.player = null
 		this.enemies = [];
 		this.size = size;
+        this.key = new LevelKey();
+        this.door = new Point();
         
         var border = new Rectangle(new Point(), new Size(size.width, size.height));
 		this.borderPath = new Path.Rectangle(border);
@@ -86,7 +88,7 @@ var Environment = (function () {
 			strokeColor: 'black'
 		});
 		
-		this.compoundVisionPath.fillColor = 'black';
+		//this.compoundVisionPath.fillColor = 'black';
         
         for(var i = 0; i < this.enemies.length; i++) {
             this.enemies[i].run(this);

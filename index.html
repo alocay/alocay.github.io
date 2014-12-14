@@ -4,6 +4,7 @@
 		<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
 		<script type="text/javascript" src="js/paper-full.js"></script>
         <script type="text/javascript" src="js/extends.js"></script>
+        <script type="text/javascript" src="js/levelKey.js"></script>
         <script type="text/javascript" src="js/environment.js"></script>
         <script type="text/javascript" src="js/mob.js"></script>
         <script type="text/javascript" src="js/enemy.js"></script>
@@ -58,7 +59,7 @@
 				
 				var block = new Rectangle(new Point (200, 0), new Size(100, view.size.height - 200));
 				var block2 = new Rectangle(new Point(400, 0), new Size(100, view.size.height - 200));
-				var block3 = new Rectangle(new Point(400, view.size.height - 200), new Size(500, 50));
+				var block3 = new Rectangle(new Point(400, view.size.height - 200), new Size(300, 50));
 				
 				var blockPath1 = new Path.Rectangle(block);
 				var blockPath2 = new Path.Rectangle(block2);
@@ -122,7 +123,7 @@
                         ctrlDown = true;
                     }
 					
-					var p = environment.player;
+					/*var p = environment.player;
 					if (event.key == 'a') {
 						var v = p.visionVector.rotate(90).normalize(movementAmount);
                         p.move(environment, p.position.add(v));
@@ -141,7 +142,7 @@
 					if(event.key == 'd') {
 						var v = p.visionVector.rotate(-90).normalize(movementAmount);
                         p.move(environment, p.position.add(v));
-					}
+					}*/
                 }
 
                 tool.onKeyUp = function(event) {
