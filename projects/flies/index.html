@@ -74,7 +74,7 @@
                 //var boid = new Boid(new Point(50, 50), circleSymbol, environment, BoidShared);
 				//environment.boids.push(boid);
                 
-                var border = new Shape.Rectangle(new Point(3, 3), new Size(view.size.width - 3, view.size.height - 3))
+                var border = new Shape.Rectangle(new Point(), new Size(view.size.width, view.size.height))
                 border.strokeColor = 'black';
                 
 				gui.add(BoidShared, 'maxSpeed', 0, 10).step(0.5).name('Max Speed');

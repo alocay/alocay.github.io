@@ -39,7 +39,7 @@
                 var environment = new Environment();
                 var mob = new Mob(environment);
                 
-                var border = new Shape.Rectangle(new Point(3, 3), new Size(view.size.width - 3, view.size.height - 3))
+                var border = new Shape.Rectangle(new Point(), new Size(view.size.width, view.size.height))
                 border.strokeColor = 'black';
                 
                 gui.add(mob, 'maxSpeed', 0, 10).name('Max speed');
