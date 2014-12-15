@@ -114,7 +114,8 @@ var Enemy = (function (_super) {
 			this.fieldOfViewArea.remove();
 		}
 	
-		this.updatePosition(environment);
+		this.updatePosition(environment); 
+		
 		this.visionVector = this.vector.clone();
 		this.fieldOfViewArea = environment.getFieldOfVisionPath(this);
 		

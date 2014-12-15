@@ -92,9 +92,10 @@ var Environment = (function () {
         
         for(var i = 0; i < this.enemies.length; i++) {
             this.enemies[i].run(this);
+            this.enemies[i].hitTest(this.player.body);
         }
 	};
-	
+    
 	Environment.prototype.getMobsInVision = function(visionPath) {
 		var mobs = [];
 		for (var i = 0; i < this.enemies.length; i++) {

@@ -11,6 +11,7 @@ var Player = (function (_super) {
 			{fov: 5, range: 600},
 		];
 		this.cuurentFovOption = 1;
+		this.hasKey = false;
     }
 	
 	Player.prototype.run = function (environment) {
@@ -20,6 +21,13 @@ var Player = (function (_super) {
 		
 		this.moveToTargetLocation();
 		this.updatePosition(environment);
+		
+        var keyDist = this.position.getDistance(environment.key.position);
+		if (keyDist < environment.key.pickupRadius && !this.hasKey) {
+			environment.key.pickup();
+			this.hasKey = true;
+		}
+		
 		this.fieldOfViewArea = environment.getFieldOfVisionPath(this);
 	};
 	
