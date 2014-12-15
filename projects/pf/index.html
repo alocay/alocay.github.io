@@ -183,31 +183,9 @@
                     labelGroup.bringToFront();
                 }
                 
-                tool.onMouseUp = function(evt) {					
-                    
-					/*if (!drawnObstacle) {
-						mob.setGoal(evt.point);
-						
-						if(aStarGoal) {
-							aStarGoal.remove();
-						}
-						
-						aStarGoal = new Shape.Circle(evt.point, 5);
-						aStarGoal.fillColor = 'orange';
-					}
-					else {
-						environment.addObstacle(drawnObstacle);
-					
-						changeX = -1;
-						obsRect = null;
-						drawnObstacle = null;
-					}
-					
-					return;*/
-					
-                    if (ctrlDown && !launched && angleNeedle) {
-                        lockAngle = !lockAngle;
-                        launchPoint = evt.point;
+                tool.onMouseUp = function(evt) {										
+                    if (ctrlDown) {
+                        mob.position = evt.point;
                     }
                     else {
                         var removed = environment.removeGenerator(evt.point);
@@ -321,6 +299,9 @@
          <div class="grid grid-pad">
             <div class="col-1-1">
                 <div id="info">
+                    <div class="controls">click - add/remove a random attractor</div>
+                    <div class="controls">shift + click - add/remove a random repulsor</div>
+                    <div class="controls">ctrl + click - change position</div>
                     <div class="controls">z - toggle movement</div>
                     <div class="controls">x - toggle potential fields visual (animation performance impact)</div>
                     <div class="controls">c - allow visual vectors to be actual length</div>
