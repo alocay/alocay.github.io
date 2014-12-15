@@ -5,7 +5,7 @@ var Environment = (function () {
 		this.enemies = [];
 		this.size = size;
         this.key = new LevelKey();
-        this.door = new Point();
+        this.door = new Door();
         
         var border = new Rectangle(new Point(), new Size(size.width, size.height));
 		this.borderPath = new Path.Rectangle(border);
@@ -18,6 +18,8 @@ var Environment = (function () {
         this.obstacles.push(this.borderPath);
 		
 		this.inters = [];
+		
+		this.gameOver = false;
 	}
 	
 	Environment.prototype.addObstacle = function (ob) {
@@ -83,16 +85,33 @@ var Environment = (function () {
 		
 		this.player.run(this);
 		
+		var keyDist = this.player.position.getDistance(this.key.position);
+		if (keyDist < this.key.pickupRadius && !this.player.hasKey) {
+			this.key.pickup();
+			this.player.hasKey = true;
+		}
+		
+		var doorDist = this.player.position.getDistance(this.door.position);
+		if (doorDist < this.key.openRadius && this.player.hasKey) {
+			this.door.opened = true;
+		}
+		
 		this.compoundVisionPath = new CompoundPath({
 			children: [this.borderPath, this.player.fieldOfViewArea],
 			strokeColor: 'black'
 		});
 		
-		this.compoundVisionPath.fillColor = 'black';
+		if (!window.DEBUG_GAME_EXTRA) {
+		    this.compoundVisionPath.fillColor = 'black';
+		}
         
         for(var i = 0; i < this.enemies.length; i++) {
             this.enemies[i].run(this);
-            this.enemies[i].hitTest(this.player.body);
+            var caught = this.enemies[i].body.hitTest(this.player.position);
+			
+			if (caught) {
+			    this.gameOver = true;
+			}
         }
 	};
     

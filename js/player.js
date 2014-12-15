@@ -22,13 +22,11 @@ var Player = (function (_super) {
 		this.moveToTargetLocation();
 		this.updatePosition(environment);
 		
-        var keyDist = this.position.getDistance(environment.key.position);
-		if (keyDist < environment.key.pickupRadius && !this.hasKey) {
-			environment.key.pickup();
-			this.hasKey = true;
-		}
-		
 		this.fieldOfViewArea = environment.getFieldOfVisionPath(this);
+		
+		if (window.DEBUG_GAME_EXTRA) {
+			this.fieldOfViewArea.fullySelected = true;
+		}
 	};
 	
 	Player.prototype.moveToTargetLocation = function() {

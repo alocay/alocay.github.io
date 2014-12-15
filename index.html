@@ -5,6 +5,7 @@
 		<script type="text/javascript" src="js/paper-full.js"></script>
         <script type="text/javascript" src="js/extends.js"></script>
         <script type="text/javascript" src="js/levelKey.js"></script>
+        <script type="text/javascript" src="js/door.js"></script>
         <script type="text/javascript" src="js/environment.js"></script>
         <script type="text/javascript" src="js/mob.js"></script>
         <script type="text/javascript" src="js/enemy.js"></script>
@@ -14,35 +15,17 @@
             $(document).ready(function () {
                 var canvas = document.getElementById('canvas');
                 //var gui = new dat.GUI();
-                var fieldPaths = [];
                 var shiftDown = false;
                 var ctrlDown = false;
 				var mouseDown = false;
 				var moveLight = false;
-				var visible = [];
-				var intersections = [];
-				var lines = [];
-				var markers = [];
-				var blocks = [];
-				var testLines = [];
-				var areaPoints = [];
-				var area = null;
-				var fails = [];
-				var mask = null;
-				var fov = 60; 
-				var fovCenter = null;
-				var direction = new Point(0, 100);
 				var movementAmount = 10;
-				var enemies = [];
-				var nv = null;
-				var rv = null;
-				var tv = null;
-				var targetLocation = null;
-				var pVector = new Point();
-				var distThreshold = 1;
 				var lockView = false;
+				var currentLevel = 1;
+				var running = false;
 				
 				window.DEBUG_GAME = true;
+				window.DEBUG_GAME_EXTRA = false;
 				
                 paper.setup(canvas);
 				
@@ -50,25 +33,7 @@
 				
 				var environment = new Environment(view.size);
 				
-                var player = new Player(new Point(350, 200), 10);
-                var enemy = new Enemy(new Point(100,100), 5);
-                enemy.vector = new Point(50,50);
-                
-                environment.player = player;
-                environment.enemies.push(enemy);
-				
-				var block = new Rectangle(new Point (200, 0), new Size(100, view.size.height - 200));
-				var block2 = new Rectangle(new Point(400, 0), new Size(100, view.size.height - 200));
-				var block3 = new Rectangle(new Point(400, view.size.height - 200), new Size(300, 50));
-				
-				var blockPath1 = new Path.Rectangle(block);
-				var blockPath2 = new Path.Rectangle(block2);
-				var blockPath3 = new Path.Rectangle(block3);
-                
-                environment.addObstacle(blockPath1);
-                environment.addObstacle(blockPath2);
-                environment.addObstacle(blockPath3);
-                environment.addObstacle(new Path.Circle(new Point(350, 400), 15));
+				setupLevel(currentLevel);
 				
 				/*function drawMarkers() {					
 					while(markers.length > 0) {
@@ -181,8 +146,44 @@
 				
                 // Draw the view now:
                 view.onFrame = function(evt) {
-					environment.update();
+					if (running) {
+					    environment.update();
+						
+						if (environment.gameOver) {
+							running = false;
+							displayGameOver();
+						}
+					}
                 }
+				
+				function setupLevel(level) {
+					if (level == 1) {
+						var player = new Player(new Point(350, 200), 10);
+						var enemy = new Enemy(new Point(100,100), 5);
+						enemy.vector = new Point(50,50);
+						
+						environment.player = player;
+						environment.enemies.push(enemy);
+						
+						var block = new Rectangle(new Point (200, 0), new Size(100, view.size.height - 200));
+						var block2 = new Rectangle(new Point(400, 0), new Size(100, view.size.height - 200));
+						var block3 = new Rectangle(new Point(400, view.size.height - 200), new Size(300, 50));
+						
+						var blockPath1 = new Path.Rectangle(block);
+						var blockPath2 = new Path.Rectangle(block2);
+						var blockPath3 = new Path.Rectangle(block3);
+						
+						environment.addObstacle(blockPath1);
+						environment.addObstacle(blockPath2);
+						environment.addObstacle(blockPath3);
+						environment.addObstacle(new Path.Circle(new Point(350, 400), 15));
+					}
+					
+					running = true;
+				}
+				
+				function displayGameOver() {
+				}
 				
                 paper.view.draw();
             });
