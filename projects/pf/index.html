@@ -1,0 +1,344 @@
+<html>
+	<head>
+        <link rel="stylesheet" type="text/css" href="../../css/simplegrid.css">
+        <link rel="stylesheet" type="text/css" href="../../css/style.css">
+		<script type="text/javascript" src="../../js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="../../js/paper-full.min.js"></script>
+        <script type="text/javascript" src="../../js/dat.gui.min.js"></script>
+        <script type="text/javascript" src="js/fieldGenerator.js"></script>
+        <script type="text/javascript" src="js/environment.js"></script>
+        <script type="text/javascript" src="js/mob.js"></script>
+		<script type="text/javascript">
+            paper.install(window);
+            $(document).ready(function () {
+                var canvas = document.getElementById('canvas');
+                var gui = new dat.GUI();
+                var fieldPaths = [];
+                var shiftDown = false;
+                var ctrlDown = false;
+                var drawFieldsOpt = false;
+                var lockAngle = false;
+                var launched = false;
+                var launchPoint = null;
+                var maxAngleNeedleDistance = 200;
+                var inAngleNeedleDistance = false;
+                var angleNeedle = null;
+                var restrictVisualVectors = true;
+                var curSpeedLabel = null;
+                var labelSurface = null;
+                var labelGroup = null;
+				var drawnObstacle = null;
+				var obsRect = null;
+				var prevPoint = null;
+				var changeX = -1;
+				var aStarGoal = null;
+                
+                paper.setup(canvas);
+                
+                var tool = new Tool();
+                var environment = new Environment();
+                var mob = new Mob(environment);
+                
+                var border = new Shape.Rectangle(new Point(3, 3), new Size(view.size.width - 3, view.size.height - 3))
+                border.strokeColor = 'black';
+                
+                gui.add(mob, 'maxSpeed', 0, 10).name('Max speed');
+                gui.add(mob, 'moveable').name('Toggle movement');
+                gui.add(mob, 'showPathVisual').name('Toggle path visual');
+                //gui.add(mob, 'aStarVisual').name('Toggle A* visual');
+                gui.add(mob, 'pathVisualSteps', 100, 3000).name('Total path steps').onFinishChange(function () {
+                    mob.showPath();
+                });
+                
+                function setCurSpeedLabel() {
+                    if(curSpeedLabel) {
+                        curSpeedLabel.content = "Speed: " + mob.vector.length.toFixed(5);
+                    }
+                }
+                
+                function clearFields() {
+                    for (var i = 0; i < fieldPaths.length; i++) {
+                        var c = fieldPaths[i].removeChildren();
+						for (var j = 0; j < c.length; j++) {
+							c[j].remove();
+						}
+                    }
+                    
+                    while(fieldPaths.length > 0) {
+                        fieldPaths.pop();
+                    }
+                }
+                
+                function canModifyLaunchAngle (point) {
+                    return !lockAngle && (point - mob.position).length <= maxAngleNeedleDistance;
+                }
+                
+                function reDrawFields() {
+                    if (drawFieldsOpt) {
+                        clearFields();
+                        drawVisualFields();
+                    }
+                    
+                    labelGroup.bringToFront();
+                }
+                
+                function moveAnglePointer(point) {
+                    if (angleNeedle && !lockAngle) {
+                        angleNeedle.remove();
+                    }
+                        
+                    if (canModifyLaunchAngle(point)) {
+                        angleNeedle = new Path.Line(mob.position, point);
+                        angleNeedle.strokeColor = 'black';
+                    }
+                }
+                
+                function drawVisualFields() {
+                    for (var i = 5; i < view.size.width; i+=10) {
+                        for (var j = 5; j < view.size.height; j+=10) {
+                            var start = new Point(i, j);
+                            
+                            var delta = mob.getNextLocationDelta(start, true);
+                            
+                            if (restrictVisualVectors) {
+                                delta.length = delta.length > 7 ? 7 : delta.length;
+                                delta.length = delta.length > 0 && delta.length < 5 ? delta.length + 5 : delta.length;
+                            }
+                            
+                            var end = start.add(delta);
+                            
+                            fieldPaths.push(drawArrow(start, end, delta));
+                        }
+                    }
+                }
+				
+				function drawArrow(start, end, d) {
+					var b = d.normalize(3);
+					var p1 = new Path([start, end]);
+					p1.strokeColor = 'black';
+					
+					var p2 = new Path([end.add(b.rotate(135)), end, end.add(b.rotate(-135))]);
+					p2.strokeColor = 'black';
+					
+					var vi = new Group([p1, p2]);
+					return vi;
+				}
+                
+                tool.onKeyDown = function(event) {
+                    
+                    if (event.key == 'shift') {
+                        shiftDown = true;
+                    }
+                    
+                    console.log(event.key);
+                    if (event.key == 'control') {
+                        ctrlDown = true;
+                    }
+                }
+
+                tool.onKeyUp = function(event) {
+                    if (event.key == 'shift') {
+                        shiftDown = false;
+                    }
+                    
+                    if (event.key == 'control') {
+                        ctrlDown = false;
+                        if(!lockAngle && angleNeedle) {
+                            angleNeedle.remove();
+                        }
+                    }
+                    
+                    if(event.key == 'z') {                        
+                        if(!launched) {
+                            if (launchPoint) {
+                                mob.vector = launchPoint.subtract(mob.position);
+                            }
+                            
+                            launched = true;
+                            
+                            if(angleNeedle) {
+                                angleNeedle.remove();
+                            }
+                        }
+                        
+                        mob.moveable = !mob.moveable;
+                    }
+                    
+                    if(event.key == 'x') {
+                        drawFieldsOpt = !drawFieldsOpt;
+                        
+                        if (!drawFieldsOpt) {
+                            clearFields();
+                        }
+                        else {
+                            reDrawFields();
+                        }
+                    }
+                    
+                    if(event.key == 'c') {
+                        restrictVisualVectors = !restrictVisualVectors;
+                        reDrawFields();
+                    }
+                    
+                    labelGroup.bringToFront();
+                }
+                
+                tool.onMouseUp = function(evt) {					
+                    
+					/*if (!drawnObstacle) {
+						mob.setGoal(evt.point);
+						
+						if(aStarGoal) {
+							aStarGoal.remove();
+						}
+						
+						aStarGoal = new Shape.Circle(evt.point, 5);
+						aStarGoal.fillColor = 'orange';
+					}
+					else {
+						environment.addObstacle(drawnObstacle);
+					
+						changeX = -1;
+						obsRect = null;
+						drawnObstacle = null;
+					}
+					
+					return;*/
+					
+                    if (ctrlDown && !launched && angleNeedle) {
+                        lockAngle = !lockAngle;
+                        launchPoint = evt.point;
+                    }
+                    else {
+                        var removed = environment.removeGenerator(evt.point);
+                    
+                        if(removed) {
+                            reDrawFields();
+                            
+                            if (mob.showPathVisual) {
+                                mob.showPath();
+                            }
+                            
+                            return;
+                        }
+                        
+                        if (shiftDown) {
+                            environment.addRandomRepulsor(evt.point);
+                        }
+                        else {
+                            environment.addRandomAttractor(evt.point);
+                        }
+                        
+                        reDrawFields();
+                        if (mob.showPathVisual) {
+                            mob.showPath();
+                        }
+                    }
+                }
+				
+				tool.onMouseDown = function(evt) {
+					/*if (shiftDown) {
+						obsRect = new Rectangle(evt.point.x, evt.point.y, 50, 50);
+						drawnObstacle = new Shape.Rectangle(obsRect);
+						drawnObstacle.fillColor = 'red';
+						drawnObstacle.srokeColor = 'black';
+						prevPoint = evt.point;
+					}*/
+				}
+				
+				tool.onMouseDrag = function(evt) {
+					if (drawnObstacle) {
+						//var topleft = new Point(drawnObstacle.left, drawnObstacle.top);
+						if (changeX == -1) {
+							var diffX = Math.abs(evt.point.x - obsRect.x);
+							var diffY = Math.abs(evt.point.y - obsRect.y);
+							
+							if (diffX > diffY) {
+								changeX = 1;
+							}
+							else {
+								changeX = 0;
+							}
+						}
+						
+						if (prevPoint) {
+							if (changeX == 0) {
+								obsRect.width = 50;
+								obsRect.height += (evt.point.y - prevPoint.y);
+							}
+							else {
+								obsRect.height = 50;
+								obsRect.width += (evt.point.x - prevPoint.x);
+							}
+						}
+						
+						drawnObstacle.remove();
+						drawnObstacle = new Shape.Rectangle(obsRect);
+						drawnObstacle.fillColor = 'red';
+						drawnObstacle.srokeColor = 'black';
+						
+						prevPoint = evt.point;
+					}
+				};
+                
+                tool.onMouseMove = function(evt) {
+                    if (!launched && ctrlDown) {
+                        moveAnglePointer(evt.point);
+                    }
+                }
+                
+                // Draw the view now:
+                view.onFrame = function(evt) {
+                    mob.runMob();
+                    setCurSpeedLabel();
+                }
+                
+                labelSurface = new Shape.Rectangle(new Point (view.size.width - 155, 30), new Size(100, 30));
+                labelSurface.fillColor = 'white';
+                labelSurface.strokeColor = 'black';
+                curSpeedLabel = new PointText(new Point(view.size.width - 150, 50));
+                labelGroup = new Group([labelSurface, curSpeedLabel]);
+                setCurSpeedLabel();
+                
+                paper.view.draw();
+            });
+		</script>
+        <title>Armando Locay - Potential Fields</title>
+	</head>
+	<body>
+        <div class="grid grid-pad">
+            <div class="col-1-1">
+                <h1>Potential Fields</h1>
+            </div>
+        </div>
+        <div class="grid grid-pad">
+            <div class="col-1-1">
+                <div id="container">
+                    <canvas id="canvas"></canvas>
+                </div>
+            </div>
+        </div>
+         <div class="grid grid-pad">
+            <div class="col-1-1">
+                <div id="info">
+                    <div class="controls">z - toggle movement</div>
+                    <div class="controls">x - toggle potential fields visual (animation performance impact)</div>
+                    <div class="controls">c - allow visual vectors to be actual length</div>
+                </div>
+            </div>
+        </div>
+        <div class="grid grid-pad">
+            <div class="col-1-1">
+                <div id="nav-menu">
+                    <span class="nav-item">
+                        <a href="../../index.html">Home</a>
+                    </span>
+                    <span class="nav-item">|</span>
+                    <span class="nav-item">
+                        <a href="../index.html">Projects</a>
+                    </span>
+                <div class="nav-menu">
+            </div>
+        </div>
+	<body>
+</html>

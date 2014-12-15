@@ -2,7 +2,7 @@ body {
     font-family: 'Raleway', sans-serif;
 }
 
-h1 {
+h1, h2, h3 {
     text-align: center;
     font-weight: 200;
     margin: 20px 0;
@@ -21,4 +21,31 @@ a:active {
 .project {
     text-align: center;
     margin: 50px 0;
+}
+
+#container {
+    text-align: center;
+}
+
+#canvas {
+    width: 900px;
+    height: 600px;
+}
+
+#info {
+    text-align: left;
+    margin-left: 100px;
+}
+
+.controls {
+    margin: 0;
+    margin-bottom: 10px;
+}
+
+#nav-menu {
+    text-align: center;
+}
+
+.nav-item {
+    margin: 0 15px;
 }

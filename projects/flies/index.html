@@ -1,0 +1,310 @@
+<html>
+	<head>
+        <link rel="stylesheet" type="text/css" href="../../css/simplegrid.css">
+        <link rel="stylesheet" type="text/css" href="../../css/style.css">
+		<script type="text/javascript" src="../../js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="../../js/paper-full.js"></script>
+        <script type="text/javascript" src="../../js/dat.gui.min.js"></script>
+        <script type="text/javascript" src="js/fieldGenerator.js"></script>
+        <script type="text/javascript" src="js/environment.js"></script>
+        <script type="text/javascript" src="js/boid.js"></script>
+		<script type="text/javascript">
+            paper.install(window);
+            $(document).ready(function () {
+                var canvas = document.getElementById('canvas');
+                var gui = new dat.GUI();
+                var fieldPaths = [];
+                var shiftDown = false;
+                var ctrlDown = false;
+                var drawFieldsOpt = false;
+                var lockAngle = false;
+                var launched = false;
+                var launchPoint = null;
+                var maxAngleNeedleDistance = 200;
+                var inAngleNeedleDistance = false;
+                var angleNeedle = null;
+                var restrictVisualVectors = true;
+                var curSpeedLabel = null;
+                var labelSurface = null;
+                var labelGroup = null;
+				var drawnObstacle = null;
+				var obsRect = null;
+				var prevPoint = null;
+				var changeX = -1;
+				var goal = null;
+				var boids = [];
+				var move = false;
+				var totalBoids = 50;
+				var obPath = null;
+                
+                paper.setup(canvas);
+				
+                var tool = new Tool();
+				
+				/*var toggleAllMovementVectors = function () {
+					for (var i = 0; i < environment.boids.length; i++) {
+						environment.boids
+					}
+				}*/
+				
+				var BoidShared = {
+					"maxSpeed": 1.5,
+					"separationDist": 25,
+					"cohesionDist": 50,
+					"alignmentDist": 50,
+					"obstacleAvoidanceDistance": 60,		
+					"obstacleWeightFactor": 3.5,
+					"separationWeightFactor": 1.5,
+					"cohesionWeightFactor": 1.0,
+					"alignmentWeightFactor": 1.0,
+					"targetWeightFactor": 1.0,
+					"showMovementVectors": false,
+					"showReflectionVectors": false,
+					"showAccelerationVectors": false,
+					"castedVectorLength": 20
+				};
+				
+                var environment = new Environment(view.size);
+				
+				var body = new Shape.Circle(new Point(0,0), 3);
+				body.fillColor = 'black';
+				var circleSymbol = new Symbol(body);
+				//circleSymbol.place(new Point(view.size.width/2, view.size.height/2));
+				
+                //var boid = new Boid(new Point(50, 50), circleSymbol, environment, BoidShared);
+				//environment.boids.push(boid);
+                
+                var border = new Shape.Rectangle(new Point(3, 3), new Size(view.size.width - 3, view.size.height - 3))
+                border.strokeColor = 'black';
+                
+				gui.add(BoidShared, 'maxSpeed', 0, 10).step(0.5).name('Max Speed');
+                gui.add(BoidShared, 'separationDist', 0, 100).name('Separation distance');
+                gui.add(BoidShared, 'cohesionDist', 0, 100).name('Cohesion distance');
+				gui.add(BoidShared, 'alignmentDist', 0, 100).name('Alignment distance');
+				gui.add(BoidShared, 'obstacleAvoidanceDistance', 0, 300).name('Obstalce avoidance distance');
+				var weights = gui.addFolder('Adjust weights');
+				weights.add(BoidShared, 'separationWeightFactor', 0, 5).step(0.1).name('Separation factor');
+				weights.add(BoidShared, 'cohesionWeightFactor', 0, 5).step(0.1).name('Cohesion factor');
+				weights.add(BoidShared, 'alignmentWeightFactor', 0, 5).step(0.1).name('Alignment factor');
+				weights.add(BoidShared, 'targetWeightFactor', 0, 5).step(0.1).name('Target factor');
+				weights.add(BoidShared, 'obstacleWeightFactor', 0, 5).step(0.1).name('Obstacle avoidance factor');
+				var visuals = gui.addFolder('Visuals');
+                visuals.add(BoidShared, 'showMovementVectors').name('Toggle movement vector visuals');
+				visuals.add(BoidShared, 'castedVectorLength', 0, 50).name('Movement vector length');
+				visuals.add(BoidShared, 'showAccelerationVectors').name('Toggle acceleration vector visuals');
+                visuals.add(BoidShared, 'showReflectionVectors').name('Toggle reflection vector visuals');
+                
+                function setCurSpeedLabel() {
+                    if(curSpeedLabel) {
+                        //curSpeedLabel.content = "Speed: " + mob.vector.length.toFixed(5);
+                    }
+                }
+                
+                function clearFields() {
+                    for (var i = 0; i < fieldPaths.length; i++) {
+                        var c = fieldPaths[i].removeChildren();
+						for (var j = 0; j < c.length; j++) {
+							c[j].remove();
+						}
+                    }
+                    
+                    while(fieldPaths.length > 0) {
+                        fieldPaths.pop();
+                    }
+                }
+                
+				/*
+                function canModifyLaunchAngle (point) {
+                    return !lockAngle && (point - mob.position).length <= maxAngleNeedleDistance;
+                }
+                
+                function reDrawFields() {
+                    if (drawFieldsOpt) {
+                        clearFields();
+                        drawVisualFields();
+                    }
+                    
+                    labelGroup.bringToFront();
+                }
+                
+                function moveAnglePointer(point) {
+                    if (angleNeedle && !lockAngle) {
+                        angleNeedle.remove();
+                    }
+                        
+                    if (canModifyLaunchAngle(point)) {
+                        angleNeedle = new Path.Line(mob.position, point);
+                        angleNeedle.strokeColor = 'black';
+                    }
+                }
+                
+                function drawVisualFields() {
+                    for (var i = 5; i < view.size.width; i+=10) {
+                        for (var j = 5; j < view.size.height; j+=10) {
+                            var start = new Point(i, j);
+                            
+                            var delta = mob.getNextLocationDelta(start, true);
+                            
+                            if (restrictVisualVectors) {
+                                delta.length = delta.length > 7 ? 7 : delta.length;
+                                delta.length = delta.length > 0 && delta.length < 5 ? delta.length + 5 : delta.length;
+                            }
+                            
+                            var end = start.add(delta);
+                            
+                            fieldPaths.push(drawArrow(start, end, delta));
+                        }
+                    }
+                }*/
+				
+				function drawArrow(start, end, d) {
+					var b = d.normalize(3);
+					var p1 = new Path([start, end]);
+					p1.strokeColor = 'black';
+					
+					var p2 = new Path([end.add(b.rotate(135)), end, end.add(b.rotate(-135))]);
+					p2.strokeColor = 'black';
+					
+					var vi = new Group([p1, p2]);
+					return vi;
+				}
+                
+                tool.onKeyDown = function(event) {
+                    
+                    if (event.key == 'shift') {
+                        shiftDown = true;
+                    }
+                    
+                    if (event.key == 'control') {
+                        ctrlDown = true;
+                    }
+                }
+
+                tool.onKeyUp = function(event) {
+                    if (event.key == 'shift') {
+                        shiftDown = false;
+                    }
+					
+					if (event.key == 'm') {
+						move = !move;
+                    }
+					
+					if (event.key == 'control') {
+						ctrlDown = false;
+					}
+					
+					if (event.key == 'n') {
+						updateBoids();
+					}
+                }
+                
+                tool.onMouseUp = function(evt) {
+					if(shiftDown) {
+						for (var i = 0; i < environment.boids.length; i++) {
+							environment.boids[i].setGoal(evt.point);
+						}
+						
+						if (goal) {
+							goal.remove();
+						}
+						
+						goal = new Shape.Circle(evt.point, 5);
+						goal.fillColor = 'orange';
+						goal.strokeColor = 'black';
+					}
+					else if (ctrlDown) {
+						if (obPath) {
+							obPath.simplify();
+							environment.pathObstacles.push(obPath.clone());
+							obPath = null;
+						}
+					}
+					else {
+						var b = new Boid(evt.point, circleSymbol, environment, BoidShared);
+						environment.boids.push(b);
+					}
+                };
+				
+				tool.onMouseDown = function(evt) {
+					if (ctrlDown) {
+						obPath = new Path({
+							segments: [evt.point],
+							strokeWidth: 5,
+							strokeColor: 'blue'
+						});
+					}
+				};
+				
+				tool.onMouseDrag = function(evt) {
+					if (obPath) {
+						obPath.add(evt.point);
+					}
+				};
+                
+				var movements = 0;
+				
+                // Draw the view now:
+                view.onFrame = function(evt) {
+					if (move /*&& movements < 1*/) {
+						updateBoids();						
+						movements++;
+					}
+                }
+				
+				function updateBoids() {
+					for (var i = 0; i < environment.boids.length; i++) {
+						environment.boids[i].run(environment.boids, environment.size, environment.pathObstacles);
+					}
+				}
+                
+                labelSurface = new Shape.Rectangle(new Point (view.size.width - 155, 30), new Size(100, 30));
+                labelSurface.fillColor = 'white';
+                labelSurface.strokeColor = 'black';
+                curSpeedLabel = new PointText(new Point(view.size.width - 150, 50));
+                labelGroup = new Group([labelSurface, curSpeedLabel]);
+                setCurSpeedLabel();
+                
+				var maxPoint = new Point(view.size.width, view.size.height);
+				for (var i = 0; i < totalBoids; i++) {
+					environment.boids.push(new Boid(Point.random().multiply(maxPoint), circleSymbol, environment, BoidShared));
+				}
+				
+                paper.view.draw();
+            });
+		</script>
+	</head>
+	<body>
+		<div class="grid grid-pad">
+            <div class="col-1-1">
+                <h1>Flies</h1>
+            </div>
+        </div>
+        <div class="grid grid-pad">
+            <div class="col-1-1">
+                <div id="container">
+                    <canvas id="canvas"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="grid grid-pad">
+            <div class="col-1-1">
+                <div id="info">
+                    <div class="controls">m - toggle movement</div>
+                </div>
+            </div>
+        </div>
+        <div class="grid grid-pad">
+            <div class="col-1-1">
+                <div id="nav-menu">
+                    <span class="nav-item">
+                        <a href="../../index.html">Home</a>
+                    </span>
+                    <span class="nav-item">|</span>
+                    <span class="nav-item">
+                        <a href="../index.html">Projects</a>
+                    </span>
+                <div class="nav-menu">
+            </div>
+        </div>
+	<body>
+</html>
