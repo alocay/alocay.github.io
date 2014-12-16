@@ -24,6 +24,7 @@
 				var lockView = false;
 				var currentLevel = 1;
 				var running = false;
+                var timerLabel = null;
 				
 				window.DEBUG_GAME = true;
 				window.DEBUG_GAME_EXTRA = false;
@@ -35,7 +36,10 @@
 				var environment = new Environment(view.size);
 				
 				setupLevel(currentLevel);
-				
+                
+                timerLabel = new PointText(view.size.width - 75, 20);
+				timerLabel.fillColor = 'white';
+                
 				/*function drawMarkers() {					
 					while(markers.length > 0) {
                         markers.pop().remove();
@@ -150,13 +154,25 @@
 					if (running) {
 					    environment.update();
 						
+                        updateClock(evt.time);
+                        
 						if (environment.gameOver) {
-							//running = false;
+							running = false;
 							displayGameOver();
 						}
 					}
                 }
 				
+                function updateClock(time) {
+                    var d = new Date(0, 0, 0, 0, 0, time, 0);
+                    timerLabel.content = doubleDigitFormat(d.getHours()) + ":" + doubleDigitFormat(d.getMinutes()) + ":" + doubleDigitFormat(d.getSeconds());
+                    timerLabel.bringToFront();
+                }
+                
+                function doubleDigitFormat (value) {
+                    return ("0" + Number(value)).slice(-2);
+                }
+                
 				function setupLevel(level) {
 					if (level == 1) {
 						var player = new Player(new Point(350, 200), 10);

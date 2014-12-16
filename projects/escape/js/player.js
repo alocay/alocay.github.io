@@ -37,16 +37,15 @@ var Player = (function (_super) {
 	
     Player.prototype.createLightFadeOutMask = function () {
         var startFill = new RGBColor(0,0,0,0.0);
-        var midFill = new RGBColor(0.5,0.5,0.5,0.8);
+        var midFill = new RGBColor(0,0,0,0.5);
         var endFill = new RGBColor(0,0,0,1); 
         var fadeOutGradient = new Gradient([startFill, midFill, endFill], 'radial');
-        var fovOpt = this.fovRangeOptions[this.currentFovOption];
         
         var mask = this.fieldOfViewArea.clone();
         mask.fillColor = {
             gradient: fadeOutGradient,
             origin: this.position,
-            destination: this.position.add(this.visionVector.normalize(fovOpt.range))
+            destination: this.position.add(this.visionVector.normalize(this.fieldOfViewDistance))
         };
         
         return mask;

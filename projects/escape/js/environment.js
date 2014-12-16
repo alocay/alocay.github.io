@@ -29,11 +29,10 @@ var Environment = (function () {
 		this.obstacles.push(ob);
 	};
     
-	Environment.prototype.getFieldOfVisionPath = function(mob) {
+	Environment.prototype.getFieldOfVisionPath = function(mob) {        
 		var halfFov = mob.fieldOfView / 2;
 		var startAngle = -1 * halfFov;
 		var step = 0.6;
-		var lengthFactor = 50;
 		var visible = [mob.position];
 		var vision = mob.visionVector.clone();
 		vision.length = mob.fieldOfViewDistance < 0 ? vision.length : mob.fieldOfViewDistance;
