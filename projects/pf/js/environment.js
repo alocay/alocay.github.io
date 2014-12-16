@@ -6,6 +6,7 @@ var Environment = (function () {
 		this.pathObstacles = [];
 		this.size = size;
 		this.boids = [];
+		this.rangeVisible = false;
     }
 	
 	Environment.prototype.getBoids = function () {
@@ -18,27 +19,39 @@ var Environment = (function () {
     
     Environment.prototype.addRepulsor = function (point, radius, strength, fieldSpread, color) {
         color = color ? color : 'red';
-        this.repulsors.push(new FieldGenerator(point, radius, strength, fieldSpread, color));
+        this.repulsors.push(new FieldGenerator(point, radius, strength, fieldSpread, color, this.rangeVisible));
     };
     
     Environment.prototype.addAttractor = function (point, radius, strength, fieldSpread, color) {
         color = color ? color : 'green';
-        this.attractors.push(new FieldGenerator(point, radius, strength, fieldSpread, color));
+        this.attractors.push(new FieldGenerator(point, radius, strength, fieldSpread, color, this.rangeVisible));
     };
     
     Environment.prototype.addRandomAttractor = function (point) {
         var strength = (Math.random() * 0.05) + 0.0001;
         var radius = Math.floor((Math.random() * 75) + 10);
         var spread = Math.floor((Math.random() * 50) + 10);
-        this.attractors.push(new FieldGenerator(point, radius, strength, spread, 'green'));
+        this.addAttractor(point, radius, strength, spread, 'green');
     };
     
     Environment.prototype.addRandomRepulsor = function (point) {
         var strength = Math.floor((Math.random() * 10) + 1);
         var radius = Math.floor((Math.random() * 75) + 10);
         var spread = Math.floor((Math.random() * 50) + 10);
-        this.repulsors.push(new FieldGenerator(point, radius, strength, spread, 'red'));
+        this.addRepulsor(point, radius, strength, spread, 'red');
     };
+	
+	Environment.prototype.toggleRangeIndicators = function () {
+		for (var i = 0; i < this.attractors.length; i++) {
+			this.attractors[i].toggleRangeIndicators();
+		}
+		
+		for (var i = 0; i < this.repulsors.length; i++) {
+			this.repulsors[i].toggleRangeIndicators();
+		}
+		
+		this.rangeVisible = !this.rangeVisible
+	};
     
     Environment.prototype.removeGenerator = function (point) {
         var result = this.isInGenerator(point);

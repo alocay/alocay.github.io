@@ -45,8 +45,8 @@
                 
                 gui.add(mob, 'maxSpeed', 0, 10).name('Max speed');
                 gui.add(mob, 'moveable').name('Toggle movement');
+                gui.add(environment, 'toggleRangeIndicators').name('Toggle spread indicators');
                 gui.add(mob, 'showPathVisual').name('Toggle path visual');
-                //gui.add(mob, 'aStarVisual').name('Toggle A* visual');
                 gui.add(mob, 'pathVisualSteps', 100, 3000).name('Total path steps').onFinishChange(function () {
                     mob.showPath();
                 });
