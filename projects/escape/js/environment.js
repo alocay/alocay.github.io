@@ -84,15 +84,15 @@ var Environment = (function () {
 		}
 		
 		this.player.run(this);
-		
-		var keyDist = this.player.position.getDistance(this.key.position);
-		if (keyDist < this.key.pickupRadius && !this.player.hasKey) {
+
+		var hitKey = this.key.body.hitTest(this.player.position);
+		if (hitKey) {
 			this.key.pickup();
 			this.player.hasKey = true;
 		}
 		
-		var doorDist = this.player.position.getDistance(this.door.position);
-		if (doorDist < this.key.openRadius && this.player.hasKey) {
+		var hitDoor = this.door.body.hitTest(this.player.position);
+		if (hitDoor) {
 			this.door.opened = true;
 		}
 		

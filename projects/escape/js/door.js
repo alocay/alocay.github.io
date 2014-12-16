@@ -1,6 +1,6 @@
 var Door = (function () {
     function Door() {
-        this.position = new Point(530, 360);
+        this.position = new Point(30, 30);
 		this.openRadius = 20;
         this.body = new Shape.Rectangle(this.position, new Size(50, 10));
         this.body.fillColor = 'purple';
