@@ -43,8 +43,8 @@ a:active {
 }
 
 #nav-menu {
-    text-align: center;
-    margin-bottom: 20px;
+    text-align: right;
+    margin-right: 90px;
 }
 
 .nav-item {
