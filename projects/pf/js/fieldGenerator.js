@@ -4,8 +4,23 @@ var FieldGenerator = (function () {
         this.radius = r;
         this.strength = s;
         this.fieldSpread = sp;
-        this.body = new Shape.Circle(this.point, this.radius);
-        this.body.fillColor = c ? c : 'green';
+        this.body = new Group({
+            children: [],
+            position: this.point
+        });
+        
+        var color = c ? c : 'green';
+        var outerShape = new Path.Circle(this.point, this.radius);
+        
+        outerShape.fillColor = {
+            gradient: {
+                stops: [[tinycolor(color).toHexString(), 0.4], [tinycolor(color).darken(10).toHexString(), 0.7], [tinycolor(color).darken(5).toHexString(), 1]],
+                radial: true
+            },
+            origin: this.point,
+            destination: outerShape.bounds.rightCenter
+        };
+        
         this.spread = new Shape.Circle(this.point, this.fieldSpread + this.radius);
         this.spread.strokeColor = 'black';
         this.label = new PointText(this.point);
