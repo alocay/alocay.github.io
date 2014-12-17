@@ -1,7 +1,8 @@
 <html>
 	<head>
-        <link rel="stylesheet" type="text/css" href="../../css/simplegrid.css">
+        <link rel="stylesheet" type="text/css" href="../../css/kube.min.css">
         <link rel="stylesheet" type="text/css" href="../../css/styles.css">
+        <script type="text/javascript" src="../../js/kube.min.js"></script>
 		<script type="text/javascript" src="../../js/jquery-1.11.1.min.js"></script>
 		<script type="text/javascript" src="../../js/paper-full.js"></script>
         <script type="text/javascript" src="../../js/dat.gui.min.js"></script>
@@ -200,17 +201,27 @@
                 
                 tool.onMouseUp = function(evt) {
 					if(shiftDown) {
-						for (var i = 0; i < environment.boids.length; i++) {
-							environment.boids[i].setGoal(evt.point);
-						}
-						
-						if (goal) {
-							goal.remove();
-						}
-						
-						goal = new Shape.Circle(evt.point, 5);
-						goal.fillColor = 'orange';
-						goal.strokeColor = 'black';
+                        if (goal && goal.contains(evt.point)) {
+                            for (var i = 0; i < environment.boids.length; i++) {
+                                environment.boids[i].removeGoal();
+                            }
+                            
+                            goal.remove();
+                            goal = null;
+                        }
+                        else {
+                            for (var i = 0; i < environment.boids.length; i++) {
+                                environment.boids[i].setGoal(evt.point);
+                            }
+                            
+                            if (goal) {
+                                goal.remove();
+                            }
+                            
+                            goal = new Shape.Circle(evt.point, 5);
+                            goal.fillColor = 'orange';
+                            goal.strokeColor = 'black';
+                        }
 					}
 					else if (ctrlDown) {
 						if (obPath) {
@@ -257,13 +268,6 @@
 					}
 				}
                 
-                labelSurface = new Shape.Rectangle(new Point (view.size.width - 155, 30), new Size(100, 30));
-                labelSurface.fillColor = 'white';
-                labelSurface.strokeColor = 'black';
-                curSpeedLabel = new PointText(new Point(view.size.width - 150, 50));
-                labelGroup = new Group([labelSurface, curSpeedLabel]);
-                setCurSpeedLabel();
-                
 				var maxPoint = new Point(view.size.width, view.size.height);
 				for (var i = 0; i < totalBoids; i++) {
 					environment.boids.push(new Boid(Point.random().multiply(maxPoint), circleSymbol, environment, BoidShared));
@@ -274,35 +278,37 @@
 		</script>
 	</head>
 	<body>
-		<div class="grid grid-pad">
-            <div class="col-1-1">
-                <h1>Flies</h1>
+        <div class="units-row">
+            <div class="unit-100">
+                <h1 class="project-title">Flies</h1>
             </div>
         </div>
-        <div class="grid grid-pad">
-            <div class="col-1-1">
+        <div class="units-row">
+            <div class="unit-centered unit-40">
                 <div id="container">
                     <canvas id="canvas"></canvas>
                 </div>
             </div>
         </div>
-        <div class="grid grid-pad">
-            <div class="col-8-12">
-                <div id="info">
-                    <div class="controls">m - toggle movement</div>
+         <div class="units-row">
+            <div class="unit-centered unit-50">
+                <div class="units-row end">
+                    <div class="unit-70">
+                        <div id="info">
+                            <div class="controls">click - add/remove target location</div>
+                            <div class="controls">m - toggle movement</div>
+                        </div>
+                    </div>
+                    <div class="unit-30">
+                        <nav class="unit-push-right navbar">
+                            <li><a href="../../index.html">Home</a></li>
+                            <li><a href="../index.html">Projects</a></li>
+                    </div>
                 </div>
             </div>
-            <div class="col-4-12">
-                <div id="nav-menu">
-                    <span class="nav-item">
-                        <a href="../../index.html">Home</a>
-                    </span>
-                    <span class="nav-item">|</span>
-                    <span class="nav-item">
-                        <a href="../index.html">Projects</a>
-                    </span>
-                </div>
-            </div>
+        </div>
+        <div class="footer">
+            <h6>Armando Locay&nbsp;|&nbsp;<a href="http://www.github.com/alocay">Github</a></h6>
         </div>
 	<body>
 </html>

@@ -1,7 +1,8 @@
 <html>
 	<head>
-        <link rel="stylesheet" type="text/css" href="../../css/simplegrid.css">
+        <link rel="stylesheet" type="text/css" href="../../css/kube.min.css">
         <link rel="stylesheet" type="text/css" href="../../css/styles.css">
+        <script type="text/javascript" src="../../js/kube.min.js"></script>
 		<script type="text/javascript" src="../../js/jquery-1.11.1.min.js"></script>
 		<script type="text/javascript" src="../../js/paper-full.js"></script>
         <script type="text/javascript" src="../../js/extends.js"></script>
@@ -15,7 +16,6 @@
             paper.install(window);
             $(document).ready(function () {
                 var canvas = document.getElementById('canvas');
-                //var gui = new dat.GUI();
                 var shiftDown = false;
                 var ctrlDown = false;
 				var mouseDown = false;
@@ -40,24 +40,6 @@
                 timerLabel = new PointText(view.size.width - 75, 20);
 				timerLabel.fillColor = 'white';
                 
-				/*function drawMarkers() {					
-					while(markers.length > 0) {
-                        markers.pop().remove();
-                    }
-					
-					for (var i = 0; i < visible.length; i++) {
-						var b = new Shape.Circle(visible[i], 3);
-						b.fillColor = 'blue';
-						markers.push(b);
-					}
-					
-					for (var i = 0; i < fails.length; i++) {
-						var b = new Shape.Circle(fails[i], 3);
-						b.fillColor = 'red';
-						markers.push(b);
-					}
-				}
-				
 				function drawArrow(start, end, d) {
 					var b = d.normalize(3);
 					var p1 = new Path([start, end]);
@@ -81,7 +63,7 @@
 					}
 					
 					arrow.remove();
-				};*/
+				};
 				
                 tool.onKeyDown = function(event) {
                     
@@ -208,33 +190,34 @@
         <title>Armando Locay - Escape!</title>
 	</head>
 	<body>
-        <div class="grid grid-pad">
-            <div class="col-1-1">
-                <h1>Escape!</h1>
+        <div class="units-row">
+            <div class="unit-100">
+                <h1 class="project-title">Escape!</h1>
             </div>
         </div>
-        <div class="grid grid-pad">
-            <div class="col-1-1">
+        <div class="units-row">
+            <div class="unit-centered unit-40">
                 <div id="container">
                     <canvas id="canvas"></canvas>
                 </div>
             </div>
         </div>
-        <div class="grid grid-pad">
-            <div class="col-8-12">
-                <div id="info">&nbsp;</div>
-            </div>
-            <div class="col-4-12">
-                <div id="nav-menu">
-                    <span class="nav-item">
-                        <a href="../../index.html">Home</a>
-                    </span>
-                    <span class="nav-item">|</span>
-                    <span class="nav-item">
-                        <a href="../index.html">Projects</a>
-                    </span>
+         <div class="units-row">
+            <div class="unit-centered unit-50">
+                <div class="units-row end">
+                    <div class="unit-70">
+                        <div id="info">&nbsp;</div>
+                    </div>
+                    <div class="unit-30">
+                        <nav class="unit-push-right navbar">
+                            <li><a href="../../index.html">Home</a></li>
+                            <li><a href="../index.html">Projects</a></li>
+                    </div>
                 </div>
             </div>
+        </div>
+        <div class="footer">
+            <h6>Armando Locay&nbsp;|&nbsp;<a href="http://www.github.com/alocay">Github</a></h6>
         </div>
 	<body>
 </html>

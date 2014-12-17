@@ -1,3 +1,5 @@
+@import url(http://fonts.googleapis.com/css?family=Poly);
+
 body {
     font-family: 'Poly', sans-serif;
 }
@@ -5,12 +7,15 @@ body {
 h1, h2, h3, h6 {
     text-align: center;
     font-weight: 200;
-    margin: 20px 0;
+    font-family: 'Poly', sans-serif;
 }
 
-h1 {
-    font-family: 'Poly', sans-serif;
+h1.header-title {
     font-size: 65pt;
+}
+
+h1.project-title {
+    margin: 30px 0;
 }
 
 a:link,
@@ -20,15 +25,14 @@ a:active {
     text-decoration: none;
 }
 
-ul {
+ul.project-list {
   list-style-type: none;
   margin: 0;
   padding: 0;
 }
  
-li {
+ul.project-list li {
   font: 200 15px/2.0;
-  border-bottom: 1px solid #ccc;
   width: 200px;
   margin-bottom: 10px;
 }
@@ -50,6 +54,12 @@ div.footer {
     margin: 0;
 }
 
+.project-group-header {
+    font-size: 12pt;
+    border-bottom: 1px solid #ccc;
+    width: 160px;
+}
+
 .project-group {
     text-align: center;
     padding: 20px 0;
@@ -60,7 +70,7 @@ div.footer {
 }
 
 #canvas {
-    width: 900px;
+    width: 800px;
     height: 600px;
 }
 
@@ -71,12 +81,10 @@ div.footer {
 
 .controls {
     margin: 0;
-    margin-bottom: 10px;
 }
 
 #nav-menu {
     text-align: right;
-    margin-right: 90px;
 }
 
 .nav-item {

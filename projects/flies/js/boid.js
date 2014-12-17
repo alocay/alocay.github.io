@@ -21,6 +21,10 @@ var Boid = (function () {
 	Boid.prototype.setGoal = function (point) {
 		this.target = point;
 	};
+    
+    Boid.prototype.removeGoal = function () {
+		this.target = null;
+	};
 	
 	Boid.prototype.run = function (boids, size, obstacles) {
 		this.flock(boids);
