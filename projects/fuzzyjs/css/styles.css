@@ -4,7 +4,7 @@
 }
 
 body {
-    background: #222 url('../assets/binding_dark.png') repeat; /* binding_dark.png courtesy of Tia Newbury. Found @ http://subtlepatterns.com/ */
+    background: #222 url('../assets/binding-dark.png') repeat; /* binding-dark.png courtesy of Tia Newbury. Found @ http://subtlepatterns.com/ */
     font-family: tiza, Verdana, Arial;
     color: #dddddd;
 }
