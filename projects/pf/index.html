@@ -217,18 +217,10 @@
                 }
 				
 				tool.onMouseDown = function(evt) {
-					/*if (shiftDown) {
-						obsRect = new Rectangle(evt.point.x, evt.point.y, 50, 50);
-						drawnObstacle = new Shape.Rectangle(obsRect);
-						drawnObstacle.fillColor = 'red';
-						drawnObstacle.srokeColor = 'black';
-						prevPoint = evt.point;
-					}*/
 				}
 				
 				tool.onMouseDrag = function(evt) {
 					if (drawnObstacle) {
-						//var topleft = new Point(drawnObstacle.left, drawnObstacle.top);
 						if (changeX == -1) {
 							var diffX = Math.abs(evt.point.x - obsRect.x);
 							var diffY = Math.abs(evt.point.y - obsRect.y);
@@ -306,9 +298,9 @@
                             <div class="controls">click - add/remove a random attractor</div>
                             <div class="controls">shift + click - add/remove a random repulsor</div>
                             <div class="controls">ctrl + click - change position</div>
-                            <div class="controls">z - toggle movement</div>
                             <div class="controls">x - toggle potential fields visual (animation performance impact)</div>
                             <div class="controls">c - allow visual vectors to be actual length</div>
+                            <div class="controls">use dat.gui console for various other controls</div>
                         </div>
                     </div>
                     <div class="unit-30">

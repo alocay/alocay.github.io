@@ -14,39 +14,20 @@
             $(document).ready(function () {
                 var canvas = document.getElementById('canvas');
                 var gui = new dat.GUI();
-                var fieldPaths = [];
                 var shiftDown = false;
                 var ctrlDown = false;
-                var drawFieldsOpt = false;
-                var lockAngle = false;
-                var launched = false;
-                var launchPoint = null;
-                var maxAngleNeedleDistance = 200;
-                var inAngleNeedleDistance = false;
-                var angleNeedle = null;
-                var restrictVisualVectors = true;
-                var curSpeedLabel = null;
-                var labelSurface = null;
-                var labelGroup = null;
-				var drawnObstacle = null;
-				var obsRect = null;
-				var prevPoint = null;
-				var changeX = -1;
 				var goal = null;
 				var boids = [];
 				var move = false;
 				var totalBoids = 100;
 				var obPath = null;
+                var obstacles = [];
+                
+                this.moveBoids = false;
                 
                 paper.setup(canvas);
 				
                 var tool = new Tool();
-				
-				/*var toggleAllMovementVectors = function () {
-					for (var i = 0; i < environment.boids.length; i++) {
-						environment.boids
-					}
-				}*/
 				
 				var BoidShared = {
 					"maxSpeed": 1.5,
@@ -70,14 +51,12 @@
 				var body = new Shape.Circle(new Point(0,0), 3);
 				body.fillColor = 'black';
 				var circleSymbol = new Symbol(body);
-				//circleSymbol.place(new Point(view.size.width/2, view.size.height/2));
-				
-                //var boid = new Boid(new Point(50, 50), circleSymbol, environment, BoidShared);
-				//environment.boids.push(boid);
                 
                 var border = new Shape.Rectangle(new Point(), new Size(view.size.width, view.size.height))
                 border.strokeColor = 'black';
                 
+                gui.add(this, 'moveBoids').name('Toggle movement');
+                gui.add(environment, 'removeObstacles').name('Clear obstacles');
 				gui.add(BoidShared, 'maxSpeed', 0, 10).step(0.5).name('Max Speed');
                 gui.add(BoidShared, 'separationDist', 0, 100).name('Separation distance');
                 gui.add(BoidShared, 'cohesionDist', 0, 100).name('Cohesion distance');
@@ -94,69 +73,6 @@
 				visuals.add(BoidShared, 'castedVectorLength', 0, 50).name('Movement vector length');
 				visuals.add(BoidShared, 'showAccelerationVectors').name('Toggle acceleration vector visuals');
                 visuals.add(BoidShared, 'showReflectionVectors').name('Toggle reflection vector visuals');
-                
-                function setCurSpeedLabel() {
-                    if(curSpeedLabel) {
-                        //curSpeedLabel.content = "Speed: " + mob.vector.length.toFixed(5);
-                    }
-                }
-                
-                function clearFields() {
-                    for (var i = 0; i < fieldPaths.length; i++) {
-                        var c = fieldPaths[i].removeChildren();
-						for (var j = 0; j < c.length; j++) {
-							c[j].remove();
-						}
-                    }
-                    
-                    while(fieldPaths.length > 0) {
-                        fieldPaths.pop();
-                    }
-                }
-                
-				/*
-                function canModifyLaunchAngle (point) {
-                    return !lockAngle && (point - mob.position).length <= maxAngleNeedleDistance;
-                }
-                
-                function reDrawFields() {
-                    if (drawFieldsOpt) {
-                        clearFields();
-                        drawVisualFields();
-                    }
-                    
-                    labelGroup.bringToFront();
-                }
-                
-                function moveAnglePointer(point) {
-                    if (angleNeedle && !lockAngle) {
-                        angleNeedle.remove();
-                    }
-                        
-                    if (canModifyLaunchAngle(point)) {
-                        angleNeedle = new Path.Line(mob.position, point);
-                        angleNeedle.strokeColor = 'black';
-                    }
-                }
-                
-                function drawVisualFields() {
-                    for (var i = 5; i < view.size.width; i+=10) {
-                        for (var j = 5; j < view.size.height; j+=10) {
-                            var start = new Point(i, j);
-                            
-                            var delta = mob.getNextLocationDelta(start, true);
-                            
-                            if (restrictVisualVectors) {
-                                delta.length = delta.length > 7 ? 7 : delta.length;
-                                delta.length = delta.length > 0 && delta.length < 5 ? delta.length + 5 : delta.length;
-                            }
-                            
-                            var end = start.add(delta);
-                            
-                            fieldPaths.push(drawArrow(start, end, delta));
-                        }
-                    }
-                }*/
 				
 				function drawArrow(start, end, d) {
 					var b = d.normalize(3);
@@ -184,10 +100,6 @@
                 tool.onKeyUp = function(event) {
                     if (event.key == 'shift') {
                         shiftDown = false;
-                    }
-					
-					if (event.key == 'm') {
-						move = !move;
                     }
 					
 					if (event.key == 'control') {
@@ -226,8 +138,8 @@
 					else if (ctrlDown) {
 						if (obPath) {
 							obPath.simplify();
-							environment.pathObstacles.push(obPath.clone());
-							obPath = null;
+							environment.addObstacle(obPath);
+                            obPath = null;
 						}
 					}
 					else {
@@ -252,19 +164,16 @@
 					}
 				};
                 
-				var movements = 0;
-				
-                // Draw the view now:
+                var that = this;
                 view.onFrame = function(evt) {
-					if (move /*&& movements < 1*/) {
-						updateBoids();						
-						movements++;
+					if (that.moveBoids) {
+						updateBoids();
 					}
                 }
 				
 				function updateBoids() {
 					for (var i = 0; i < environment.boids.length; i++) {
-						environment.boids[i].run(environment.boids, environment.size, environment.pathObstacles);
+						environment.boids[i].run(environment.boids, environment.size, environment.obstacles);
 					}
 				}
                 
@@ -298,7 +207,8 @@
                         <div id="info">
                             <div class="controls">click - add a new fly</div>
                             <div class="controls">shift+click - add/remove target location</div>
-                            <div class="controls">m - toggle movement</div>
+                            <div class="controls">ctrl+drag - draw obstacle</div>
+                            <div class="controls">use dat.gui console for various other controls</div>
                         </div>
                     </div>
                     <div class="unit-30">
