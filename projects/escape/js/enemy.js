@@ -43,9 +43,12 @@ var Enemy = (function (_super) {
         if (!player) {
             for (var i = 0; i < visibleLight.length; i++) {
                 light = visibleLight[i];
+                break;
+            }
+            
+            if (window.DEBUG_GAME && light) {
                 this.lightMarker = new Shape.Circle(light, 5);
                 this.lightMarker.fillColor = 'blue';
-                break;
             }
         }
 		

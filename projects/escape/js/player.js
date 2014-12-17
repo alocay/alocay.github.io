@@ -58,6 +58,10 @@ var Player = (function (_super) {
 		}
 	};
     
+    Player.prototype.HasKey = function () {
+        return this.hasKey;
+    };
+    
     Player.prototype.addBattery = function (battery) {
         this.flashlight.insertBattery(battery);
     };

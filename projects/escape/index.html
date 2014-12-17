@@ -29,6 +29,7 @@
                 var timerLabel = null;
                 var flashlightLabel = null;
                 var batteryLifeLabel = null;
+                var hasKeyLabel = null;
                 var fpsLabel = null;
                 var lastUpdate = 0;
                 var lastCount = 0;
@@ -50,7 +51,9 @@
 				flashlightLabel.fillColor = 'white';
                 batteryLifeLabel = new PointText(view.size.width - 80, 50);
 				batteryLifeLabel.fillColor = 'white';
-                fpsLabel = new PointText(view.size.width - 80, 65);
+                hasKeyLabel = new PointText(view.size.width - 80, 65);
+				hasKeyLabel.fillColor = 'white';
+                fpsLabel = new PointText(view.size.width - 80, 80);
 				fpsLabel.fillColor = 'white';
                 
 				function drawArrow(start, end, d) {
@@ -133,7 +136,7 @@
 					if (running) {
                         environment.update();
                         
-                        updateBatteryLabel();
+                        updatePlayerInfo();
                         updateClock(evt.time);
                         
                         if (window.DEBUG_GAME) {
@@ -157,11 +160,13 @@
                     fpsLabel.bringToFront();
                 }
                 
-                function updateBatteryLabel() {
+                function updatePlayerInfo() {
                     flashlightLabel.content = "Flashlight: " + (environment.player.isFlashlightOn() ? "On" : "Off");
                     flashlightLabel.bringToFront();
                     batteryLifeLabel.content = environment.player.getFlashlightBatteryLife();
                     batteryLifeLabel.bringToFront();
+                    hasKeyLabel.content = "Key: " + (environment.player.HasKey() ? "Yes" : "No");
+                    hasKeyLabel.bringToFront();
                 }
                 
                 function updateClock(time) {
