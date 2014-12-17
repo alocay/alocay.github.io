@@ -1,0 +1,84 @@
+body {
+    font-family: 'Poly', sans-serif;
+}
+
+h1, h2, h3, h6 {
+    text-align: center;
+    font-weight: 200;
+    margin: 20px 0;
+}
+
+h1 {
+    font-family: 'Poly', sans-serif;
+    font-size: 65pt;
+}
+
+a:link,
+a:visited,
+a:hover,
+a:active {
+    text-decoration: none;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+ 
+li {
+  font: 200 15px/2.0;
+  border-bottom: 1px solid #ccc;
+  width: 200px;
+  margin-bottom: 10px;
+}
+
+div.header {
+    margin-top: 50px;
+    margin-bottom: 150px;
+}
+
+div.projects {
+    padding-left: 8%;
+}
+
+div.footer {
+    position: absolute;
+    width: 100%;
+    padding: 0;
+    bottom: 0;
+    margin: 0;
+}
+
+.project-group {
+    text-align: center;
+    padding: 20px 0;
+}
+
+#container {
+    text-align: center;
+}
+
+#canvas {
+    width: 900px;
+    height: 600px;
+}
+
+#info {
+    text-align: left;
+    margin-left: 100px;
+}
+
+.controls {
+    margin: 0;
+    margin-bottom: 10px;
+}
+
+#nav-menu {
+    text-align: right;
+    margin-right: 90px;
+}
+
+.nav-item {
+    margin: 0 15px;
+}
