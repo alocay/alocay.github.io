@@ -3,6 +3,7 @@ var Environment = (function () {
 		this.obstacles = [];
 		this.player = null
 		this.enemies = [];
+        this.batteries = [];
 		this.size = size;
         this.key = new LevelKey();
         this.door = new Door();
@@ -27,6 +28,14 @@ var Environment = (function () {
         ob.strokeColor = 'black';
         ob.fillColor = 'black';
 		this.obstacles.push(ob);
+	};
+    
+    Environment.prototype.addEnemy = function (e) {
+        this.enemies.push(e);
+	};
+    
+    Environment.prototype.addBattery = function (b) {
+        this.batteries.push(b);
 	};
     
 	Environment.prototype.getFieldOfVisionPath = function(mob) {        
@@ -83,7 +92,16 @@ var Environment = (function () {
 		}
 		
 		this.player.run(this);
-
+        
+        for (var i = 0; i < this.batteries.length; i++) {
+            var hitBattery = this.batteries[i].body.hitTest(this.player.position);
+            if (hitBattery) {
+                this.player.addBattery(this.batteries[i]);
+                this.batteries[i].pickup();
+                this.batteries.splice(i, 1);
+            }
+        }
+        
 		var hitKey = this.key.body.hitTest(this.player.position);
 		if (hitKey) {
 			this.key.pickup();

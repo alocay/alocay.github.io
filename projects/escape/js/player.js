@@ -3,14 +3,7 @@ var Player = (function (_super) {
     function Player(position, radius, ms, mf, fov) {
         _super.call(this, position, radius, ms, mf, fov);
 		this.targetLocation = null;
-		this.isFlashlightOn = true;
-		this.fovRangeOptions = [
-			{fov: 180, range: 75},
-			{fov: 60, range: 200},
-			{fov: 20, range: 300},
-			{fov: 5, range: 600},
-		];
-		this.currentFovOption = 1;
+		this.flashlight = new Flashlight();
 		this.hasKey = false;
 		this.lightFadeOutMask = null;
     }
@@ -26,7 +19,11 @@ var Player = (function (_super) {
 		
 		this.moveToTargetLocation();
 		this.updatePosition(environment);
+        this.flashlight.updateBattery();
 		
+        this.fieldOfView = this.flashlight.getFov();
+		this.fieldOfViewDistance = this.flashlight.getRange();
+        
 		this.fieldOfViewArea = environment.getFieldOfVisionPath(this);
 		this.lightFadeOutMask = this.createLightFadeOutMask();
 		
@@ -36,10 +33,7 @@ var Player = (function (_super) {
 	};
 	
     Player.prototype.createLightFadeOutMask = function () {
-        var startFill = new RGBColor(0,0,0,0.0);
-        var midFill = new RGBColor(0,0,0,0.5);
-        var endFill = new RGBColor(0,0,0,1); 
-        var fadeOutGradient = new Gradient([startFill, midFill, endFill], 'radial');
+        var fadeOutGradient = this.flashlight.getFadeOutGradient();
         
         var mask = this.fieldOfViewArea.clone();
         mask.fillColor = {
@@ -62,12 +56,30 @@ var Player = (function (_super) {
 				this.acceleration = this.seek(this.targetLocation);
 			}
 		}
-	}
+	};
+    
+    Player.prototype.addBattery = function (battery) {
+        this.flashlight.insertBattery(battery);
+    };
 	
+    Player.prototype.toggleFlashlight = function () {
+        this.flashlight.toggle();
+    };
+    
+    Player.prototype.isFlashlightOn = function () {
+        return this.flashlight.isOn;
+    };
+    
+    Player.prototype.getFlashlightBatteryLife = function () {
+        return this.flashlight.getBatteryLife();
+    };
+    
+    Player.prototype.getFlashlightBatteryLife = function () {
+        return this.flashlight.getBatteryLife();
+    };
+    
 	Player.prototype.cycleThroughFov = function() {
-		this.currentFovOption = (this.currentFovOption + 1) % this.fovRangeOptions.length;
-		this.fieldOfView = this.fovRangeOptions[this.currentFovOption].fov;
-		this.fieldOfViewDistance = this.fovRangeOptions[this.currentFovOption].range;
+		this.flashlight.cycle();
 	};
 	
     return Player;

@@ -2,12 +2,14 @@
 	<head>
         <link rel="stylesheet" type="text/css" href="../../css/kube.min.css">
         <link rel="stylesheet" type="text/css" href="../../css/styles.css">
-        <script type="text/javascript" src="../../js/kube.min.js"></script>
 		<script type="text/javascript" src="../../js/jquery-1.11.1.min.js"></script>
+        <script type="text/javascript" src="../../js/kube.min.js"></script>
 		<script type="text/javascript" src="../../js/paper-full.js"></script>
         <script type="text/javascript" src="../../js/extends.js"></script>
         <script type="text/javascript" src="js/levelKey.js"></script>
         <script type="text/javascript" src="js/door.js"></script>
+        <script type="text/javascript" src="js/battery.js"></script>
+        <script type="text/javascript" src="js/flashlight.js"></script>
         <script type="text/javascript" src="js/environment.js"></script>
         <script type="text/javascript" src="js/mob.js"></script>
         <script type="text/javascript" src="js/enemy.js"></script>
@@ -25,6 +27,8 @@
 				var currentLevel = 1;
 				var running = false;
                 var timerLabel = null;
+                var flashlightLabel = null;
+                var batteryLifeLabel = null;
 				
 				window.DEBUG_GAME = true;
 				window.DEBUG_GAME_EXTRA = false;
@@ -37,8 +41,12 @@
 				
 				setupLevel(currentLevel);
                 
-                timerLabel = new PointText(view.size.width - 75, 20);
+                timerLabel = new PointText(view.size.width - 80, 20);
 				timerLabel.fillColor = 'white';
+                flashlightLabel = new PointText(view.size.width - 80, 35);
+				flashlightLabel.fillColor = 'white';
+                batteryLifeLabel = new PointText(view.size.width - 80, 50);
+				batteryLifeLabel.fillColor = 'white';
                 
 				function drawArrow(start, end, d) {
 					var b = d.normalize(3);
@@ -74,27 +82,6 @@
                     if (event.key == 'control') {
                         ctrlDown = true;
                     }
-					
-					/*var p = environment.player;
-					if (event.key == 'a') {
-						var v = p.visionVector.rotate(90).normalize(movementAmount);
-                        p.move(environment, p.position.add(v));
-					}
-					
-					if (event.key == 'w') {
-						var v = p.visionVector.normalize(movementAmount);
-                        p.move(environment, p.position.add(v));
-					}
-					
-					if (event.key == 's') {
-						var v = p.visionVector.multiply(-1).normalize(movementAmount);
-                        p.move(environment, p.position.add(v));
-					}
-					
-					if(event.key == 'd') {
-						var v = p.visionVector.rotate(-90).normalize(movementAmount);
-                        p.move(environment, p.position.add(v));
-					}*/
                 }
 
                 tool.onKeyUp = function(event) {
@@ -110,21 +97,26 @@
                 }
                 
                 tool.onMouseUp = function(evt) {
-					mouseDown = false;
-					environment.player.targetLocation = evt.point;
+                    switch(evt.event.which) {
+                        case 1:
+                            environment.player.targetLocation = evt.point;
+                            break;
+                        case 3:
+                            if (evt.event.stopPropagation) {
+                                evt.event.stopPropagation();
+                            }
+
+                            evt.event.cancelBubble = true;
+                            
+                            environment.player.toggleFlashlight();
+                            break;
+                            
+                    }
                 };
-				
-				tool.onMouseDown = function(evt) {
-					mouseDown = true;
-				};
 				
 				tool.onMouseMove = function(evt) {
 					if (!lockView) {
 						environment.player.setVisionVector(evt.point);
-					}
-					
-					if (mouseDown) {
-						environment.player.targetLocation = evt.point;
 					}
 				};
 				
@@ -136,6 +128,7 @@
 					if (running) {
 					    environment.update();
 						
+                        updateBatteryLabel();
                         updateClock(evt.time);
                         
 						if (environment.gameOver) {
@@ -145,6 +138,13 @@
 					}
                 }
 				
+                function updateBatteryLabel() {
+                    flashlightLabel.content = "Flashlight: " + (environment.player.isFlashlightOn() ? "On" : "Off");
+                    flashlightLabel.bringToFront();
+                    batteryLifeLabel.content = environment.player.getFlashlightBatteryLife();
+                    batteryLifeLabel.bringToFront();
+                }
+                
                 function updateClock(time) {
                     var d = new Date(0, 0, 0, 0, 0, time, 0);
                     timerLabel.content = doubleDigitFormat(d.getHours()) + ":" + doubleDigitFormat(d.getMinutes()) + ":" + doubleDigitFormat(d.getSeconds());
@@ -162,7 +162,7 @@
 						enemy.vector = new Point(50,50);
 						
 						environment.player = player;
-						environment.enemies.push(enemy);
+						environment.addEnemy(enemy);
 						
 						var block = new Rectangle(new Point (200, 0), new Size(100, view.size.height - 200));
 						var block2 = new Rectangle(new Point(400, 0), new Size(100, view.size.height - 200));
@@ -176,6 +176,12 @@
 						environment.addObstacle(blockPath2);
 						environment.addObstacle(blockPath3);
 						environment.addObstacle(new Path.Circle(new Point(350, 400), 15));
+                        
+                        var battery1 = new Battery(new Point(754, 43));
+                        var battery2 = new Battery(new Point(12, 582));
+                        
+                        environment.addBattery(battery1);
+                        environment.addBattery(battery2);
 					}
 					
 					running = true;
@@ -198,7 +204,7 @@
         <div class="units-row">
             <div class="unit-centered unit-40">
                 <div id="container">
-                    <canvas id="canvas"></canvas>
+                    <canvas id="canvas" oncontextmenu="return false;"></canvas>
                 </div>
             </div>
         </div>

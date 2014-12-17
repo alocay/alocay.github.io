@@ -1,9 +1,16 @@
 var Battery = (function () {
     function Battery(position) {
         this.position = position;
-		this.totalLife = 100;
-		this.currentLife = 100;
+        this.charge = 20;
+		this.body = new Shape.Rectangle(this.position, new Size(15, 5));
+        this.body.fillColor = 'green';
+        this.body.strokeColor = 'black';
+        this.body.strokeWidth = 1;
     }
+    
+    Battery.prototype.pickup = function() {
+		this.body.remove();
+	};
 	
     return Battery;
 })();
