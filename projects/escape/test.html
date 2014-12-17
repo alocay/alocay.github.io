@@ -1,0 +1,88 @@
+<html>
+    <head>
+        <script type="text/javascript" src="../../js/jquery-1.11.1.min.js"></script>
+        <script type="text/javascript">
+             $(document).ready(function () {
+                var img = new Image();
+                img.src = "http://i.imgur.com/TUHw5q2.png";
+
+                var canvas = document.getElementById("animation");
+                canvas.width = 44;
+                canvas.height = 42;
+                
+                function sprite (options) {
+                    var that = {},
+                        frameIndex = 0,
+                        hIndex = 3,
+                        tickCount = 0,
+                        ticksPerFrame = options.ticksPerFrame || 10,
+                        numberOfFrames = options.numberOfFrames || 1;
+                                    
+                    that.context = options.context;
+                    that.width = options.width;
+                    that.height = options.height;
+                    that.image = options.image;
+                    that.loop = options.loop;
+                    
+                    that.render = function () {
+                        that.context.clearRect(0, 0, that.width, that.height);
+                        
+                        var sx = frameIndex * that.width / numberOfFrames;
+                        var sx2 = that.width / numberOfFrames;
+                        // Draw the animation
+                        that.context.drawImage(
+                           that.image,
+                           sx,
+                           0,
+                           sx2,
+                           that.height,
+                           0,
+                           0,
+                           that.width / numberOfFrames,
+                           that.height);
+                    };
+                    
+                    that.update = function () {
+                        tickCount += 1;
+                            
+                        if (tickCount > ticksPerFrame) {
+                            tickCount = 0;
+                            if (frameIndex < numberOfFrames - 1) {
+                                // Go to the next frame
+                                frameIndex += 1;
+                            } else if (that.loop) {
+                                frameIndex = 0;
+                            }
+                        } 
+                    }; 
+                    
+                    return that;
+                }
+
+                var imgSprite = sprite({
+                    context: canvas.getContext("2d"),
+                    width: 350,
+                    height: 42,
+                    image: img,
+                    ticksPerFrame: 10,
+                    numberOfFrames: 8,
+                    loop: true
+                });
+
+                function gameLoop () {
+                  window.requestAnimationFrame(gameLoop);
+                  
+                  imgSprite.update();
+                  imgSprite.render();
+                }
+
+                //imgSprite.render();
+                window.requestAnimationFrame(gameLoop);
+             });
+        </script>
+    </head>
+    <body>
+        <img src="http://i.imgur.com/TUHw5q2.png" /> <br/><br />
+        <canvas id="animation"></canvas>
+    </body>
+</html>

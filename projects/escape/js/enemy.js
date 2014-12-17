@@ -9,6 +9,7 @@ var Enemy = (function (_super) {
 		this.memoryTimeout = null;
 		this.remembersPlayerLocation = false;
 		this.lastPlayerLocation = null;
+        this.lightSensitive = false;
         this.nv = null;
 		this.playerFoundIndicator = null;
         this.lightMarker = null;
@@ -26,7 +27,7 @@ var Enemy = (function (_super) {
 		
 		if (this.fieldOfViewArea) {
 			visibleMobs = environment.getMobsInVision(this.fieldOfViewArea);
-            visibleLight = environment.getLightInVision(this.fieldOfViewArea);
+            visibleLight = this.lightSensitive ? environment.getLightInVision(this.fieldOfViewArea) : [];
 		}
 		
 		if (this.playerFoundIndicator) {
@@ -40,15 +41,15 @@ var Enemy = (function (_super) {
 			}
 		}
         
-        if (!player) {
+        if (!player && visibleLight.length) {
             for (var i = 0; i < visibleLight.length; i++) {
                 light = visibleLight[i];
                 break;
             }
             
             if (window.DEBUG_GAME && light) {
-                this.lightMarker = new Shape.Circle(light, 5);
-                this.lightMarker.fillColor = 'blue';
+                this.lightMarker = new Shape.Circle(light, 3);
+                this.lightMarker.fillColor = 'orange';
             }
         }
 		
