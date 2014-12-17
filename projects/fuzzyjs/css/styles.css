@@ -16,6 +16,10 @@ a:link {
     color: #48b7e1;
 }
 
+a:hover {
+    color: #db6d0f;
+}
+
 h2 {
     margin: 0 0 5px 0;
 }
