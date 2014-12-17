@@ -29,6 +29,9 @@
                 var timerLabel = null;
                 var flashlightLabel = null;
                 var batteryLifeLabel = null;
+                var fpsLabel = null;
+                var lastUpdate = 0;
+                var lastCount = 0;
 				
 				window.DEBUG_GAME = true;
 				window.DEBUG_GAME_EXTRA = false;
@@ -47,6 +50,8 @@
 				flashlightLabel.fillColor = 'white';
                 batteryLifeLabel = new PointText(view.size.width - 80, 50);
 				batteryLifeLabel.fillColor = 'white';
+                fpsLabel = new PointText(view.size.width - 80, 65);
+				fpsLabel.fillColor = 'white';
                 
 				function drawArrow(start, end, d) {
 					var b = d.normalize(3);
@@ -126,18 +131,32 @@
                 // Draw the view now:
                 view.onFrame = function(evt) {
 					if (running) {
-					    environment.update();
-						
+                        environment.update();
+                        
                         updateBatteryLabel();
                         updateClock(evt.time);
                         
-						if (environment.gameOver) {
-							running = false;
-							displayGameOver();
-						}
+                        if (window.DEBUG_GAME) {
+                            updateFpsLabel((evt.time | 0), evt.count);
+                        }
+                        
+                        if (environment.gameOver) {
+                            running = false;
+                            displayGameOver();
+                        }
 					}
                 }
 				
+                function updateFpsLabel (time, count) {
+                    if (time > lastUpdate) {
+                        fpsLabel.content = "FPS: " + (count - lastCount);
+                        lastCount = count;
+                        lastUpdate = time;
+                    }
+                    
+                    fpsLabel.bringToFront();
+                }
+                
                 function updateBatteryLabel() {
                     flashlightLabel.content = "Flashlight: " + (environment.player.isFlashlightOn() ? "On" : "Off");
                     flashlightLabel.bringToFront();

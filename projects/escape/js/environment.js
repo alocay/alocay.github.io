@@ -144,9 +144,22 @@ var Environment = (function () {
 		if (visionPath.contains(this.player.position)) {
 			mobs.push(this.player);
 		}
-		
+        
 		return mobs;
 	};
+    
+    Environment.prototype.getLightInVision = function(visionPath) {
+        var lightIntersections = [];
+        if (this.player.isFlashlightOn()) {
+            var flashlightIntersections = visionPath.getIntersections(this.player.fieldOfViewArea);
+            
+            if (flashlightIntersections.length) {
+                lightIntersections.push(flashlightIntersections[0].point);
+            }
+        }
+        
+        return lightIntersections;
+    };
 	
 	Environment.prototype.isPlayer = function(mob) {
 		return mob === this.player;

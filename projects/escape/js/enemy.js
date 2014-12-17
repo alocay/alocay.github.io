@@ -11,14 +11,22 @@ var Enemy = (function (_super) {
 		this.lastPlayerLocation = null;
         this.nv = null;
 		this.playerFoundIndicator = null;
+        this.lightMarker = null;
     }
 	
 	Enemy.prototype.calculateSteer = function (environment) {
 		var visibleMobs = [];
+        var visibleLight = [];
 		var player = null;
+        var light = null;
+        
+        if (this.lightMarker) {
+            this.lightMarker.remove();
+        }
 		
 		if (this.fieldOfViewArea) {
 			visibleMobs = environment.getMobsInVision(this.fieldOfViewArea);
+            visibleLight = environment.getLightInVision(this.fieldOfViewArea);
 		}
 		
 		if (this.playerFoundIndicator) {
@@ -31,6 +39,15 @@ var Enemy = (function (_super) {
 				break;
 			}
 		}
+        
+        if (!player) {
+            for (var i = 0; i < visibleLight.length; i++) {
+                light = visibleLight[i];
+                this.lightMarker = new Shape.Circle(light, 5);
+                this.lightMarker.fillColor = 'blue';
+                break;
+            }
+        }
 		
 		if (player) {
 			if(this.memoryTimeout) {
@@ -62,6 +79,9 @@ var Enemy = (function (_super) {
 		else if (this.remembersPlayerLocation) {
 			this.acceleration = this.acceleration.add(this.seek(this.lastPlayerLocation));
 		}
+        else if (light) {
+            this.acceleration = this.acceleration.add(this.seek(light));
+        }
         
         this.acceleration = this.acceleration.add(this.getRepulsionSteer(environment.obstacles));
 	};
