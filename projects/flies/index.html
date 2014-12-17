@@ -55,24 +55,24 @@
                 var border = new Shape.Rectangle(new Point(), new Size(view.size.width, view.size.height))
                 border.strokeColor = 'black';
                 
-                gui.add(this, 'moveBoids').name('Toggle movement');
+                gui.add(this, 'moveBoids').name('Movement');
                 gui.add(environment, 'removeObstacles').name('Clear obstacles');
 				gui.add(BoidShared, 'maxSpeed', 0, 10).step(0.5).name('Max Speed');
-                gui.add(BoidShared, 'separationDist', 0, 100).name('Separation distance');
-                gui.add(BoidShared, 'cohesionDist', 0, 100).name('Cohesion distance');
-				gui.add(BoidShared, 'alignmentDist', 0, 100).name('Alignment distance');
-				gui.add(BoidShared, 'obstacleAvoidanceDistance', 0, 300).name('Obstalce avoidance distance');
+                var distancesFolder = gui.addFolder('Adjust distances');
+                distancesFolder.add(BoidShared, 'separationDist', 0, 100).name('Separation');
+                distancesFolder.add(BoidShared, 'cohesionDist', 0, 100).name('Cohesion');
+				distancesFolder.add(BoidShared, 'alignmentDist', 0, 100).name('Alignment');
+				distancesFolder.add(BoidShared, 'obstacleAvoidanceDistance', 0, 300).name('Obstalces');
 				var weights = gui.addFolder('Adjust weights');
-				weights.add(BoidShared, 'separationWeightFactor', 0, 5).step(0.1).name('Separation factor');
-				weights.add(BoidShared, 'cohesionWeightFactor', 0, 5).step(0.1).name('Cohesion factor');
-				weights.add(BoidShared, 'alignmentWeightFactor', 0, 5).step(0.1).name('Alignment factor');
-				weights.add(BoidShared, 'targetWeightFactor', 0, 5).step(0.1).name('Target factor');
-				weights.add(BoidShared, 'obstacleWeightFactor', 0, 5).step(0.1).name('Obstacle avoidance factor');
+				weights.add(BoidShared, 'separationWeightFactor', 0, 5).step(0.1).name('Separation');
+				weights.add(BoidShared, 'cohesionWeightFactor', 0, 5).step(0.1).name('Cohesion');
+				weights.add(BoidShared, 'alignmentWeightFactor', 0, 5).step(0.1).name('Alignment');
+				weights.add(BoidShared, 'targetWeightFactor', 0, 5).step(0.1).name('Target');
+				weights.add(BoidShared, 'obstacleWeightFactor', 0, 5).step(0.1).name('Obstacles');
 				var visuals = gui.addFolder('Visuals');
-                visuals.add(BoidShared, 'showMovementVectors').name('Toggle movement vector visuals');
-				visuals.add(BoidShared, 'castedVectorLength', 0, 50).name('Movement vector length');
-				visuals.add(BoidShared, 'showAccelerationVectors').name('Toggle acceleration vector visuals');
-                visuals.add(BoidShared, 'showReflectionVectors').name('Toggle reflection vector visuals');
+                visuals.add(BoidShared, 'showMovementVectors').name('Movement vectors');
+				visuals.add(BoidShared, 'showAccelerationVectors').name('Acceleration vectors');
+                visuals.add(BoidShared, 'showReflectionVectors').name('Reflection vectors');
 				
 				function drawArrow(start, end, d) {
 					var b = d.normalize(3);

@@ -44,10 +44,21 @@
                 var border = new Shape.Rectangle(new Point(), new Size(view.size.width, view.size.height))
                 border.strokeColor = 'black';
                 
+                this.toggleFieldsVisual = function () {
+                    drawFieldsOpt = !drawFieldsOpt;
+                    reDrawFields();
+                };
+                
+                this.restrictFieldVisualLength = function () {
+                    restrictVisualVectors = !restrictVisualVectors;
+                    reDrawFields();
+                };
+                
                 gui.add(mob, 'maxSpeed', 0, 10).name('Max speed');
-                gui.add(mob, 'moveable').name('Toggle movement');
-                gui.add(environment, 'toggleRangeIndicators').name('Toggle spread indicators');
-                gui.add(mob, 'showPathVisual').name('Toggle path visual');
+                gui.add(mob, 'moveable').name('Movement');
+                gui.add(this, 'toggleFieldsVisual').name('Field visual');
+                gui.add(environment, 'toggleRangeIndicators').name('Range indicators');
+                gui.add(mob, 'showPathVisual').name('Path visual');
                 gui.add(mob, 'pathVisualSteps', 100, 3000).name('Total path steps').onFinishChange(function () {
                     mob.showPath();
                 });
@@ -76,8 +87,9 @@
                 }
                 
                 function reDrawFields() {
+                    clearFields();
+                    
                     if (drawFieldsOpt) {
-                        clearFields();
                         drawVisualFields();
                     }
                     
@@ -145,41 +157,6 @@
                     
                     if (event.key == 'control') {
                         ctrlDown = false;
-                        if(!lockAngle && angleNeedle) {
-                            angleNeedle.remove();
-                        }
-                    }
-                    
-                    if(event.key == 'z') {                        
-                        if(!launched) {
-                            if (launchPoint) {
-                                mob.vector = launchPoint.subtract(mob.position);
-                            }
-                            
-                            launched = true;
-                            
-                            if(angleNeedle) {
-                                angleNeedle.remove();
-                            }
-                        }
-                        
-                        mob.moveable = !mob.moveable;
-                    }
-                    
-                    if(event.key == 'x') {
-                        drawFieldsOpt = !drawFieldsOpt;
-                        
-                        if (!drawFieldsOpt) {
-                            clearFields();
-                        }
-                        else {
-                            reDrawFields();
-                        }
-                    }
-                    
-                    if(event.key == 'c') {
-                        restrictVisualVectors = !restrictVisualVectors;
-                        reDrawFields();
                     }
                     
                     labelGroup.bringToFront();
@@ -296,8 +273,8 @@
                     <div class="unit-70">
                         <div id="info">
                             <div class="controls">click - add/remove a random attractor</div>
-                            <div class="controls">shift + click - add/remove a random repulsor</div>
-                            <div class="controls">ctrl + click - change position</div>
+                            <div class="controls">shift+click - add/remove a random repulsor</div>
+                            <div class="controls">ctrl+click - change position</div>
                             <div class="controls">x - toggle potential fields visual (animation performance impact)</div>
                             <div class="controls">c - allow visual vectors to be actual length</div>
                             <div class="controls">use dat.gui console for various other controls</div>
