@@ -43,8 +43,10 @@ var Flashlight = (function () {
     };
     
     Flashlight.prototype.toggle = function () {
-        this.isOn = !this.isOn;
-        this.playerTurnedOff = !this.isOn
+        if (batteryLife > 0) {        
+            this.isOn = !this.isOn;
+            this.playerTurnedOff = !this.isOn
+        }
     };
     
     Flashlight.prototype.updateBattery = function () {
