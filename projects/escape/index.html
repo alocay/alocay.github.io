@@ -255,8 +255,14 @@
         <div class="units-row">
             <div class="unit-centered unit-40">
                 <div id="container">
-                    <canvas id="canvas" oncontextmenu="return false;">
+                    <canvas id="canvas" class="abs" oncontextmenu="return false;">
 					</canvas>
+                    <div id="game-over" class="hidden">
+                        <div id="game-over-title">Game Over!</div>
+                        <div id="game-over-retry">
+                            <a href="#">Retry</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -282,11 +288,5 @@
         <div class="footer">
             <h6>Armando Locay&nbsp;|&nbsp;<a href="http://www.github.com/alocay">Github</a></h6>
         </div>
-		<div id="game-over" class="hidden">
-			<div id="game-over-title">Game Over!</div>
-			<div id="game-over-retry">
-				<a href="#">Retry</a>
-			</div>
-		</div>
 	<body>
 </html>
