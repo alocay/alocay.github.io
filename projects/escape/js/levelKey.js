@@ -12,5 +12,11 @@ var LevelKey = (function () {
 		this.body.visible = false;
 	};
 	
+	LevelKey.prototype.remove = function() {
+		if (this.body) {
+			this.body.remove();
+		}
+	};
+	
     return LevelKey;
 })();

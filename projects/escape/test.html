@@ -13,10 +13,10 @@
                 function sprite (options) {
                     var that = {},
                         frameIndex = 0,
-                        hIndex = 3,
                         tickCount = 0,
                         ticksPerFrame = options.ticksPerFrame || 10,
-                        numberOfFrames = options.numberOfFrames || 1;
+                        numberOfFrames = options.numberOfFrames || 1,
+						y = 0;
                                     
                     that.context = options.context;
                     that.width = options.width;
@@ -50,8 +50,10 @@
                             if (frameIndex < numberOfFrames - 1) {
                                 // Go to the next frame
                                 frameIndex += 1;
+								y += 10;
                             } else if (that.loop) {
                                 frameIndex = 0;
+								y = 0;
                             }
                         } 
                     }; 

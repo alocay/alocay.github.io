@@ -7,6 +7,7 @@ var Environment = (function () {
 		this.size = size;
         this.key = new LevelKey();
         this.door = new Door();
+		this.gameOver = false;
         
         var border = new Rectangle(new Point(), new Size(size.width, size.height));
 		this.borderPath = new Path.Rectangle(border);
@@ -17,10 +18,6 @@ var Environment = (function () {
 		this.compoundVisionPath = null;
         
         this.obstacles.push(this.borderPath);
-		
-		this.inters = [];
-		
-		this.gameOver = false;
 	}
 	
 	Environment.prototype.addObstacle = function (ob) {
@@ -45,10 +42,6 @@ var Environment = (function () {
 		var visible = [mob.position];
 		var vision = mob.visionVector.clone();
 		vision.length = mob.fieldOfViewDistance < 0 ? vision.length : mob.fieldOfViewDistance;
-		
-		for (var i = 0; i < this.inters.length; i++) {
-			this.inters.pop().remove();
-		}
 		
 		for (var i = startAngle; i <= halfFov; i+=step) {
 			var r = vision.rotate(i);
@@ -112,15 +105,6 @@ var Environment = (function () {
 		if (hitDoor) {
 			this.door.opened = true;
 		}
-		
-		this.compoundVisionPath = new CompoundPath({
-			children: [this.borderPath, this.player.fieldOfViewArea],
-			strokeColor: 'black'
-		});
-		
-		if (!window.DEBUG_GAME_EXTRA) {
-		    this.compoundVisionPath.fillColor = 'black';
-		}
         
         for(var i = 0; i < this.enemies.length; i++) {
             this.enemies[i].run(this);
@@ -130,6 +114,15 @@ var Environment = (function () {
 			    this.gameOver = true;
 			}
         }
+		
+		this.compoundVisionPath = new CompoundPath({
+			children: [this.borderPath, this.player.fieldOfViewArea],
+			strokeColor: 'black'
+		});
+		
+		if (!window.DEBUG_GAME_EXTRA) {
+		    this.compoundVisionPath.fillColor = 'black';
+		}
 	};
     
 	Environment.prototype.getMobsInVision = function(visionPath) {
@@ -149,16 +142,21 @@ var Environment = (function () {
 	};
     
     Environment.prototype.getLightInVision = function(visionPath) {
-        var lightIntersections = [];
+        var closestLightIntersection = null;
         if (this.player.isFlashlightOn()) {
             var flashlightIntersections = visionPath.getIntersections(this.player.fieldOfViewArea);
             
-            if (flashlightIntersections.length) {
-                lightIntersections.push(flashlightIntersections[0].point);
-            }
+			var closestDist = Number.MAX_VALUE;
+			for (var i = 0; i < flashlightIntersections.length; i++) {
+				var dist = flashlightIntersections[i].point.getDistance(this.player.position);
+				if (dist < closestDist) {
+					closestDist = dist;
+					closestLightIntersection = flashlightIntersections[i].point;
+				}
+			}
         }
         
-        return lightIntersections;
+        return closestLightIntersection;
     };
 	
 	Environment.prototype.isPlayer = function(mob) {
@@ -206,6 +204,28 @@ var Environment = (function () {
 		}
 		else {
 			return null;
+		}
+	};
+	
+	Environment.prototype.cleanup = function() {
+		this.door.remove();
+		this.key.remove();
+		this.player.remove();
+		
+		while (this.enemies.length) {
+			this.enemies.pop().remove();
+		}
+		
+		while (this.obstacles.length) {
+			this.obstacles.pop().remove();
+		}
+		
+		while (this.batteries.length) {
+			this.batteries.pop().remove();
+		}
+		
+		if (this.compoundVisionPath) {
+			this.compoundVisionPath.remove();
 		}
 	};
     

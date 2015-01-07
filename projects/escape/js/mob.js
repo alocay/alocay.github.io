@@ -1,7 +1,7 @@
 var Mob = (function () {
     function Mob(position, radius, ms, mf, fov) {
         this.radius = radius ? radius : 5;
-        this.maxSpeed = ms ? ms : 2;
+        this.maxSpeed = ms ? ms : 1.0;
         this.maxForce = mf ? mf : 0.15;
         this.position = position ? position : new Point();
         this.vector = new Point();
@@ -21,6 +21,8 @@ var Mob = (function () {
 		var desired = target.subtract(this.position);
 		desired = desired.normalize();
 		desired.length = this.maxSpeed;
+		
+		console.log('ms: ' + this.maxSpeed);
 		
 		var steer = desired.subtract(this.vector);
 		steer.length = Math.min(this.maxForce, steer.length);
@@ -57,11 +59,21 @@ var Mob = (function () {
             this.position = point;
         }
     };
+	
+	Mob.prototype.cleanup = function() {
+		if (this.fieldOfViewArea) {
+			this.fieldOfViewArea.remove();
+		}
+		
+		if (this.body) {
+			this.body.remove();
+		}
+	};
     
     Mob.prototype.setVisionVector = function(point) {
         this.visionVector = this.position.subtract(point).multiply(-1).normalize(100);
     };
-    
+	
     function drawArrow(start, end, d) {
         var b = d.normalize(3);
         var p1 = new Path([start, end]);

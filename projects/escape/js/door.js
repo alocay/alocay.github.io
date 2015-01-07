@@ -17,5 +17,11 @@ var Door = (function () {
 		return this.opened;
 	};
 	
+	Door.prototype.remove = function() {
+		if (this.body) {
+			this.body.remove();
+		}
+	};
+	
     return Door;
 })();

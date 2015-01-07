@@ -13,11 +13,13 @@
         <script type="text/javascript" src="js/environment.js"></script>
         <script type="text/javascript" src="js/mob.js"></script>
         <script type="text/javascript" src="js/enemy.js"></script>
+        <script type="text/javascript" src="js/eliteEnemy.js"></script>		
         <script type="text/javascript" src="js/player.js"></script>
 		<script type="text/javascript">
             paper.install(window);
             $(document).ready(function () {
                 var canvas = document.getElementById('canvas');
+				var environment = null;
                 var shiftDown = false;
                 var ctrlDown = false;
 				var mouseDown = false;
@@ -30,9 +32,11 @@
                 var flashlightLabel = null;
                 var batteryLifeLabel = null;
                 var hasKeyLabel = null;
+				var gameOverGroup = null;
                 var fpsLabel = null;
                 var lastUpdate = 0;
                 var lastCount = 0;
+                var url = "http://i.imgur.com/TUHw5q2.png";
 				
 				window.DEBUG_GAME = true;
 				window.DEBUG_GAME_EXTRA = false;
@@ -41,21 +45,35 @@
 				
                 var tool = new Tool();
 				
-				var environment = new Environment(view.size);
-				
 				setupLevel(currentLevel);
-                
-                timerLabel = new PointText(view.size.width - 80, 20);
-				timerLabel.fillColor = 'white';
-                flashlightLabel = new PointText(view.size.width - 80, 35);
-				flashlightLabel.fillColor = 'white';
-                batteryLifeLabel = new PointText(view.size.width - 80, 50);
-				batteryLifeLabel.fillColor = 'white';
-                hasKeyLabel = new PointText(view.size.width - 80, 65);
-				hasKeyLabel.fillColor = 'white';
-                fpsLabel = new PointText(view.size.width - 80, 80);
-				fpsLabel.fillColor = 'white';
-                
+				createGameInfoLabels();
+				
+				function createGameOverGroup() {
+					var point = new Point(view.size.width / 4, view.size.height / 4);
+					var gameOverLabelBackground = new Shape.Rectangle(point, new Size(200, 75));
+					
+					var gameOverLabel = new PointText(view.size.width / 4, view.size.height / 4);
+					gameOverLabel.fillColor = 'black';
+					gameOverLabel.visible = false;
+				}
+				
+				function createGameInfoLabels() {
+					timerLabel = new PointText(view.size.width - 80, 20);
+					timerLabel.fillColor = 'white';
+					
+					flashlightLabel = new PointText(view.size.width - 80, 35);
+					flashlightLabel.fillColor = 'white';
+					
+					batteryLifeLabel = new PointText(view.size.width - 80, 50);
+					batteryLifeLabel.fillColor = 'white';
+					
+					hasKeyLabel = new PointText(view.size.width - 80, 65);
+					hasKeyLabel.fillColor = 'white';
+					
+					fpsLabel = new PointText(view.size.width - 80, 80);
+					fpsLabel.fillColor = 'white';
+				}
+				
 				function drawArrow(start, end, d) {
 					var b = d.normalize(3);
 					var p1 = new Path([start, end]);
@@ -150,6 +168,13 @@
 					}
                 }
 				
+				$("#game-over-retry a").click(function () {
+					$('#game-over').addClass('hidden');
+					environment.cleanup();
+					setupLevel(currentLevel);
+					
+				});
+				
                 function updateFpsLabel (time, count) {
                     if (time > lastUpdate) {
                         fpsLabel.content = "FPS: " + (count - lastCount);
@@ -181,8 +206,9 @@
                 
 				function setupLevel(level) {
 					if (level == 1) {
+						environment = new Environment(view.size);
 						var player = new Player(new Point(350, 200), 10);
-						var enemy = new Enemy(new Point(100,100), 5);
+						var enemy = new EliteEnemy(new Point(100,100));
 						enemy.vector = new Point(50,50);
 						
 						environment.player = player;
@@ -212,6 +238,7 @@
 				}
 				
 				function displayGameOver() {
+					$('#game-over').removeClass('hidden');
 				}
 				
                 paper.view.draw();
@@ -228,7 +255,8 @@
         <div class="units-row">
             <div class="unit-centered unit-40">
                 <div id="container">
-                    <canvas id="canvas" oncontextmenu="return false;"></canvas>
+                    <canvas id="canvas" oncontextmenu="return false;">
+					</canvas>
                 </div>
             </div>
         </div>
@@ -254,5 +282,11 @@
         <div class="footer">
             <h6>Armando Locay&nbsp;|&nbsp;<a href="http://www.github.com/alocay">Github</a></h6>
         </div>
+		<div id="game-over" class="hidden">
+			<div id="game-over-title">Game Over!</div>
+			<div id="game-over-retry">
+				<a href="#">Retry</a>
+			</div>
+		</div>
 	<body>
 </html>

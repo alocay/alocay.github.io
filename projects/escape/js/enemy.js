@@ -1,10 +1,12 @@
 var Enemy = (function (_super) {
     __extends(Enemy, _super);
     function Enemy(position, radius, ms, mf, fov, attackDist) {
-        _super.call(this, position, radius, ms, mf, fov);
+		_super.call(this, position, radius, ms, mf, fov);		
 		this.attackDistance = attackDist ? attackDist : 150;
         this.obstacleAvoidanceDistance = 10;
-        this.maxSpeed = 1.5;
+		this.moveSpeed = 1.0;
+		this.sprintSpeed = 1.5;
+        this.maxSpeed = this.moveSpeed;
 		this.memoryLengthMS = 5000;
 		this.memoryTimeout = null;
 		this.remembersPlayerLocation = false;
@@ -13,21 +15,25 @@ var Enemy = (function (_super) {
         this.nv = null;
 		this.playerFoundIndicator = null;
         this.lightMarker = null;
+		this.spriteUrl = "http://i.imgur.com/TUHw5q2.png";
+		this.sprite = null;
+		this.spriteFrames = 8;
+		this.spriteSize = new Size(44, 42);
+		this.spriteSheetWidth = 350;
+		this.frameIndex = 0;
+		this.sv = null;
+		this.vv = null;
     }
 	
 	Enemy.prototype.calculateSteer = function (environment) {
 		var visibleMobs = [];
-        var visibleLight = [];
+        var visibleLight = null;
 		var player = null;
         var light = null;
-        
-        if (this.lightMarker) {
-            this.lightMarker.remove();
-        }
 		
 		if (this.fieldOfViewArea) {
 			visibleMobs = environment.getMobsInVision(this.fieldOfViewArea);
-            visibleLight = this.lightSensitive ? environment.getLightInVision(this.fieldOfViewArea) : [];
+            visibleLight = this.lightSensitive ? environment.getLightInVision(this.fieldOfViewArea) : null;
 		}
 		
 		if (this.playerFoundIndicator) {
@@ -41,17 +47,22 @@ var Enemy = (function (_super) {
 			}
 		}
         
-        if (!player && visibleLight.length) {
-            for (var i = 0; i < visibleLight.length; i++) {
-                light = visibleLight[i];
-                break;
-            }
-            
-            if (window.DEBUG_GAME && light) {
-                this.lightMarker = new Shape.Circle(light, 3);
-                this.lightMarker.fillColor = 'orange';
-            }
+        if (!player && visibleLight && window.DEBUG_GAME) {
+			if (this.lightMarker) {
+				this.lightMarker.position = visibleLight;
+			}
+			else {
+				this.lightMarker = new Shape.Circle(visibleLight, 3);
+				this.lightMarker.fillColor = 'orange';
+			}
         }
+		else {
+			if (this.lightMarker) {
+				this.lightMarker.remove();
+			}
+		}
+		
+		this.maxSpeed = this.sprintSpeed;
 		
 		if (player) {
 			if(this.memoryTimeout) {
@@ -83,9 +94,12 @@ var Enemy = (function (_super) {
 		else if (this.remembersPlayerLocation) {
 			this.acceleration = this.acceleration.add(this.seek(this.lastPlayerLocation));
 		}
-        else if (light) {
-            this.acceleration = this.acceleration.add(this.seek(light));
+        else if (visibleLight) {
+            this.acceleration = this.acceleration.add(this.seek(visibleLight));
         }
+		else {
+			this.maxSpeed = this.moveSpeed;
+		}
         
         this.acceleration = this.acceleration.add(this.getRepulsionSteer(environment.obstacles));
 	};
@@ -137,10 +151,31 @@ var Enemy = (function (_super) {
 		if (this.fieldOfViewArea) {
 			this.fieldOfViewArea.remove();
 		}
-	
+		
 		this.updatePosition(environment); 
 		
+		if (this.sprite) {
+			this.sprite.remove();
+		}
+		
+		if (this.vv) {
+			this.sv.removeChildren();
+			this.sv.remove();
+			this.vv.removeChildren();
+			this.vv.remove();
+		}
+		
 		this.visionVector = this.vector.clone();
+		
+		this.frameIndex = (this.frameIndex + 1) % this.spriteFrames;
+		var point = new Point(this.frameIndex * this.spriteSheetWidth / this.spriteFrames, 0);
+		var fullSprite = new Raster(this.spriteUrl);
+		this.sprite = fullSprite.getSubRaster(new Rectangle(point, this.spriteSize));
+		this.sprite.position = this.position;
+		
+		this.sprite.rotate(this.visionVector.angle - 90);
+		fullSprite.remove();
+		
 		this.fieldOfViewArea = environment.getFieldOfVisionPath(this);
 		
 		if(window.DEBUG_GAME) {
@@ -149,6 +184,36 @@ var Enemy = (function (_super) {
 		}
 	};
     
+	Enemy.prototype.getVisionAngle = function(v1, v2) {
+		var norm1 = v1.normalize();
+		var norm2 = v2.normalize();
+		var rads = Math.acos(norm1.dot(norm2) / (norm1.length * norm2.length));
+		var angle = rads * (180 / Math.PI);
+		
+		return angle;
+	};
+	
+	Enemy.prototype.remove = function() {
+		this.cleanup();
+		
+		if (this.nv) {
+			this.nv.removeChildren();
+			this.nv.remove();
+		}
+		
+		if (this.playerFoundIndicator) {
+			this.playerFoundIndicator.remove();
+		}
+		
+        if (this.lightMarker) {
+			this.lightMarker.remove();
+		}
+		
+		if(this.memoryTimeout) {
+			clearTimeout(this.memoryTimeout);
+		}
+	};
+	
     function drawArrow(start, end, d) {
         var b = d.normalize(3);
         var p1 = new Path([start, end]);
