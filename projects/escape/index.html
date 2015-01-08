@@ -11,6 +11,7 @@
         <script type="text/javascript" src="js/battery.js"></script>
         <script type="text/javascript" src="js/flashlight.js"></script>
         <script type="text/javascript" src="js/environment.js"></script>
+        <script type="text/javascript" src="js/sprite.js"></script>		
         <script type="text/javascript" src="js/mob.js"></script>
         <script type="text/javascript" src="js/enemy.js"></script>
         <script type="text/javascript" src="js/eliteEnemy.js"></script>		
@@ -38,7 +39,7 @@
                 var lastCount = 0;
                 var url = "http://i.imgur.com/TUHw5q2.png";
 				
-				window.DEBUG_GAME = true;
+				window.DEBUG_GAME = false;
 				window.DEBUG_GAME_EXTRA = false;
 				
                 paper.setup(canvas);
@@ -210,6 +211,26 @@
 						var player = new Player(new Point(350, 200), 10);
 						var enemy = new EliteEnemy(new Point(100,100));
 						enemy.vector = new Point(50,50);
+						
+						var wp1 = new Point(10, 100);
+						var wp2 = new Point(10, 350);
+						var wp3 = new Point (250, 450);
+						var wp4 = new Point (300, 500);
+						
+						enemy.addWaypoint(wp1);
+						enemy.addWaypoint(wp2);
+						enemy.addWaypoint(wp3);
+						enemy.addWaypoint(wp4);
+						enemy.useWaypoints = true;
+						
+						var c1 = new Shape.Circle(wp1, 5);
+						c1.fillColor = 'orange';
+						var c2 = new Shape.Circle(wp2, 5);
+						c2.fillColor = 'orange';
+						var c3 = new Shape.Circle(wp3, 5);
+						c3.fillColor = 'orange';
+						var c4 = new Shape.Circle(wp4, 5);
+						c4.fillColor = 'orange';
 						
 						environment.player = player;
 						environment.addEnemy(enemy);

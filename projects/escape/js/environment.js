@@ -121,7 +121,11 @@ var Environment = (function () {
 		});
 		
 		if (!window.DEBUG_GAME_EXTRA) {
-		    this.compoundVisionPath.fillColor = 'black';
+		    this.compoundVisionPath.fillColor =  'black';
+		}
+		
+		if (window.DEBUG_GAME) {
+		    this.compoundVisionPath.opacity =  0.8;
 		}
 	};
     

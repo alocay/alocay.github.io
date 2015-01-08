@@ -16,11 +16,12 @@ var Enemy = (function (_super) {
 		this.playerFoundIndicator = null;
         this.lightMarker = null;
 		this.spriteUrl = "http://i.imgur.com/TUHw5q2.png";
-		this.sprite = null;
-		this.spriteFrames = 8;
-		this.spriteSize = new Size(44, 42);
-		this.spriteSheetWidth = 350;
-		this.frameIndex = 0;
+		this.sprite = new Sprite(this.spriteUrl, 8, 350, new Size(44,42));
+		this.changeWaypointThreshold = 15
+		this.waypoints = [];
+		this.useWaypoints = false;
+		this.waypointIndex = 0;
+		this.waypointReverse = false;
 		this.sv = null;
 		this.vv = null;
     }
@@ -100,6 +101,11 @@ var Enemy = (function (_super) {
 		else {
 			this.maxSpeed = this.moveSpeed;
 		}
+		
+		if (this.useWaypoints) {
+			this.updateWaypointIndex();
+			this.acceleration = this.acceleration.add(this.seek(this.waypoints[this.waypointIndex]));
+		}
         
         this.acceleration = this.acceleration.add(this.getRepulsionSteer(environment.obstacles));
 	};
@@ -154,10 +160,6 @@ var Enemy = (function (_super) {
 		
 		this.updatePosition(environment); 
 		
-		if (this.sprite) {
-			this.sprite.remove();
-		}
-		
 		if (this.vv) {
 			this.sv.removeChildren();
 			this.sv.remove();
@@ -166,16 +168,7 @@ var Enemy = (function (_super) {
 		}
 		
 		this.visionVector = this.vector.clone();
-		
-		this.frameIndex = (this.frameIndex + 1) % this.spriteFrames;
-		var point = new Point(this.frameIndex * this.spriteSheetWidth / this.spriteFrames, 0);
-		var fullSprite = new Raster(this.spriteUrl);
-		this.sprite = fullSprite.getSubRaster(new Rectangle(point, this.spriteSize));
-		this.sprite.position = this.position;
-		
-		this.sprite.rotate(this.visionVector.angle - 90);
-		fullSprite.remove();
-		
+		this.sprite.run(this.position, this.visionVector.angle - 90);
 		this.fieldOfViewArea = environment.getFieldOfVisionPath(this);
 		
 		if(window.DEBUG_GAME) {
@@ -191,6 +184,23 @@ var Enemy = (function (_super) {
 		var angle = rads * (180 / Math.PI);
 		
 		return angle;
+	};
+	
+	Enemy.prototype.updateWaypointIndex = function() {
+		if (this.waypointIndex + 1 == this.waypoints.length) {
+			this.waypointReverse = true;
+		}
+        else if (this.waypointIndex == 0) {
+			this.waypointReverse = false;
+		}
+		
+		if (this.position.getDistance(this.waypoints[this.waypointIndex]) < this.changeWaypointThreshold) {
+			this.waypointIndex += this.waypointReverse ? -1 : 1;
+		}
+	};
+	
+	Enemy.prototype.addWaypoint = function(point) {
+		this.waypoints.push(point);
 	};
 	
 	Enemy.prototype.remove = function() {
