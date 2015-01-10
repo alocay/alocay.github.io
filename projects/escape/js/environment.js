@@ -8,6 +8,7 @@ var Environment = (function () {
         this.key = new LevelKey();
         this.door = new Door();
 		this.gameOver = false;
+		this.escaped = false;
         
         var border = new Rectangle(new Point(), new Size(size.width, size.height));
 		this.borderPath = new Path.Rectangle(border);
@@ -104,6 +105,8 @@ var Environment = (function () {
 		var hitDoor = this.door.body.hitTest(this.player.position);
 		if (hitDoor) {
 			this.door.opened = true;
+			this.gameOver = true;
+			this.escaped = true;
 		}
         
         for(var i = 0; i < this.enemies.length; i++) {
@@ -112,6 +115,7 @@ var Environment = (function () {
 			
 			if (caught) {
 			    this.gameOver = true;
+				this.escape = false;
 			}
         }
 		
@@ -217,7 +221,13 @@ var Environment = (function () {
 		this.player.remove();
 		
 		while (this.enemies.length) {
-			this.enemies.pop().remove();
+			var e = this.enemies.pop();
+			
+			if (e.sprite) {
+				e.sprite.remove();
+			}
+			
+			e.remove();
 		}
 		
 		while (this.obstacles.length) {

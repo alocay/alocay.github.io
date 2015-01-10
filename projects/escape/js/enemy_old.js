@@ -18,7 +18,7 @@ var Enemy = (function (_super) {
 		this.spriteUrl = "http://i.imgur.com/TUHw5q2.png";
 		this.sprite = new Sprite(this.spriteUrl, 8, 350, new Size(44,42));
 		this.changeWaypointThreshold = 15
-		this.currentWaypoint = null;
+		this.waypoints = [];
 		this.useWaypoints = false;
 		this.waypointIndex = 0;
 		this.waypointReverse = false;
@@ -103,8 +103,8 @@ var Enemy = (function (_super) {
 		}
 		
 		if (this.useWaypoints) {
-			this.updateCurrentWaypoint();
-			this.acceleration = this.acceleration.add(this.seek(this.currentWaypoint.position));
+			this.updateWaypointIndex();
+			this.acceleration = this.acceleration.add(this.seek(this.waypoints[this.waypointIndex]));
 		}
         
         this.acceleration = this.acceleration.add(this.getRepulsionSteer(environment.obstacles));
@@ -186,19 +186,21 @@ var Enemy = (function (_super) {
 		return angle;
 	};
 	
-	Enemy.prototype.updateCurrentWaypoint = function() {
-		if (this.currentWaypoint.hasNeighbors()) {
-			if (this.position.getDistance(this.currentWaypoint.position) < this.changeWaypointThreshold) {
-				this.currentWaypoint.unselect();
-				this.currentWaypoint = this.currentWaypoint.getNextNeighbor();
-				this.currentWaypoint.select();
-			}
+	Enemy.prototype.updateWaypointIndex = function() {
+		if (this.waypointIndex + 1 == this.waypoints.length) {
+			this.waypointReverse = true;
+		}
+        else if (this.waypointIndex == 0) {
+			this.waypointReverse = false;
+		}
+		
+		if (this.position.getDistance(this.waypoints[this.waypointIndex]) < this.changeWaypointThreshold) {
+			this.waypointIndex += this.waypointReverse ? -1 : 1;
 		}
 	};
 	
-	Enemy.prototype.setWaypoint = function(wp) {
-		this.currentWaypoint = wp;
-		this.currentWaypoint.select();
+	Enemy.prototype.addWaypoint = function(point) {
+		this.waypoints.push(point);
 	};
 	
 	Enemy.prototype.remove = function() {

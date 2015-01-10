@@ -11,8 +11,7 @@
         <script type="text/javascript" src="js/battery.js"></script>
         <script type="text/javascript" src="js/flashlight.js"></script>
         <script type="text/javascript" src="js/environment.js"></script>
-        <script type="text/javascript" src="js/sprite.js"></script>
-        <script type="text/javascript" src="js/waypoint.js"></script>		
+        <script type="text/javascript" src="js/sprite.js"></script>		
         <script type="text/javascript" src="js/mob.js"></script>
         <script type="text/javascript" src="js/enemy.js"></script>
         <script type="text/javascript" src="js/eliteEnemy.js"></script>		
@@ -171,15 +170,10 @@
                 }
 				
 				$("#game-over-retry a").click(function () {
-					$('#retry').addClass('hidden');
+					$('#game-over').addClass('hidden');
 					environment.cleanup();
 					setupLevel(currentLevel);
-				});
-				
-				$("#game-over-win a").click(function () {
-					$('#win').addClass('hidden');
-					environment.cleanup();
-					setupLevel(currentLevel);
+					
 				});
 				
                 function updateFpsLabel (time, count) {
@@ -218,23 +212,25 @@
 						var enemy = new EliteEnemy(new Point(100,100));
 						enemy.vector = new Point(50,50);
 						
-						var wp1 = new Waypoint(new Point(10, 100), 0.2);
-						var wp2 = new Waypoint(new Point(10, 350), 0.2);
-						var wp3 = new Waypoint(new Point(250, 450), 0.6);
-						var wp4 = new Waypoint(new Point(300, 500), 0.2);
-						var wp5 = new Waypoint(new Point(250, 500), 0.2);
+						var wp1 = new Point(10, 100);
+						var wp2 = new Point(10, 350);
+						var wp3 = new Point (250, 450);
+						var wp4 = new Point (300, 500);
 						
-						wp1.addNeighbor(wp2);
-						wp2.addNeighbor(wp1);
-						wp2.addNeighbor(wp3);
-						wp3.addNeighbor(wp2);
-						wp3.addNeighbor(wp4);
-						wp3.addNeighbor(wp5);
-						wp4.addNeighbor(wp3);
-						wp5.addNeighbor(wp3);
-						
-						enemy.setWaypoint(wp1);
+						enemy.addWaypoint(wp1);
+						enemy.addWaypoint(wp2);
+						enemy.addWaypoint(wp3);
+						enemy.addWaypoint(wp4);
 						enemy.useWaypoints = true;
+						
+						var c1 = new Shape.Circle(wp1, 5);
+						c1.fillColor = 'orange';
+						var c2 = new Shape.Circle(wp2, 5);
+						c2.fillColor = 'orange';
+						var c3 = new Shape.Circle(wp3, 5);
+						c3.fillColor = 'orange';
+						var c4 = new Shape.Circle(wp4, 5);
+						c4.fillColor = 'orange';
 						
 						environment.player = player;
 						environment.addEnemy(enemy);
@@ -263,12 +259,7 @@
 				}
 				
 				function displayGameOver() {
-					if (environment.escaped) {
-						$('#win').removeClass('hidden');
-					}
-					else {
-						$('#retry').removeClass('hidden');
-					}
+					$('#game-over').removeClass('hidden');
 				}
 				
                 paper.view.draw();
@@ -287,16 +278,10 @@
                 <div id="container">
                     <canvas id="canvas" class="abs" oncontextmenu="return false;">
 					</canvas>
-                    <div id="retry" class="game-over hidden">
+                    <div id="game-over" class="hidden">
                         <div id="game-over-title">Game Over!</div>
                         <div id="game-over-retry">
                             <a href="#">Retry</a>
-                        </div>
-                    </div>
-					<div id="win" class="game-over hidden">
-                        <div class="game-over-title">You Escaped!</div>
-                        <div id="game-over-win">
-                            <a href="#">Play Again</a>
                         </div>
                     </div>
                 </div>
