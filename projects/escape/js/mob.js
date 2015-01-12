@@ -21,9 +21,7 @@ var Mob = (function () {
 		var desired = target.subtract(this.position);
 		desired = desired.normalize();
 		desired.length = this.maxSpeed;
-		
-		console.log('ms: ' + this.maxSpeed);
-		
+        
 		var steer = desired.subtract(this.vector);
 		steer.length = Math.min(this.maxForce, steer.length);
 		return steer;
