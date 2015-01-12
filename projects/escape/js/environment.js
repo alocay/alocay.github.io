@@ -4,6 +4,7 @@ var Environment = (function () {
 		this.player = null
 		this.enemies = [];
         this.batteries = [];
+        this.tiles = [];
 		this.size = size;
         this.key = new LevelKey();
         this.door = new Door();
@@ -35,6 +36,10 @@ var Environment = (function () {
     Environment.prototype.addBattery = function (b) {
         this.batteries.push(b);
 	};
+    
+    Environment.prototype.addTile = function(t) {
+        this.tiles.push(t);
+    };
     
 	Environment.prototype.getFieldOfVisionPath = function(mob) {        
 		var halfFov = mob.fieldOfView / 2;
@@ -108,6 +113,13 @@ var Environment = (function () {
 			this.gameOver = true;
 			this.escaped = true;
 		}
+        
+        for (var i = 0; i < this.tiles.length; i++) {
+            var hitTile = this.tiles[i].body.hitTest(this.player.position);
+            if (hitTile) {
+                this.tiles[i].onStep();
+            }
+        }
         
         for(var i = 0; i < this.enemies.length; i++) {
             this.enemies[i].run(this);

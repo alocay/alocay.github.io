@@ -10,6 +10,7 @@
         <script type="text/javascript" src="js/door.js"></script>
         <script type="text/javascript" src="js/battery.js"></script>
         <script type="text/javascript" src="js/flashlight.js"></script>
+        <script type="text/javascript" src="js/tile.js"></script>
         <script type="text/javascript" src="js/environment.js"></script>
         <script type="text/javascript" src="js/sprite.js"></script>
         <script type="text/javascript" src="js/waypoint.js"></script>		
@@ -40,8 +41,8 @@
                 var lastCount = 0;
                 var url = "http://i.imgur.com/TUHw5q2.png";
 				
-				window.DEBUG_GAME = false;
-				window.DEBUG_GAME_EXTRA = false;
+				window.DEBUG_GAME = true;
+				window.DEBUG_GAME_EXTRA = true;
 				
                 paper.setup(canvas);
 				
@@ -239,6 +240,8 @@
 						environment.player = player;
 						environment.addEnemy(enemy);
 						
+                        var tile = new Tile(new Point(250, 550), 'assets/splat.mp3');
+                        
 						var block = new Rectangle(new Point (200, 0), new Size(100, view.size.height - 200));
 						var block2 = new Rectangle(new Point(400, 0), new Size(100, view.size.height - 200));
 						var block3 = new Rectangle(new Point(400, view.size.height - 200), new Size(300, 50));
@@ -251,6 +254,7 @@
 						environment.addObstacle(blockPath2);
 						environment.addObstacle(blockPath3);
 						environment.addObstacle(new Path.Circle(new Point(350, 400), 15));
+                        environment.addTile(tile);
                         
                         var battery1 = new Battery(new Point(754, 43));
                         var battery2 = new Battery(new Point(12, 582));
