@@ -16,23 +16,28 @@ var Waypoint = (function () {
 	};
 	
 	Waypoint.prototype.getNextNeighbor = function() {
+        var wp = null;
 		if (this.neighbors.length == 1) {
-			return this.neighbors[0];
+			wp = this.neighbors[0];
 		}
 		else {
-			var wp = null;
-			var largest = 0;
-			for (var i = 0; i < this.neighbors.length; i++) {
-				var r = Math.random();
-				var l = r * this.neighbors[i].priority;
-				if (!wp || l > largest) {
-					wp = this.neighbors[i];
-					largest = l;
-				}
-			}
+            var r = Math.random();
+            this.neighbors.sort(neighborsSortFunction);
 			
-			return wp;
+            
+			for (var i = 0; i < this.neighbors.length; i++) {
+				if (r <= this.neighbors[i].priority) {
+                    wp = this.neighbors[i];
+                    break;
+                }
+                
+                if (i == (this.neighbors.length - 1)) {
+                    wp = this.neighbors[i];
+                }
+			}
 		}
+        
+        return wp;
 	};
 	
 	Waypoint.prototype.select = function() {
@@ -57,5 +62,17 @@ var Waypoint = (function () {
 		}
 	};
 	
+    function neighborsSortFunction(a, b) {
+        if (a.priority < b.priority) {
+            return -1;
+        }
+        else if (a.priority > b.priority) {
+            return 1;
+        }
+        else {
+            return 0;
+        }
+    }
+    
     return Waypoint;
 })();

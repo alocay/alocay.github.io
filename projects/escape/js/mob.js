@@ -1,5 +1,5 @@
 var Mob = (function () {
-    function Mob(position, radius, ms, mf, fov) {
+    function Mob(position, radius, ms, mf, fov, fovd) {
         this.radius = radius ? radius : 5;
         this.maxSpeed = ms ? ms : 1.0;
         this.maxForce = mf ? mf : 0.15;
@@ -7,7 +7,7 @@ var Mob = (function () {
         this.vector = new Point();
 		this.visionVector = new Point(0, 100);
 		this.fieldOfView = fov ? fov : 60;
-		this.fieldOfViewDistance = 200;
+		this.fieldOfViewDistance = fovd ? fovd : 200;
         this.body = new Path.Circle(this.position, this.radius);        
         this.moveable = true;
 		this.acceleration = new Point();

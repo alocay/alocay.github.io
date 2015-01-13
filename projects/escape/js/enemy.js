@@ -1,17 +1,16 @@
 var Enemy = (function (_super) {
     __extends(Enemy, _super);
-    function Enemy(position, radius, ms, mf, fov, attackDist) {
-		_super.call(this, position, radius, ms, mf, fov);		
-		this.attackDistance = attackDist ? attackDist : 150;
+    function Enemy(position, radius, ms, sps, mf, fov, fovd, ls) {
+		_super.call(this, position, radius, null, mf, fov, fovd);
         this.obstacleAvoidanceDistance = 10;
-		this.moveSpeed = 1.0;
-		this.sprintSpeed = 1.5;
+		this.moveSpeed = ms ? ms : 1.0;
+		this.sprintSpeed = sps ? sps : 1.5;
         this.maxSpeed = this.moveSpeed;
 		this.memoryLengthMS = 5000;
 		this.memoryTimeout = null;
 		this.remembersPlayerLocation = false;
 		this.lastPlayerLocation = null;
-        this.lightSensitive = false;
+        this.lightSensitive = ls ? ls : false;
         this.nv = null;
 		this.playerFoundIndicator = null;
         this.lightMarker = null;
@@ -100,11 +99,11 @@ var Enemy = (function (_super) {
         }
 		else {
 			this.maxSpeed = this.moveSpeed;
-		}
-		
-		if (this.useWaypoints) {
-			this.updateCurrentWaypoint();
-			this.acceleration = this.acceleration.add(this.seek(this.currentWaypoint.position));
+            
+            if (this.useWaypoints) {
+                this.updateCurrentWaypoint();
+                this.acceleration = this.acceleration.add(this.seek(this.currentWaypoint.position));
+            }
 		}
         
         this.acceleration = this.acceleration.add(this.getRepulsionSteer(environment.obstacles));
@@ -170,11 +169,9 @@ var Enemy = (function (_super) {
 		this.visionVector = this.vector.clone();
 		this.sprite.run(this.position, this.visionVector.angle - 90);
 		this.fieldOfViewArea = environment.getFieldOfVisionPath(this);
-		
-		if(window.DEBUG_GAME) {
-			this.fieldOfViewArea.strokeColor = 'red';
-			this.fieldOfViewArea.strokeWidth = 1;
-		}
+		this.fieldOfViewArea.strokeColor = 'yellow';
+        this.fieldOfViewArea.strokeWidth = 1;
+        this.fieldOfViewArea.dashArray = [8, 10];
 	};
     
 	Enemy.prototype.getVisionAngle = function(v1, v2) {
