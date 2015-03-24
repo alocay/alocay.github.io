@@ -4,7 +4,7 @@
     <title>Fuzzy JS</title>
     <link rel="stylesheet" type="text/css" href="css/styles.css">
     <script type="text/javascript" src="../../js/jquery-1.11.1.min.js"></script>
-    <script type="text/javascript" src="js/fuzzy.min.js"></script>
+    <script type="text/javascript" src="https://raw.githubusercontent.com/alocay/FuzzyJS/master/dist/fuzzy.min.js"></script>
     <script type="text/javascript" src="js/load-image.min.js"></script>
     <script>
         window.onload = function() {            
@@ -208,7 +208,7 @@
                 
                 // horizontal motion blur
                 runDemoTimer(function () {
-	            	fuzzy(canvas).motionBlur(8).draw($("#h-blur")[0],
+	            	fuzzy(canvas).horizontalBlur(8).draw($("#h-blur")[0],
 	            		{
 	                		// setups the popup
 	                		callback: function (i) {
@@ -221,7 +221,7 @@
                 	
             	// vertical motion blur
             	runDemoTimer(function () {
-	            	fuzzy(canvas).motionBlur(8, fuzzy.directions.VERTICAL).draw($("#v-blur")[0],
+	            	fuzzy(canvas).verticalBlur(8).draw($("#v-blur")[0],
 	            		{
 	                		// setups the popup
 	                		callback: function (i) {
