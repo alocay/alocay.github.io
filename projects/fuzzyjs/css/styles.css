@@ -80,6 +80,7 @@ li > a {
 
 #enlarge,
 .samples img,
+.samples canvas,
 .header img,
 .header canvas {
     background: none repeat rgba(255, 255, 255, 0.1);
