@@ -9,7 +9,13 @@ var Battery = (function () {
     }
     
     Battery.prototype.pickup = function() {
-		this.body.remove();
+		this.remove();
+	};
+	
+	Battery.prototype.remove = function() {
+		if (this.body) {
+			this.body.remove();
+		}
 	};
 	
     return Battery;

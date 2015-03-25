@@ -54,6 +54,45 @@ div.footer {
     margin: 0;
 }
 
+.game-over {
+	background-color: #fff;
+	position: absolute;
+	width: 25%;
+    height: 80px;
+	padding: 15px;
+	margin: auto;
+	top: 0;
+    bottom: 0;
+    right: 0;
+	left: 0;
+	border: 1px solid #000;
+    z-index: 2;
+}
+
+.game-over-title {
+	font-size: 12pt;
+	margin-bottom: 10px;
+	margin: auto;
+	text-align: center;
+	font-weight: bold;
+}
+
+#game-over-retry,
+#game-over-win {
+	font-size: 10pt;
+	margin: auto;
+	text-align: center;
+}
+
+#game-over-retry a:hover,
+#game-over-win a:hover {
+	color: #ff0000;
+}
+
+.hidden {
+	display: none;
+}
+
 .project-group-header {
     font-size: 12pt;
     border-bottom: 1px solid #ccc;
@@ -67,11 +106,18 @@ div.footer {
 
 #container {
     text-align: center;
+    width: 800px;
+    height: 600px;
 }
 
 #canvas {
     width: 800px;
     height: 600px;
+}
+
+.abs {
+    position: absolute;
+    z-index: 1;
 }
 
 #info {

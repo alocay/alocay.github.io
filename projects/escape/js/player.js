@@ -1,7 +1,8 @@
 var Player = (function (_super) {
     __extends(Player, _super);
-    function Player(position, radius, ms, mf, fov) {
-        _super.call(this, position, radius, ms, mf, fov);
+    function Player(position, radius, ms, mf, fov, fovd) {
+        _super.call(this, position, radius, ms, mf, fov, fovd);
+		this.maxSpeed = 2.0;
 		this.targetLocation = null;
 		this.flashlight = new Flashlight();
 		this.hasKey = false;
@@ -84,6 +85,14 @@ var Player = (function (_super) {
     
 	Player.prototype.cycleThroughFov = function() {
 		this.flashlight.cycle();
+	};
+	
+	Player.prototype.remove = function() {
+		this.cleanup();
+		
+		if (this.lightFadeOutMask) {
+			this.lightFadeOutMask.remove();
+		}
 	};
 	
     return Player;

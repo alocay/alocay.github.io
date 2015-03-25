@@ -4,9 +4,12 @@ var Environment = (function () {
 		this.player = null
 		this.enemies = [];
         this.batteries = [];
+        this.tiles = [];
 		this.size = size;
         this.key = new LevelKey();
         this.door = new Door();
+		this.gameOver = false;
+		this.escaped = false;
         
         var border = new Rectangle(new Point(), new Size(size.width, size.height));
 		this.borderPath = new Path.Rectangle(border);
@@ -17,10 +20,6 @@ var Environment = (function () {
 		this.compoundVisionPath = null;
         
         this.obstacles.push(this.borderPath);
-		
-		this.inters = [];
-		
-		this.gameOver = false;
 	}
 	
 	Environment.prototype.addObstacle = function (ob) {
@@ -38,6 +37,10 @@ var Environment = (function () {
         this.batteries.push(b);
 	};
     
+    Environment.prototype.addTile = function(t) {
+        this.tiles.push(t);
+    };
+    
 	Environment.prototype.getFieldOfVisionPath = function(mob) {        
 		var halfFov = mob.fieldOfView / 2;
 		var startAngle = -1 * halfFov;
@@ -45,10 +48,6 @@ var Environment = (function () {
 		var visible = [mob.position];
 		var vision = mob.visionVector.clone();
 		vision.length = mob.fieldOfViewDistance < 0 ? vision.length : mob.fieldOfViewDistance;
-		
-		for (var i = 0; i < this.inters.length; i++) {
-			this.inters.pop().remove();
-		}
 		
 		for (var i = startAngle; i <= halfFov; i+=step) {
 			var r = vision.rotate(i);
@@ -111,16 +110,16 @@ var Environment = (function () {
 		var hitDoor = this.door.body.hitTest(this.player.position);
 		if (hitDoor) {
 			this.door.opened = true;
+			this.gameOver = true;
+			this.escaped = true;
 		}
-		
-		this.compoundVisionPath = new CompoundPath({
-			children: [this.borderPath, this.player.fieldOfViewArea],
-			strokeColor: 'black'
-		});
-		
-		if (!window.DEBUG_GAME_EXTRA) {
-		    this.compoundVisionPath.fillColor = 'black';
-		}
+        
+        for (var i = 0; i < this.tiles.length; i++) {
+            var hitTile = this.tiles[i].body.hitTest(this.player.position);
+            if (hitTile) {
+                this.tiles[i].onStep();
+            }
+        }
         
         for(var i = 0; i < this.enemies.length; i++) {
             this.enemies[i].run(this);
@@ -128,8 +127,22 @@ var Environment = (function () {
 			
 			if (caught) {
 			    this.gameOver = true;
+				this.escape = false;
 			}
         }
+		
+		this.compoundVisionPath = new CompoundPath({
+			children: [this.borderPath, this.player.fieldOfViewArea],
+			strokeColor: 'black'
+		});
+		
+		if (!window.DEBUG_GAME_EXTRA) {
+		    this.compoundVisionPath.fillColor =  'black';
+		}
+		
+		if (window.DEBUG_GAME) {
+		    this.compoundVisionPath.opacity =  0.8;
+		}
 	};
     
 	Environment.prototype.getMobsInVision = function(visionPath) {
@@ -149,16 +162,21 @@ var Environment = (function () {
 	};
     
     Environment.prototype.getLightInVision = function(visionPath) {
-        var lightIntersections = [];
+        var closestLightIntersection = null;
         if (this.player.isFlashlightOn()) {
             var flashlightIntersections = visionPath.getIntersections(this.player.fieldOfViewArea);
             
-            if (flashlightIntersections.length) {
-                lightIntersections.push(flashlightIntersections[0].point);
-            }
+			var closestDist = Number.MAX_VALUE;
+			for (var i = 0; i < flashlightIntersections.length; i++) {
+				var dist = flashlightIntersections[i].point.getDistance(this.player.position);
+				if (dist < closestDist) {
+					closestDist = dist;
+					closestLightIntersection = flashlightIntersections[i].point;
+				}
+			}
         }
         
-        return lightIntersections;
+        return closestLightIntersection;
     };
 	
 	Environment.prototype.isPlayer = function(mob) {
@@ -206,6 +224,34 @@ var Environment = (function () {
 		}
 		else {
 			return null;
+		}
+	};
+	
+	Environment.prototype.cleanup = function() {
+		this.door.remove();
+		this.key.remove();
+		this.player.remove();
+		
+		while (this.enemies.length) {
+			var e = this.enemies.pop();
+			
+			if (e.sprite) {
+				e.sprite.remove();
+			}
+			
+			e.remove();
+		}
+		
+		while (this.obstacles.length) {
+			this.obstacles.pop().remove();
+		}
+		
+		while (this.batteries.length) {
+			this.batteries.pop().remove();
+		}
+		
+		if (this.compoundVisionPath) {
+			this.compoundVisionPath.remove();
 		}
 	};
     
