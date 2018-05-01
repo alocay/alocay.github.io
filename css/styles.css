@@ -5,14 +5,6 @@ body {
     font-family: 'Poly', sans-serif;
 }
 
-body#footer-temp {
-	background: #030303 none;
-}
-
-body#footer-temp h6 {
-	color: #eee;
-}
-
 h1, h2, h3, h6 {
     text-align: center;
     font-weight: 200;
@@ -89,6 +81,11 @@ div.footer {
     padding: 0;
     bottom: 0;
     margin: 0;
+	background: #030303 none;
+}
+
+div.footer h6 {
+	color: #eee;
 }
 
 #shared-footer {
