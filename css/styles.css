@@ -1,8 +1,16 @@
 @import url(http://fonts.googleapis.com/css?family=Poly);
 
 body {
+	background: #222 url('../assets/dark-triangles.png') repeat; /* binding-dark.png courtesy of Tia Newbury. Found @ http://subtlepatterns.com/ */
     font-family: 'Poly', sans-serif;
-    background-color: #0ef;
+}
+
+body#footer-temp {
+	background: #030303 none;
+}
+
+body#footer-temp h6 {
+	color: #eee;
 }
 
 h1, h2, h3, h6 {
@@ -12,7 +20,17 @@ h1, h2, h3, h6 {
 }
 
 h1.header-title {
-    font-size: 65pt;
+	margin-top: 150px;
+    font-size: 35pt;
+	color: #eee;
+}
+
+h1.header-title div {
+	border: 2px solid rgba(255, 255, 255, 0.75);
+	background-color: rgba(0, 0, 0, 0.5);
+	width: 30%;
+	margin: 0 auto;
+	padding: 15px;
 }
 
 h1.project-title {
@@ -43,10 +61,10 @@ div.header {
 }
 
 div.content {
-    border-radius: 25px;
+    border-radius: 5px;
     padding: 20px 0;
     margin: auto;
-    background-color: #fff;
+    background-color: #666;
     width: 50%;
 }
 
