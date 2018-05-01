@@ -1,0 +1,22 @@
+{
+  "name": "alocay.github.io",
+  "version": "1.0.0",
+  "description": "Personal site for Armando Locay",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alocay/alocay.github.io.git"
+  },
+  "author": "Armando Locay",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/alocay/alocay.github.io/issues"
+  },
+  "homepage": "https://github.com/alocay/alocay.github.io#readme",
+  "dependencies": {
+    "npm": "^6.0.0"
+  }
+}

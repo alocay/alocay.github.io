@@ -1,0 +1,66 @@
+@import url("http://fonts.googleapis.com/css?family=Poly");
+
+body {
+	background: #222 url('../assets/dark-triangles.png') repeat; /* binding-dark.png courtesy of Tia Newbury. Found @ http://subtlepatterns.com/ */
+    font-family: 'Poly', sans-serif;
+}
+
+a:link,
+a:visited,
+a:hover,
+a:active {
+    text-decoration: none;
+}
+
+h1, h2, h3, h6 {
+    text-align: center;
+    font-weight: 200;
+    font-family: 'Poly', sans-serif;
+}
+
+h1.header-title {
+	margin-top: 150px;
+    font-size: 35pt;
+	color: #eee;
+	
+	div {
+		border: 2px solid rgba(255, 255, 255, 0.75);
+		background-color: rgba(0, 0, 0, 0.5);
+		width: 30%;
+		margin: 0 auto;
+		padding: 15px;
+	}
+}
+
+nav {
+	ul {
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+		overflow: hidden;
+		background-color: #ddd;
+		
+		li {
+			float: left;
+			
+			a {
+				display: block;
+				padding: 8px;
+			}
+		}
+	}
+}
+
+div.footer {
+    position: absolute;
+    width: 100%;
+    padding: 0;
+    bottom: 0;
+    margin: 0;
+	background: #030303 none;
+	
+	h6 {
+		color: #eee;
+	}
+}
+
