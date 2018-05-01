@@ -1,0 +1,92 @@
+body {
+  background: #222 url("../assets/dark-triangles.png") repeat;
+  /* binding-dark.png courtesy of Tia Newbury. Found @ http://subtlepatterns.com/ */
+  font-family: sans-serif; }
+
+a:link,
+a:visited,
+a:hover,
+a:active {
+  text-decoration: none; }
+
+h1, h2, h3, h6 {
+  text-align: center;
+  font-weight: 200;
+  font-family: 'Poly', sans-serif; }
+
+.arrow-box {
+  position: relative;
+  background: #dedede;
+  border: 2px solid #dedede; }
+  .arrow-box:after {
+    top: 100%;
+    left: 50%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none; }
+  .arrow-box:after {
+    border-color: rgba(222, 222, 222, 0);
+    border-top-color: #dedede;
+    border-width: 16px;
+    margin-left: -16px; }
+
+div.full {
+  width: 100%;
+  position: fixed;
+  top: 100px; }
+  div.full nav {
+    z-index: 2;
+    width: 100%;
+    background-color: #151515; }
+    div.full nav ul {
+      list-style-type: none;
+      display: block;
+      margin: 0 auto;
+      width: 50%;
+      padding: 0;
+      overflow: visible;
+      text-align: center; }
+      div.full nav ul li {
+        display: inline-block; }
+        div.full nav ul li a {
+          display: block;
+          padding: 16px 16px;
+          color: white;
+          text-align: center;
+          text-decoration: none; }
+          div.full nav ul li a.active {
+            background-color: #dedede;
+            color: black; }
+          div.full nav ul li a:hover {
+            background-color: #212121;
+            color: white; }
+  div.full div.content-container {
+    width: 100%;
+    background-color: #666;
+    z-index: 1; }
+    div.full div.content-container div.title {
+      margin: 0 auto;
+      padding: 5px;
+      padding-top: 30px;
+      font-size: 22pt;
+      color: #151515;
+      width: 300px; }
+      div.full div.content-container div.title ul {
+        list-style-type: none; }
+    div.full div.content-container div.content {
+      margin: 0 auto;
+      padding: 25px;
+      text-align: center;
+      min-height: 100px; }
+  div.full div.footer {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    background: #151515 none; }
+    div.full div.footer h6 {
+      color: #eee; }
+
+/*# sourceMappingURL=styles2.css.map */
