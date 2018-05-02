@@ -1,0 +1,36 @@
+body {
+	background: #222 url('../assets/dark-triangles.png') repeat; /* binding-dark.png courtesy of Tia Newbury. Found @ http://subtlepatterns.com/ */
+    font-family: sans-serif;
+}
+
+div.full {
+    width: 100%;
+    position: fixed;
+    top: 100px;
+	
+	div.content-container {
+        width: 100%;
+        background-color: #666;
+        z-index: 1;
+        
+        div.title {
+            margin: 0 auto;
+            padding: 5px;
+            font-size: 22pt;
+			font-weight: bold;
+            color: #151515;
+            width: 330px;
+            
+            ul {
+                list-style-type: none;
+            }
+        }
+
+        div.content {
+            margin: 0 auto;
+            padding: 25px;
+            text-align: center;
+            min-height: 100px;
+        }
+    }
+}
