@@ -1,5 +1,4 @@
 import React, { Component} from "react";
-import "../../css/App.css";
 
 class Art extends Component{
   render(){
@@ -7,11 +6,14 @@ class Art extends Component{
 		<div>
 			<div className="title">
 				<ul>
-					<li>Title</li>
+					<li>Art.</li>
 				</ul>
 			</div>
 			<div className="content">
-				Art content goes here.
+				<h4 className="text-left">sketches.</h4>
+                <hr />
+                <h4 className="text-left">photography.</h4>
+                <hr />
 			</div>
 		</div>
     );

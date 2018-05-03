@@ -12,7 +12,7 @@ class Root extends Component{
 		<Router>
 			<App>
 				<Route exact path="/" component={About} />
-				<Route path="/work" component={Work} />
+				<Route path="/exp" component={Work} />
 				<Route path="/art" component={Art} />
 				<Route path="/contact" component={Contact} />
 			</App>

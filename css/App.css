@@ -1,3 +1,4 @@
+@import url(kube.min.css);
 body {
   background: #222 url("../assets/dark-triangles.png") repeat;
   /* binding-dark.png courtesy of Tia Newbury. Found @ http://subtlepatterns.com/ */
@@ -14,6 +15,7 @@ div.full {
     div.full div.content-container div.title {
       margin: 0 auto;
       padding: 5px;
+      padding-top: 20px;
       font-size: 22pt;
       font-weight: bold;
       color: #151515;
@@ -25,3 +27,69 @@ div.full {
       padding: 25px;
       text-align: center;
       min-height: 100px; }
+
+nav {
+  z-index: 2;
+  width: 100%;
+  background-color: #151515; }
+  nav ul {
+    list-style-type: none;
+    display: block;
+    margin: 0 auto;
+    width: 50%;
+    padding: 0;
+    overflow: visible;
+    text-align: center; }
+    nav ul li {
+      display: inline-block; }
+      nav ul li a {
+        display: block;
+        padding: 16px 16px;
+        color: white;
+        text-align: center;
+        text-decoration: none; }
+        nav ul li a.active {
+          background-color: #dedede;
+          color: black; }
+        nav ul li a:hover {
+          background-color: #212121;
+          color: white; }
+        nav ul li a.active {
+          position: relative;
+          background: #dedede;
+          border: 2px solid #dedede; }
+          nav ul li a.active:after {
+            top: 100%;
+            left: 50%;
+            border: solid transparent;
+            content: " ";
+            height: 0;
+            width: 0;
+            position: absolute;
+            pointer-events: none; }
+          nav ul li a.active:after {
+            border-color: rgba(222, 222, 222, 0);
+            border-top-color: #dedede;
+            border-width: 16px;
+            margin-left: -16px; }
+
+div.content {
+  width: 50%; }
+  div.content table {
+    width: auto; }
+    div.content table td {
+      text-align: left; }
+      div.content table td:last-child {
+        padding-left: 20px; }
+
+li.subtitle {
+  font-size: 8pt;
+  line-height: normal;
+  margin-top: 5px; }
+  li.subtitle a {
+    text-decoration: none; }
+    li.subtitle a:link, li.subtitle a:visited, li.subtitle a:hover, li.subtitle a:active {
+      text-decoration: none;
+      color: inherit; }
+  li.subtitle:last-child {
+    margin-top: 0; }

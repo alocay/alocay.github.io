@@ -1,0 +1,17 @@
+
+div.content {
+    width: 50%;
+
+    table {
+        width: auto;
+        
+        td {
+            text-align: left;
+            
+            &:last-child {
+                padding-left: 20px;
+            }
+        }
+    }
+}
+

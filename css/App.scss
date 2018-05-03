@@ -1,3 +1,5 @@
+@import 'kube.min.css';
+
 body {
 	background: #222 url('../assets/dark-triangles.png') repeat; /* binding-dark.png courtesy of Tia Newbury. Found @ http://subtlepatterns.com/ */
     font-family: sans-serif;
@@ -16,6 +18,7 @@ div.full {
         div.title {
             margin: 0 auto;
             padding: 5px;
+            padding-top: 20px;
             font-size: 22pt;
 			font-weight: bold;
             color: #151515;
@@ -34,3 +37,7 @@ div.full {
         }
     }
 }
+
+@import 'navbar';
+@import 'contact';
+@import 'work';

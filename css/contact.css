@@ -1,0 +1,8 @@
+div.content {
+  width: 50%; }
+  div.content table {
+    width: auto; }
+    div.content table td {
+      text-align: left; }
+      div.content table td:last-child {
+        padding-left: 20px; }

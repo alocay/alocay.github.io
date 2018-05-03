@@ -1,0 +1,21 @@
+li.subtitle {
+    font-size: 8pt;
+    line-height: normal;
+    margin-top: 5px;
+    
+    a {
+        text-decoration: none;
+        
+        &:link,
+        &:visited,
+        &:hover,
+        &:active {
+            text-decoration: none;
+            color: inherit;
+        }
+    }
+    
+    &:last-child {
+        margin-top: 0;
+    }
+}

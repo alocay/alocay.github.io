@@ -1,7 +1,6 @@
 import React, { Component} from "react";
 import { Link } from 'react-router-dom';
 import classnames from 'classnames';
-import "../../css/navbar.css";
 
 const Routes = [
     {
@@ -9,8 +8,8 @@ const Routes = [
         name: 'About'
     },
     {
-        path: '/work',
-        name: 'Work'
+        path: '/exp',
+        name: 'Experience'
     },
     {
         path: '/art',
