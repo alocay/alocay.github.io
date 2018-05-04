@@ -4,15 +4,15 @@ body {
   /* binding-dark.png courtesy of Tia Newbury. Found @ http://subtlepatterns.com/ */
   font-family: sans-serif; }
 
-div.full {
+div.root-container {
   width: 100%;
   position: fixed;
   top: 100px; }
-  div.full div.content-container {
+  div.root-container div.content-container {
     width: 100%;
     background-color: #666;
     z-index: 1; }
-    div.full div.content-container div.title {
+    div.root-container div.content-container div.title {
       margin: 0 auto;
       padding: 5px;
       padding-top: 20px;
@@ -20,13 +20,16 @@ div.full {
       font-weight: bold;
       color: #151515;
       width: 330px; }
-      div.full div.content-container div.title ul {
+      div.root-container div.content-container div.title ul {
         list-style-type: none; }
-    div.full div.content-container div.content {
+    div.root-container div.content-container div.content {
+      width: 50%;
       margin: 0 auto;
       padding: 25px;
       text-align: center;
       min-height: 100px; }
+      div.root-container div.content-container div.content.full {
+        width: 100%; }
 
 nav {
   z-index: 2;
@@ -73,14 +76,12 @@ nav {
             border-width: 16px;
             margin-left: -16px; }
 
-div.content {
-  width: 50%; }
-  div.content table {
-    width: auto; }
-    div.content table td {
-      text-align: left; }
-      div.content table td:last-child {
-        padding-left: 20px; }
+div.content table {
+  width: auto; }
+  div.content table td {
+    text-align: left; }
+    div.content table td:last-child {
+      padding-left: 20px; }
 
 li.subtitle {
   font-size: 8pt;
@@ -93,3 +94,57 @@ li.subtitle {
       color: inherit; }
   li.subtitle:last-child {
     margin-top: 0; }
+
+div.gallery {
+  width: 100%;
+  text-align: left;
+  overflow: auto;
+  white-space: nowrap; }
+
+div.image-container {
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+  margin: 0 10px 10px 10px; }
+  div.image-container:hover {
+    cursor: pointer; }
+  div.image-container figure.loaded-image {
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0; }
+    div.image-container figure.loaded-image img.image-final {
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 1s ease; }
+      div.image-container figure.loaded-image img.image-final.image-fade-in {
+        opacity: 1; }
+    div.image-container figure.loaded-image figcaption {
+      overflow-wrap: normal;
+      text-align: left;
+      color: #a0a0a0;
+      background-color: rgba(0, 0, 0, 0.5); }
+  div.image-container img.image-preload {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0; }
+
+div.light-box {
+  position: absolute;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  margin-top: -100px;
+  width: 100vw;
+  height: 100vw;
+  background-color: rgba(0, 0, 0, 0.7);
+  overflow: auto; }
+  div.light-box .light-box-image {
+    position: relative;
+    margin-top: 50px; }

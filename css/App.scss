@@ -5,7 +5,7 @@ body {
     font-family: sans-serif;
 }
 
-div.full {
+div.root-container {
     width: 100%;
     position: fixed;
     top: 100px;
@@ -29,11 +29,16 @@ div.full {
             }
         }
 
-        div.content {
+        div.content { 
+            width: 50%;
             margin: 0 auto;
             padding: 25px;
             text-align: center;
             min-height: 100px;
+            
+            &.full {
+                width: 100%;
+            }
         }
     }
 }
@@ -41,3 +46,4 @@ div.full {
 @import 'navbar';
 @import 'contact';
 @import 'work';
+@import 'art';
