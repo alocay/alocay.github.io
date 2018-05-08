@@ -7,6 +7,7 @@ class FlipLabel extends Component{
     constructor(props) {
         super(props);
         
+        this.completedChars = 0;
         this.state = {
             labelChars: []
         };
@@ -20,23 +21,33 @@ class FlipLabel extends Component{
     
     componentWillReceiveProps(nextProps) {
         if (nextProps.label) {
+            this.completedChars = 0;
             this.setState({ labelChars: nextProps.label.split('') });
         }
     }
     
     getFlipChars() {
-        return this.state.labelChars.map((c, i) => <FlipChar key={i} finalChar={c} delay={(i * 3000)}/>);
+        return this.state.labelChars.map((c, i) => <FlipChar key={i} finalChar={c} delay={(i * 250)} onComplete={this.onComplete.bind(this)}/>);
+    }
+    
+    onComplete() {
+        this.completedChars += 1;
+        
+        if (this.completedChars >= this.state.labelChars.length && this.props.onComplete) {
+            this.props.onComplete();
+        }
     }
     
     render(){
         return(
-            <div>{ this.getFlipChars() }</div>
+            <div className="flip-label">{ this.getFlipChars() }</div>
         );
     }
 }
 
 FlipLabel.propTypes = {
-    label: PropTypes.string.isRequired
+    label: PropTypes.string.isRequired,
+    onComplete: PropTypes.func
 };
 
 export default FlipLabel;

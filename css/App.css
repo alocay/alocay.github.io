@@ -2,7 +2,7 @@
 body {
   background: #222 url("../assets/dark-triangles.png") repeat;
   /* binding-dark.png courtesy of Tia Newbury. Found @ http://subtlepatterns.com/ */
-  font-family: sans-serif; }
+  font-family: monospace; }
 
 div.root-container {
   width: 100%;
@@ -148,3 +148,5 @@ div.light-box {
   div.light-box .light-box-image {
     position: relative;
     margin-top: 50px; }
+
+/*# sourceMappingURL=App.css.map */
