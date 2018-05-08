@@ -1,4 +1,5 @@
 import React, { Component} from "react";
+import FlipLabel from './FlipLabel.js';
 
 class About extends Component{
   render(){
@@ -7,7 +8,7 @@ class About extends Component{
 			<div className="title">
 				<ul>
 					<li>Armando Locay. </li>
-					<li>Developer. </li>
+					<li><FlipLabel label={"Developer."} /></li>
 					<li>Artist. </li>
 					<li>Gamer. </li>
 					<li>Outdoor Enthusiast. </li>
