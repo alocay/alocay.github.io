@@ -4,8 +4,8 @@ import classnames from 'classnames';
 
 const Min = 43;
 const Max = 122;
-const Iterations = 35;
-const ChangeTimeout = 100;
+const Iterations = 30;
+const ChangeTimeout = 75;
 
 class FlipChar extends Component{
     constructor(props) {
@@ -21,20 +21,20 @@ class FlipChar extends Component{
         this.changeSymbol();
     }
     
-    componentWillUnmount() {
-        console.log('unmounting: ' + this.props.finalChar);
-    }
-    
     componentWillReceiveProps(nextProps) {
         if (nextProps.finalChar) {
-            console.log('new props: ' + nextProps.finalChar);
-            this.setState({ iteration: 0 }, this.changeSymbol.bind(this));
+            this.setState({ iteration: 0 }, this.undoSymbolAndRepeat.bind(this));
         }
+    }
+    
+    undoSymbolAndRepeat() {
+        const timeout = this.getDelayedTimeout();
+        setTimeout(this.changeSymbol.bind(this), timeout);
     }
     
     changeSymbol() {
         // Add a delay to the first flip if necessary
-        const timeout = (this.props.delay > 0 && this.state.iteration == 0) ? (ChangeTimeout + this.props.delay) : ChangeTimeout;
+        const timeout = this.getDelayedTimeout();
         
         if (this.state.iteration < Iterations) {
             this.setState({ symbol: this.getNewRandomSymbol(), iteration: this.state.iteration + 1 }, () => {
@@ -46,6 +46,10 @@ class FlipChar extends Component{
             if (this.props.onComplete) 
                 this.props.onComplete();
         }
+    }
+    
+    getDelayedTimeout() {
+        return (this.props.delay > 0 && this.state.iteration == 0) ? (ChangeTimeout + this.props.delay) : ChangeTimeout;
     }
     
     getNewRandomSymbol() {

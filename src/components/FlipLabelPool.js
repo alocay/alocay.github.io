@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import FlipLabel from './FlipLabel.js';
 
-const LabelChangeTimeout = 5000;
+const LabelChangeTimeout = 3000;
 
 class FlipLabelPool extends Component{
     constructor(props) {
@@ -31,7 +31,6 @@ class FlipLabelPool extends Component{
     }
     
     changeToNextLabel() {
-        console.log('changing labels...');
         const newActiveLabel = (this.state.activeLabel + 1) % this.props.labels.length;
         this.setState({ activeLabel: newActiveLabel });
     }
