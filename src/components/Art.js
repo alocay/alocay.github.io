@@ -33,12 +33,12 @@ class Art extends Component{
             <div>
                 <div className="title">
                     <ul>
-                        <li>Art.</li>
+                        <li>Art/Photography.</li>
                     </ul>
                 </div>
                 <div className="content full">
                     { this.state.lightbox }
-                    <h4 className="text-left">sketches.</h4>
+                    <h4 className="text-left">artwork.</h4>
                         <div className="gallery">
                             { Drawings.map(d => <FadeInImage key={d.src} 
                                                              src={d.src} 
@@ -50,7 +50,12 @@ class Art extends Component{
                     <hr />
                     <h4 className="text-left">photography.</h4>
                         <div className="gallery">
-                            { Photos.map(d => <FadeInImage key={d.src} src={d.src} preloadSrc={d.preload} caption={d.caption} /> ) }
+                            { Photos.map(d => <FadeInImage key={d.src} 
+                                                           src={d.src} 
+                                                           preloadSrc={d.preload} 
+                                                           width={d.width}
+                                                           height={d.height}
+                                                           onClick={this.showLightbox.bind(this, d.big)} /> ) }
                         </div>
                     <hr />
                 </div>

@@ -7,13 +7,13 @@ body {
 
 div.root-container {
     width: 100%;
-    position: fixed;
     top: 100px;
 	
 	div.content-container {
         width: 100%;
         background-color: #666;
         z-index: 1;
+        padding-top: 60px;
         
         div.title {
             margin: 0 auto;
@@ -40,6 +40,21 @@ div.root-container {
                 width: 100%;
             }
         }
+        
+        .parallax {
+            background-image: url('../assets/photos/asturia_coastal_city_2015_big.png');
+            height: 500px;
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+    }
+}
+
+@media only screen and (max-device-width: 1366px) {
+    .parallax {
+        background-attachment: scroll;
     }
 }
 

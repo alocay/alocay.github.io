@@ -5,8 +5,8 @@ import { sprintf } from 'sprintf-js';
 import classnames from 'classnames';
 
 const NoImageSrc = "../assets/no_image.png";
-const calcHeightFormat = 'calc(%upx - 100px + %s)';
-const captionOffset = '35px';
+const calcHeightFormat = 'calc(%upx + %s)';
+const captionOffset = '0px';
 
 class FadeInImage extends Component{
     constructor(props) {

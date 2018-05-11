@@ -6,12 +6,12 @@ body {
 
 div.root-container {
   width: 100%;
-  position: fixed;
   top: 100px; }
   div.root-container div.content-container {
     width: 100%;
     background-color: #666;
-    z-index: 1; }
+    z-index: 1;
+    padding-top: 60px; }
     div.root-container div.content-container div.title {
       margin: 0 auto;
       padding: 5px;
@@ -30,11 +30,22 @@ div.root-container {
       min-height: 100px; }
       div.root-container div.content-container div.content.full {
         width: 100%; }
+    div.root-container div.content-container .parallax {
+      background-image: url("../assets/photos/asturia_coastal_city_2015_big.png");
+      height: 500px;
+      background-attachment: fixed;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover; }
 
+@media only screen and (max-device-width: 1366px) {
+  .parallax {
+    background-attachment: scroll; } }
 nav {
   z-index: 2;
   width: 100%;
-  background-color: #151515; }
+  background-color: #151515;
+  position: fixed; }
   nav ul {
     list-style-type: none;
     display: block;
@@ -96,15 +107,13 @@ li.subtitle {
     margin-top: 0; }
 
 div.gallery {
-  width: 100%;
-  text-align: left;
-  overflow: auto;
-  white-space: nowrap; }
+  display: flex;
+  flex-wrap: wrap; }
 
 div.image-container {
-  display: inline-block;
   position: relative;
-  overflow: hidden;
+  /*display: inline-block;
+  overflow: hidden;*/
   margin: 0 10px 10px 10px; }
   div.image-container:hover {
     cursor: pointer; }
@@ -140,13 +149,13 @@ div.light-box {
   z-index: 10;
   top: 0;
   left: 0;
-  margin-top: -100px;
+  margin-top: 0;
   width: 100vw;
   height: 100vw;
   background-color: rgba(0, 0, 0, 0.7);
   overflow: auto; }
   div.light-box .light-box-image {
-    position: relative;
-    margin-top: 50px; }
-
-/*# sourceMappingURL=App.css.map */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); }

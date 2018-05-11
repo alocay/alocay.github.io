@@ -1,14 +1,12 @@
 div.gallery {
-    width: 100%;
-    text-align: left;
-    overflow: auto;
-    white-space: nowrap;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 div.image-container {
-    display: inline-block;
     position: relative;
-    overflow: hidden;
+    /*display: inline-block;
+    overflow: hidden;*/
     margin: 0 10px 10px 10px;
     
     &:hover {
@@ -57,14 +55,16 @@ div.light-box {
     z-index: 10;
     top: 0;
     left: 0;
-    margin-top: -100px;
+    margin-top: 0;
     width: 100vw;
     height: 100vw;
     background-color: rgba(0, 0, 0, 0.7);
     overflow: auto;
     
     .light-box-image {
-        position: relative;
-        margin-top: 50px;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
     }
 }
