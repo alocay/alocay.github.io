@@ -19,23 +19,19 @@ nav {
 			a {
 				display: block;
 				padding: 16px 16px;
-				color: white;
+				color: $link-color;
 				text-align: center;
 				text-decoration: none;
 				
-				&.active {
-					background-color: #dedede;
-					color: black;
-				}
-				
 				&:hover {
 					background-color: #212121;
-					color: white;
+					color: $link-hover-color;
 				}
 				
 				&.active {
 					position: relative;
-					background: #dedede;
+                    background-color: #dedede;
+					color: $link-active-color;
 					border: 2px solid #dedede;
 					
 					&:after {

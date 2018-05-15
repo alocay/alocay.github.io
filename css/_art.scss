@@ -1,3 +1,7 @@
+div.gallery-header {
+    color: #ddd;
+}
+
 div.gallery {
     display: flex;
     flex-wrap: wrap;
@@ -36,7 +40,7 @@ div.image-container {
             overflow-wrap: normal;
             text-align: left;
             color: #a0a0a0;
-            background-color: rgba(0, 0, 0, 0.5);
+            background-color: rgba(0, 0, 0, 0.7);
         }
     }
     

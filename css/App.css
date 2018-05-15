@@ -4,39 +4,43 @@ body {
   /* binding-dark.png courtesy of Tia Newbury. Found @ http://subtlepatterns.com/ */
   font-family: monospace; }
 
+a {
+  text-decoration: none;
+  color: #f03c69; }
+  a:hover {
+    color: #fff; }
+
+div.inline > div {
+  display: inline-block; }
+
 div.root-container {
   width: 100%;
   top: 100px; }
   div.root-container div.content-container {
     width: 100%;
-    background-color: #666;
+    background-color: rgba(50, 50, 50, 0.5);
     z-index: 1;
-    padding-top: 60px; }
-    div.root-container div.content-container div.title {
-      margin: 0 auto;
-      padding: 5px;
-      padding-top: 20px;
-      font-size: 22pt;
-      font-weight: bold;
-      color: #151515;
-      width: 330px; }
-      div.root-container div.content-container div.title ul {
-        list-style-type: none; }
+    padding-top: 60px;
+    color: rgba(255, 255, 255, 0.5);
+    /*.parallax {
+        background-image: url('../assets/photos/asturia_coastal_city_2015_big.png');
+        height: 250px;
+        background-attachment: fixed;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }*/ }
+    div.root-container div.content-container > div {
+      min-height: 285px; }
     div.root-container div.content-container div.content {
-      width: 50%;
       margin: 0 auto;
       padding: 25px;
       text-align: center;
       min-height: 100px; }
-      div.root-container div.content-container div.content.full {
-        width: 100%; }
-    div.root-container div.content-container .parallax {
-      background-image: url("../assets/photos/asturia_coastal_city_2015_big.png");
-      height: 500px;
-      background-attachment: fixed;
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: cover; }
+      div.root-container div.content-container div.content.half {
+        width: 50%; }
+      div.root-container div.content-container div.content.eighty {
+        width: 80%; }
 
 @media only screen and (max-device-width: 1366px) {
   .parallax {
@@ -59,18 +63,16 @@ nav {
       nav ul li a {
         display: block;
         padding: 16px 16px;
-        color: white;
+        color: #f03c69;
         text-align: center;
         text-decoration: none; }
-        nav ul li a.active {
-          background-color: #dedede;
-          color: black; }
         nav ul li a:hover {
           background-color: #212121;
-          color: white; }
+          color: #fff; }
         nav ul li a.active {
           position: relative;
-          background: #dedede;
+          background-color: #dedede;
+          color: black;
           border: 2px solid #dedede; }
           nav ul li a.active:after {
             top: 100%;
@@ -87,12 +89,33 @@ nav {
             border-width: 16px;
             margin-left: -16px; }
 
-div.content table {
-  width: auto; }
-  div.content table td {
-    text-align: left; }
-    div.content table td:last-child {
-      padding-left: 20px; }
+div.header {
+  margin: 0 auto;
+  padding: 5px;
+  padding-top: 20px;
+  font-size: 22pt;
+  font-weight: bold;
+  color: #f03c69;
+  width: 330px; }
+  div.header ul {
+    list-style-type: none; }
+    div.header ul li:first-child {
+      color: #fff; }
+
+div.contact {
+  width: 240px;
+  min-width: 240px; }
+
+div.info {
+  margin: 20px auto 0 auto;
+  width: 250px; }
+
+div.work-entry {
+  padding: 15px; }
+  div.work-entry:nth-child(even) {
+    background-color: rgba(100, 100, 100, 0.2); }
+  div.work-entry hr {
+    background-color: rgba(255, 255, 255, 0.5); }
 
 li.subtitle {
   font-size: 8pt;
@@ -105,6 +128,9 @@ li.subtitle {
       color: inherit; }
   li.subtitle:last-child {
     margin-top: 0; }
+
+div.gallery-header {
+  color: #ddd; }
 
 div.gallery {
   display: flex;
@@ -135,7 +161,7 @@ div.image-container {
       overflow-wrap: normal;
       text-align: left;
       color: #a0a0a0;
-      background-color: rgba(0, 0, 0, 0.5); }
+      background-color: rgba(0, 0, 0, 0.7); }
   div.image-container img.image-preload {
     position: absolute;
     z-index: 1;

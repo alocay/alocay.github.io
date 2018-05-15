@@ -1,8 +1,27 @@
 @import 'kube.min.css';
 
+$content-bg: rgba(50, 50, 50, 0.5);
+$text-color: rgba(255, 255, 255, 0.5);
+$link-color: #f03c69;
+$link-hover-color: #fff;
+$link-active-color: black;
+
 body {
 	background: #222 url('../assets/dark-triangles.png') repeat; /* binding-dark.png courtesy of Tia Newbury. Found @ http://subtlepatterns.com/ */
     font-family: monospace;
+}
+
+a {
+    text-decoration: none;
+    color: $link-color;
+    
+    &:hover {
+        color: $link-hover-color;
+    }
+}
+
+div.inline > div {
+    display: inline-block;
 }
 
 div.root-container {
@@ -11,44 +30,38 @@ div.root-container {
 	
 	div.content-container {
         width: 100%;
-        background-color: #666;
+        background-color: $content-bg;
         z-index: 1;
         padding-top: 60px;
+        color: $text-color;
         
-        div.title {
-            margin: 0 auto;
-            padding: 5px;
-            padding-top: 20px;
-            font-size: 22pt;
-			font-weight: bold;
-            color: #151515;
-            width: 330px;
-            
-            ul {
-                list-style-type: none;
-            }
+        & > div {
+            min-height: 285px;
         }
 
-        div.content { 
-            width: 50%;
+        div.content {
             margin: 0 auto;
             padding: 25px;
             text-align: center;
             min-height: 100px;
             
-            &.full {
-                width: 100%;
+            &.half {
+                width: 50%;
+            }
+            
+            &.eighty {
+                width: 80%;
             }
         }
         
-        .parallax {
+        /*.parallax {
             background-image: url('../assets/photos/asturia_coastal_city_2015_big.png');
-            height: 500px;
+            height: 250px;
             background-attachment: fixed;
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
-        }
+        }*/
     }
 }
 

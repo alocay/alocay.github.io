@@ -1,3 +1,20 @@
+div.info {
+    margin: 20px auto 0 auto;
+    width: 250px;
+}
+
+div.work-entry {
+    padding: 15px;
+    
+    &:nth-child(even) {
+        background-color: rgba(100, 100, 100, 0.2);
+    }
+    
+    hr {
+        background-color: $text-color;
+    }
+}
+
 li.subtitle {
     font-size: 8pt;
     line-height: normal;

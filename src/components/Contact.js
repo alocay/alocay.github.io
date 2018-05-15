@@ -4,34 +4,12 @@ class Contact extends Component{
   render(){
     return(
 		<div>
-			<div className="title">
-				<ul>
-					<li>Contact.</li>
-				</ul>
-			</div>
-			<div className="content">
-                <table className="unstyled">
-                    <tr>
-                        <td>Email:</td>
-                        <td>alocay@gmail.com</td>
-                    </tr>
-                    <tr>
-                        <td>LinkedIn:</td>
-                        <td>https://github.com/alocay</td>
-                    </tr>
-                    <tr>
-                        <td>Github:</td>
-                        <td>https://www.linkedin.com/in/armandolocay</td>
-                    </tr>
-                    <tr>
-                        <td>Stackoverflow:</td>
-                        <td>https://stackoverflow.com/users/278447/fizz?tab=profile</td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td>https://stackoverflow.com/story/alocay</td>
-                    </tr>
-                </table>
+			<div className="content contact text-left">
+                <div className="text-left"><a href="mailto:alocay@gmail.com">alocay@gmail.com</a></div> 
+                <div className="text-left"><a href="http://github.com/alocay">GitHub</a></div>
+                <div className="text-left"><a href="https://www.linkedin.com/in/armandolocay">LinkedIn</a></div>
+                <div className="text-left"><a href="https://stackoverflow.com/users/278447/fizz?tab=profile">Stackoverflow</a></div>
+                <div className="text-left"><a href="https://stackoverflow.com/story/alocay">Stackoverflow Story</a></div>
 			</div>
 		</div>
     );

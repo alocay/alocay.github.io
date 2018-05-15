@@ -31,14 +31,9 @@ class Art extends Component{
     render(){
         return(
             <div>
-                <div className="title">
-                    <ul>
-                        <li>Art/Photography.</li>
-                    </ul>
-                </div>
-                <div className="content full">
+                <div className="content eighty">
                     { this.state.lightbox }
-                    <h4 className="text-left">artwork.</h4>
+                    <div className="text-left gallery-header">artwork.</div>
                         <div className="gallery">
                             { Drawings.map(d => <FadeInImage key={d.src} 
                                                              src={d.src} 
@@ -48,7 +43,7 @@ class Art extends Component{
                                                              onClick={this.showLightbox.bind(this, d.big)}/> ) }
                         </div>
                     <hr />
-                    <h4 className="text-left">photography.</h4>
+                    <div className="text-left gallery-header">photography.</div>
                         <div className="gallery">
                             { Photos.map(d => <FadeInImage key={d.src} 
                                                            src={d.src} 

@@ -1,0 +1,22 @@
+div.header {
+    margin: 0 auto;
+    padding: 5px;
+    padding-top: 20px;
+    font-size: 22pt;
+    font-weight: bold;
+    color: $link-color;
+    width: 330px;
+    
+    ul {
+        list-style-type: none;
+        
+        li:first-child {
+            color: #fff;
+        }
+    }
+}
+
+div.flip-label {
+    span.flip-char {
+    }
+}
