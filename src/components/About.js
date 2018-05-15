@@ -1,6 +1,7 @@
 import React, { Component} from "react";
 import FlipLabelPool from './FlipLabelPool.js';
 import FlipLabel from './FlipLabel.js';
+import Fuzzy from './fuzzy.js';
 
 const words = [
     ["Developer.", "Engineer.", "Testing.", "Programmer.", "Algorithm.", ],
@@ -11,20 +12,34 @@ const words = [
 ];
 
 class About extends Component{
-  render(){
-    return(
-		<div>
-			<div className="header">
-				<ul>
-					<li><FlipLabel label={"Armando Locay."} /></li>
-                    { words.map((w, i) => <li key={i}><FlipLabelPool labels={w} /></li>) }
-				</ul>
-			</div>
-			<div className="content">
-			</div>
-		</div>
-    );
-  }
+    constructor(props) {
+        super(props);
+        
+        this.state = {
+            color: 'blue'
+        }
+    }
+    
+    componentDidMount() {
+    }
+    
+    render(){
+        return(
+            <div>
+                <div className="header">
+                    <ul>
+                        <li><FlipLabel label={"Armando Locay."} /></li>
+                        { words.map((w, i) => <li key={i}><FlipLabelPool labels={w} /></li>) }
+                    </ul>
+                </div>
+                <div className="content">
+                    <Fuzzy url={require("../../assets/photos/asturia_coastal_city_2015.png")} 
+                               color={this.state.color}
+                               useImg={"true"}/>
+                </div>
+            </div>
+        );
+    }
 }
 
 export default About;
