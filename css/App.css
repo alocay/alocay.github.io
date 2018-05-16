@@ -1,4 +1,8 @@
 @import url(kube.min.css);
+html {
+  min-height: 100%;
+  position: relative; }
+
 body {
   background: #222 url("../assets/dark-triangles.png") repeat;
   /* binding-dark.png courtesy of Tia Newbury. Found @ http://subtlepatterns.com/ */
@@ -175,9 +179,9 @@ div.light-box {
   z-index: 10;
   top: 0;
   left: 0;
+  bottom: 0;
   margin-top: 0;
   width: 100vw;
-  height: 100vw;
   background-color: rgba(0, 0, 0, 0.7);
   overflow: auto; }
   div.light-box .light-box-image {
@@ -185,5 +189,3 @@ div.light-box {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%); }
-
-/*# sourceMappingURL=App.css.map */

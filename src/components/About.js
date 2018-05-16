@@ -1,7 +1,6 @@
 import React, { Component} from "react";
-import FlipLabelPool from './FlipLabelPool.js';
-import FlipLabel from './FlipLabel.js';
-import Fuzzy from './fuzzy.js';
+import FlipLabelPool from './FlipLabel/FlipLabelPool.js';
+import FlipLabel from './FlipLabel/FlipLabel.js';
 
 const words = [
     ["Developer.", "Engineer.", "Testing.", "Programmer.", "Algorithm.", ],
@@ -33,9 +32,6 @@ class About extends Component{
                     </ul>
                 </div>
                 <div className="content">
-                    <Fuzzy url={require("../../assets/photos/asturia_coastal_city_2015.png")} 
-                               color={this.state.color}
-                               useImg={"true"}/>
                 </div>
             </div>
         );

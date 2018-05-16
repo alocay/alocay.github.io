@@ -1,7 +1,7 @@
 import React, { Component} from "react";
-import FadeInImage from "./FadeInImage.js";
-import LightBox from "./LightBox.js";
-import { Drawings, Photos } from "./GalleryImages.js"
+import FadeInImage from "./Gallery/FadeInImage.js";
+import LightBox from "./Gallery/LightBox.js";
+import { Drawings, Photos } from "./Gallery/GalleryImages.js"
 
 class Art extends Component{
     constructor(props) {

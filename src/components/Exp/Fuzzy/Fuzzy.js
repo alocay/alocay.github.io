@@ -1,6 +1,25 @@
 import React, { Component} from "react";
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
+import FuzzyLogic from './FuzzyLogic.js';
+
+const Filters = {
+    Color: "color",
+    Invert: "invert",
+    Greyscale: "greyscale",
+    Pixelate: "pixelate",
+    BoxBlur: "boxblur",
+    HorizontalBlur: "horizontalblur",
+    VeriticalBlur: "verticalblur",
+    GuassianBlur: "guassianblur",
+    Emboss: "emboss",
+    Luminosity: "luminosity",
+    Lighten: "lighten",
+    Darken: "darken",
+    Sharpen: "sharpen",
+    Edge: "edgetrace",
+    Convolution: "convolution"
+}
 
 class Fuzzy extends Component{
     constructor(props) {
@@ -11,8 +30,6 @@ class Fuzzy extends Component{
         this.imageData = null;
         this.canvasRef = React.createRef();
         this.canvasContext = null;
-        this.width = 0;
-        this.height = 0;
     }
     
     componentDidMount() {
@@ -23,8 +40,8 @@ class Fuzzy extends Component{
     }
     
     componentWillReceiveProps(nextProps) {
-        if (nextProps.color) {
-            this.processImage(nextProps.color, nextProps.useImg);
+        if (nextProps.filter) {
+            this.processImage(nextProps.filter, nextProps.parameter, nextProps.useImg);
         }
     }
     
@@ -35,27 +52,21 @@ class Fuzzy extends Component{
         this.canvasContext.drawImage(this.originalImage, 0, 0, this.originalImage.width, this.originalImage.height);
         this.imageData = this.canvasContext.getImageData(0, 0, this.originalImage.width, this.originalImage.height);
         
-        this.processImage(this.props.color, this.props.useImg);
+        this.processImage(this.props.filter, this.props.parameter, this.props.useImg);
     }
     
-    processImage(color, useImg) {        
-        console.log('color: ' + color);
-        for (var i = 0; i < this.imageData.data.length; i += 4) {
-            // simply set the pixels not related to the specified color to 0
-            switch (color) {
-                case 'red':
-                    this.imageData.data[i + 1] = 0;
-                    this.imageData.data[i + 2] = 0;
+    processImage(filter, parameter, useImg) {        
+        switch (filter) {
+            case Filters.Color:
+                FuzzyLogic.colorFilter(this.imageData, parameter);
                 break;
-                case 'green':
-                    this.imageData.data[i] = 0;
-                    this.imageData.data[i + 2] = 0;
+            case Filters.Invert: 
+                FuzzyLogic.invert(this.imageData);
                 break;
-                case 'blue':
-                    this.imageData.data[i] = 0;
-                    this.imageData.data[i + 1] = 0;
+            case Filters.Pixelate:
+                console.log(parameter + ' ' + this.originalImage.width + ' ' + this.originalImage.height);
+                FuzzyLogic.pixelate(this.imageData, parameter, this.originalImage.width, this.originalImage.height);
                 break;
-            }
         }
         
         this.canvasContext.putImageData(this.imageData, 0, 0);
@@ -77,7 +88,11 @@ class Fuzzy extends Component{
 
 Fuzzy.propTypes = {
     url: PropTypes.string.isRequired,
-    color: PropTypes.string.isRequired,
+    filter: PropTypes.string.isRequired,
+    parameter: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number
+    ]),
     useImg: PropTypes.bool
 };
 
@@ -85,4 +100,5 @@ Fuzzy.defaultPropTypes = {
     useImg: false
 }
 
+export { Filters };
 export default Fuzzy;
