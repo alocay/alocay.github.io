@@ -28,37 +28,37 @@ class ExpList extends Component{
                     </div>
                     
                     <div className="text-left work-entry">
-                        <a href ="http://alocay.github.io/projects/fuzzyjs/index.html">FuzzyJS</a> (2014)
+                        <a href="http://alocay.github.io/projects/fuzzyjs/index.html">FuzzyJS</a> (2014)
                         <hr />
                         <p>A simple image filter/processing JavaScript library.</p>
                     </div>
                     
                     <div className="text-left work-entry">
-                        <Link to={'exp/fuzzy'}>Fuzzy React</Link> (2018)
+                        <a href="https://alocay.github.io/react-image-fuzzy">React Fuzzy</a> (2018)
                         <hr />
-                        <p>A simple image filter/processing JavaScript library.</p>
+                        <p>A React component implementation of FuzzyJS</p>
                     </div>
                     
                     <div className="text-left work-entry">
                         Potential Fields (2014)
                         <hr />
-                        <p>Basic potential fields visualization.</p>
+                        <p>Basic potential fields visualization using paper.js.</p>
                     </div>
                     
                     <div className="text-left work-entry">
                         Flies (2014)
                         <hr />
-                        <p>Flock algorithm visualization based on various boids algorithms (primarily Processing.js's) with some tweaks</p>
+                        <p>Flock algorithm visualization based on various boids algorithms with some tweaks using paper.js (based primarily around Processing.js)</p>
                     </div>
                     
                     <div className="text-left work-entry">
                         Escape (2014)
                         <hr />
-                        <p>A basic unfinished game exploring masking and shadows.</p>
+                        <p>A basic (unfinished) game exploring masking and shadows using paper.js.</p>
                     </div>
                     
                     <div className="text-left work-entry">
-                        Memofire (2011 - defunct)
+                        Memofire (2011) <i>defunct</i>
                         <hr />
                         <p>A Ruby on Rails flashcard studying application (contributor).</p>
                     </div>
