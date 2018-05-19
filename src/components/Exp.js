@@ -25,7 +25,7 @@ class Work extends Component{
                     </div>
                     
                     <div className="text-left work-entry">
-                        <a href="http://alocay.github.io/projects/fuzzyjs/index.html">FuzzyJS</a> (2014)
+                        FuzzyJS (2014)
                         <hr />
                         <p>A simple image filter/processing JavaScript library.</p>
                     </div>
