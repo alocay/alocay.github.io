@@ -5,8 +5,8 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 module.exports = {
     entry: path.join(__dirname, "src"),
     output: {
-        path: path.join(__dirname, "docs"),
-        filename: "bundle.js"
+        path: path.join(__dirname),
+        filename: "docs/bundle.js"
     },
     module: {
         rules: [
@@ -22,7 +22,10 @@ module.exports = {
             },
             {
                 test: /\.(gif|png|jpe?g|svg)$/i,
-                use: [ 'file-loader', 'image-webpack-loader' ]
+                loader: 'file-loader',
+                query: {
+                    name: 'docs/[name].[ext]'
+                }
             }
         ]
     },
@@ -31,7 +34,7 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: path.join(__dirname, "src/index.html")
         }),
-        new webpack.HotModuleReplacementPlugin() 
+        new webpack.HotModuleReplacementPlugin()
     ],
     devServer: {
         contentBase: path.join(__dirname,'docs'),
