@@ -6,7 +6,7 @@ const Drawings = [
         width: 215,
         height: 215,
         big: {
-            src: require("../../../assets/drawings/clothflag_big.png"),
+            src: "https://i.imgur.com/FsKDuLy.png",
             preload: require("../../../assets/drawings/clothflag_big_placeholder.png"),
             width: 861,
             height: 538,
@@ -19,7 +19,7 @@ const Drawings = [
         width: 215,
         height: 215,
         big: {
-            src: require("../../../assets/drawings/monster_big.png"),
+            src: "https://i.imgur.com/uZV1ou1.png",
             preload: require("../../../assets/drawings/monster_big_placeholder.png"),
             width: 1089,
             height: 703,
@@ -32,7 +32,7 @@ const Drawings = [
         width: 215,
         height: 215,
         big: {
-            src: require("../../../assets/drawings/squid_big.png"),
+            src: "https://i.imgur.com/AOjGWZZ.png",
             preload: require("../../../assets/drawings/squid_big_placeholder.png"),
             width: 603,
             height: 825,
@@ -45,7 +45,7 @@ const Drawings = [
         width: 215,
         height: 215,
         big: {
-            src: require("../../../assets/drawings/wineglass_big.png"),
+            src: "https://i.imgur.com/L1VXNjo.png",
             preload: require("../../../assets/drawings/wineglass_big_placeholder.png"),
             width: 704,
             height: 825,
@@ -58,7 +58,7 @@ const Drawings = [
         width: 206,
         height: 206,
         big: {
-            src: require("../../../assets/drawings/layered_portrait_2007_big.png"),
+            src: "https://i.imgur.com/F0c5PFf.png",
             preload: require("../../../assets/drawings/layered_portrait_2007_placeholder.png"),
             width: 206,
             height: 359,
@@ -74,7 +74,7 @@ const Photos = [
         width: 215,
         height: 215,
         big: {
-            src: require("../../../assets/photos/asturia_coastal_city_2015_big.png"),
+            src: "https://i.imgur.com/q5URJly.png",
             preload: require("../../../assets/photos/asturia_coastal_city_2015_big_placeholder.png"),
             width: 816,
             height: 612,
@@ -87,7 +87,7 @@ const Photos = [
         width: 215,
         height: 215,
         big: {
-            src: require("../../../assets/photos/spain_flowers_2015_big.png"),
+            src: "https://i.imgur.com/oEYU2vz.png",
             preload: require("../../../assets/photos/spain_flowers_2015_big_placeholder.png"),
             width: 612,
             height: 816,
@@ -100,7 +100,7 @@ const Photos = [
         width: 215,
         height: 215,
         big: {
-            src: require("../../../assets/photos/spain_flowers2_2015_big.png"),
+            src: "https://i.imgur.com/oXBbD7H.png",
             preload: require("../../../assets/photos/spain_flowers2_2015_big_placeholder.png"),
             width: 612,
             height: 816,
@@ -113,7 +113,7 @@ const Photos = [
         width: 215,
         height: 215,
         big: {
-            src: require("../../../assets/photos/mead_botanical_bee_2016_big.png"),
+            src: "https://i.imgur.com/BWqbW8i.png",
             preload: require("../../../assets/photos/mead_botanical_bee_2016_big_placeholder.png"),
             width: 560,
             height: 840,
@@ -126,7 +126,7 @@ const Photos = [
         width: 215,
         height: 215,
         big: {
-            src: require("../../../assets/photos/mead_botanical_bridge_2016_big.png"),
+            src: "https://i.imgur.com/xdmGeo5.png",
             preload: require("../../../assets/photos/mead_botanical_bridge_2016_big_placeholder.png"),
             width: 560,
             height: 840,
@@ -139,7 +139,7 @@ const Photos = [
         width: 215,
         height: 215,
         big: {
-            src: require("../../../assets/photos/mead_botanical_grasshopper_2016_big.png"),
+            src: "https://i.imgur.com/SNnPjvX.png",
             preload: require("../../../assets/photos/mead_botanical_grasshopper_2016_big_placeholder.png"),
             width: 840,
             height: 560,
@@ -152,7 +152,7 @@ const Photos = [
         width: 215,
         height: 215,
         big: {
-            src: require("../../../assets/photos/mead_botanical_orange_2016_big.png"),
+            src: "https://i.imgur.com/QpDJBVi.png",
             preload: require("../../../assets/photos/mead_botanical_orange_2016_big_placeholder.png"),
             width: 840,
             height: 560,
@@ -165,7 +165,7 @@ const Photos = [
         width: 215,
         height: 215,
         big: {
-            src: require("../../../assets/photos/mead_botanical_palms_2016_big.png"),
+            src: "https://i.imgur.com/FUI5C5o.png",
             preload: require("../../../assets/photos/mead_botanical_palms_2016_big_placeholder.png"),
             width: 560,
             height: 840,
@@ -178,7 +178,7 @@ const Photos = [
         width: 215,
         height: 215,
         big: {
-            src: require("../../../assets/photos/mead_botanical_seeds_2016_big.png"),
+            src: "https://i.imgur.com/iCTbXva.png",
             preload: require("../../../assets/photos/mead_botanical_seeds_2016_big_placeholder.png"),
             width: 840,
             height: 560,
@@ -191,7 +191,7 @@ const Photos = [
         width: 430,
         height: 205,
         big: {
-            src: require("../../../assets/photos/spain_pano_2015_big.png"),
+            src: "https://i.imgur.com/GVS45Sv.png",
             preload: require("../../../assets/photos/spain_pano_2015_big_placeholder.png"),
             width: 960,
             height: 207,
@@ -204,7 +204,7 @@ const Photos = [
         width: 430,
         height: 205,
         big: {
-            src: require("../../../assets/photos/paramo_pano_2015_big.png"),
+            src: "https://i.imgur.com/C9HA27C.png",
             preload: require("../../../assets/photos/paramo_pano_2015_big_placeholder.png"),
             width: 960,
             height: 207,
