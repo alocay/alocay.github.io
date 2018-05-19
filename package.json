@@ -4,7 +4,6 @@
   "description": "Personal site for Armando Locay",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack-dev-server --mode development",
     "build": "webpack --mode production"
   },
@@ -17,7 +16,7 @@
   "bugs": {
     "url": "https://github.com/alocay/alocay.github.io/issues"
   },
-  "homepage": "https://github.com/alocay/alocay.github.io#readme",
+  "homepage": "https://alocay.github.io",
   "dependencies": {
     "classnames": "^2.2.5",
     "npm": "^6.0.1",
