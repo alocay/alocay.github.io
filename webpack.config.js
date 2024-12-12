@@ -1,6 +1,7 @@
 const path = require("path");
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
     entry: path.join(__dirname, "src"),
@@ -13,31 +14,39 @@ module.exports = {
             {
                 test: /\.(js|jsx)$/,
                 exclude: /(node_modules|bower_components|projects)/,
-                loader: 'babel-loader',
-                options: { presets: ['env'] }
+                use: {
+                    loader: 'babel-loader',
+                    options: { presets: ['@babel/preset-env', '@babel/preset-react'] }
+                },
             },
             {
                 test: /\.css$/,
-                use: [ 'style-loader', 'css-loader' ]
+                use: [ MiniCssExtractPlugin.loader, 'css-loader' ]
             },
             {
                 test: /\.(gif|png|jpe?g|svg)$/i,
-                loader: 'file-loader',
-                query: {
-                    name: 'docs/[name].[ext]'
-                }
+                type: 'asset/resource',
+                generator: {
+                    filename: 'docs/[name][ext]', // Output path and naming convention
+                },
             }
         ]
     },
     resolve: { extensions: ['*', '.js', '.jsx'] },
-    plugins: [ 
+    plugins: [
         new HtmlWebpackPlugin({
             template: path.join(__dirname, "src/index.html")
         }),
-        new webpack.HotModuleReplacementPlugin()
+        //new webpack.HotModuleReplacementPlugin(),
+        new MiniCssExtractPlugin({
+            filename: '[name].[contenthash].css',  // Use contenthash for production
+            chunkFilename: '[id].[contenthash].css',
+        }),
     ],
     devServer: {
-        contentBase: path.join(__dirname,'docs'),
+        static: {
+            directory: path.join(__dirname,'docs'),
+        },
         port: 3000,
         historyApiFallback: true
     }
