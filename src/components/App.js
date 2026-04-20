@@ -1,24 +1,26 @@
-import React, { Component} from "react";
-import PropTypes from 'prop-types';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+import React from "react";
+import { Routes, Route } from 'react-router-dom';
 import Navbar from "./Navbar.js";
+import About from "./About.js";
+import Exp from "./Exp.js";
+import Art from "./Art.js";
+import Contact from "./Contact.js";
 import "../../css/App.css";
 
-class App extends Component{
-  render(){
-    return(
-		<div className="root-container">
-			<Navbar />
-			<div className="content-container">
-				{this.props.children}
-			</div>
-		</div>
+function App() {
+    return (
+        <div className="root-container">
+            <Navbar />
+            <div className="content-container">
+                <Routes>
+                    <Route path="/" element={<About />} />
+                    <Route path="/exp" element={<Exp />} />
+                    <Route path="/art" element={<Art />} />
+                    <Route path="/contact" element={<Contact />} />
+                </Routes>
+            </div>
+        </div>
     );
-  }
 }
-
-App.propTypes = {
-	children: PropTypes.node,
-};
 
 export default App;
