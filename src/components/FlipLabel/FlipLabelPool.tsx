@@ -1,14 +1,17 @@
 import React, { useState, useEffect, useRef } from 'react';
-import PropTypes from 'prop-types';
-import FlipLabel from './FlipLabel.js';
+import FlipLabel from './FlipLabel';
 
 const LabelChangeTimeout = 3000;
 
-function FlipLabelPool({ labels }) {
-    const [activeLabel, setActiveLabel] = useState(
+interface FlipLabelPoolProps {
+    labels: string[];
+}
+
+function FlipLabelPool({ labels }: FlipLabelPoolProps) {
+    const [activeLabel, setActiveLabel] = useState<number | null>(
         labels && labels.length ? 0 : null
     );
-    const timeoutRef = useRef(null);
+    const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
     useEffect(() => {
         setActiveLabel(labels && labels.length ? 0 : null);
@@ -23,7 +26,7 @@ function FlipLabelPool({ labels }) {
     const changeToNextLabel = () => {
         if (!labels || labels.length <= 1) return;
         setActiveLabel(prev => {
-            let next;
+            let next: number;
             do {
                 next = Math.floor(Math.random() * labels.length);
             } while (next === prev);
@@ -43,9 +46,5 @@ function FlipLabelPool({ labels }) {
         </div>
     );
 }
-
-FlipLabelPool.propTypes = {
-    labels: PropTypes.array.isRequired,
-};
 
 export default FlipLabelPool;

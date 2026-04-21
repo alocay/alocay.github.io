@@ -1,8 +1,12 @@
 import React, { useRef, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import FlipChar from './FlipChar.js';
+import FlipChar from './FlipChar';
 
-function FlipLabel({ label, onComplete }) {
+interface FlipLabelProps {
+    label: string;
+    onComplete?: () => void;
+}
+
+function FlipLabel({ label, onComplete }: FlipLabelProps) {
     const completedCharsRef = useRef(0);
     const labelChars = label ? label.split('') : [];
 
@@ -25,10 +29,5 @@ function FlipLabel({ label, onComplete }) {
         </div>
     );
 }
-
-FlipLabel.propTypes = {
-    label: PropTypes.string.isRequired,
-    onComplete: PropTypes.func,
-};
 
 export default FlipLabel;
