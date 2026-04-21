@@ -1,61 +1,51 @@
-import React, { Component} from "react";
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames';
 import FlipLabel from './FlipLabel.js';
 
 const LabelChangeTimeout = 3000;
 
-class FlipLabelPool extends Component{
-    constructor(props) {
-        super(props);
-        
-        this.state = {
-            activeLabel: null
+function FlipLabelPool({ labels }) {
+    const [activeLabel, setActiveLabel] = useState(
+        labels && labels.length ? 0 : null
+    );
+    const timeoutRef = useRef(null);
+
+    useEffect(() => {
+        setActiveLabel(labels && labels.length ? 0 : null);
+    }, [labels]);
+
+    useEffect(() => {
+        return () => {
+            if (timeoutRef.current) clearTimeout(timeoutRef.current);
         };
-    }
-    
-    componentDidMount() {
-        this.initState(this.props);
-    }
-    
-    componentWillReceiveProps(nextProps) {
-        this.initState(nextProps);
-    }
-    
-    initState(props) {
-        if (props.labels && props.labels.length) {
-            this.setState({ activeLabel: 0 });
-        } else {
-            this.setState({ activeLabel: null });
-        }
-    }
-    
-    changeToNextLabel() {
-        const { labels } = this.props;
-        const { activeLabel } = this.state;
-        if (labels.length <= 1) return;
-        let next;
-        do {
-            next = Math.floor(Math.random() * labels.length);
-        } while (next === activeLabel);
-        this.setState({ activeLabel: next });
-    }
-    
-    finalLabelShown() {
-        setTimeout(this.changeToNextLabel.bind(this), LabelChangeTimeout);
-    }
-    
-    render(){
-        if (this.state.activeLabel == null || !this.props.labels || !this.props.labels.length) return (<div></div>);
-        
-        return(
-            <div>{ <FlipLabel label={this.props.labels[this.state.activeLabel]} onComplete={this.finalLabelShown.bind(this)} /> }</div>
-        );
-    }
+    }, []);
+
+    const changeToNextLabel = () => {
+        if (!labels || labels.length <= 1) return;
+        setActiveLabel(prev => {
+            let next;
+            do {
+                next = Math.floor(Math.random() * labels.length);
+            } while (next === prev);
+            return next;
+        });
+    };
+
+    const finalLabelShown = () => {
+        timeoutRef.current = setTimeout(changeToNextLabel, LabelChangeTimeout);
+    };
+
+    if (activeLabel == null || !labels || !labels.length) return <div></div>;
+
+    return (
+        <div>
+            <FlipLabel label={labels[activeLabel]} onComplete={finalLabelShown} />
+        </div>
+    );
 }
 
 FlipLabelPool.propTypes = {
-    labels: PropTypes.array.isRequired
+    labels: PropTypes.array.isRequired,
 };
 
 export default FlipLabelPool;

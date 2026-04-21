@@ -1,75 +1,56 @@
-import React, { Component} from "react";
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames';
 
 const Min = 43;
 const Max = 122;
 const Iterations = 10;
 const ChangeTimeout = 60;
 
-class FlipChar extends Component{
-    constructor(props) {
-        super(props);
-        
-        this.state = {
-            symbol: null,
-            iteration: 0
+function FlipChar({ finalChar, delay, onComplete }) {
+    const [symbol, setSymbol] = useState(null);
+    const iterationRef = useRef(0);
+
+    useEffect(() => {
+        iterationRef.current = 0;
+        let active = true;
+
+        const getNewRandomSymbol = () => {
+            const symbolCode = Math.floor(Math.random() * (Max - Min) + Min);
+            return String.fromCharCode(symbolCode);
         };
-    }
-    
-    componentDidMount() {
-        this._scheduleStart();
-    }
 
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.finalChar) {
-            this.setState({ iteration: 0 }, this._scheduleStart.bind(this));
-        }
-    }
+        const changeSymbol = () => {
+            if (!active) return;
+            if (iterationRef.current < Iterations) {
+                iterationRef.current += 1;
+                setSymbol(getNewRandomSymbol());
+                setTimeout(changeSymbol, ChangeTimeout);
+            } else {
+                setSymbol(finalChar);
+                if (onComplete) onComplete();
+            }
+        };
 
-    _scheduleStart() {
-        const delay = this.props.delay || 0;
-        if (delay > 0) {
-            setTimeout(this.changeSymbol.bind(this), delay);
-        } else {
-            this.changeSymbol();
-        }
-    }
+        const timeoutId = setTimeout(changeSymbol, delay || 0);
 
-    changeSymbol() {
-        if (this.state.iteration < Iterations) {
-            this.setState(
-                prev => ({ symbol: this.getNewRandomSymbol(), iteration: prev.iteration + 1 }),
-                () => { setTimeout(this.changeSymbol.bind(this), ChangeTimeout); }
-            );
-        } else {
-            this.setState({ symbol: this.props.finalChar });
-            if (this.props.onComplete)
-                this.props.onComplete();
-        }
-    }
-    
-    getNewRandomSymbol() {
-        const symbolCode = Math.floor(Math.random() * (Max - Min) + Min);
-        return String.fromCharCode(symbolCode);
-    }
-    
-    render(){
-        return(
-            <span className="flip-char">{this.state.symbol}</span>
-        );
-    }
+        return () => {
+            active = false;
+            clearTimeout(timeoutId);
+        };
+    }, [finalChar, delay]);
+
+    return <span className="flip-char">{symbol}</span>;
 }
 
 FlipChar.propTypes = {
     finalChar: PropTypes.string.isRequired,
     delay: PropTypes.number,
-    onComplete: PropTypes.func
+    onComplete: PropTypes.func,
 };
 
 FlipChar.defaultPropTypes = {
     finalChar: '#',
-    delay: 0
-}
+    delay: 0,
+};
 
 export default FlipChar;
