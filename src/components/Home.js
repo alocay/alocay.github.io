@@ -1,34 +1,31 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
+import FlipLabelPool from './FlipLabel/FlipLabelPool.js';
 import '../../css/home.css';
 
 const NAV_ITEMS = [
-    { number: '01', label: 'About', to: '/about' },
-    { number: '02', label: 'Experience', to: '/exp' },
-    { number: '03', label: 'Art', to: '/art' },
-    { number: '04', label: 'Contact', to: '/contact' },
+    { number: '01', label: 'Experience', to: '/exp' },
+    { number: '02', label: 'Art', to: '/art' },
+    { number: '03', label: 'Contact', to: '/contact' },
+];
+
+const IDENTITY_WORDS = [
+    'Developer.',
+    'Artist.',
+    'Gamer.',
+    'Woodworker.',
+    'Mead Maker.',
+    'Hiker.',
+    'Traveler.',
 ];
 
 function Home() {
     const navigate = useNavigate();
     return (
         <div className="home">
-            <div className="home__top-strip">
-                <span className="home__site-handle">alocay.github.io</span>
-                <span className="home__year">2026</span>
-            </div>
-            <div className="home__hero">
-                <div className="home__label">Software Engineer</div>
-                <h1 className="home__name">
-                    ARMANDO<br />
-                    LOCAY<span className="home__period">.</span>
-                </h1>
-                <div className="home__tagline-row">
-                    <div className="home__dash" />
-                    <span className="home__tagline">Builder · Maker · Artist</span>
-                </div>
-            </div>
             <nav className="home__nav">
+                <Link to="/" className="home__nav-monogram">AL</Link>
+                <div className="home__nav-divider" />
                 <div className="home__nav-items">
                     {NAV_ITEMS.map(({ number, label, to }) => (
                         <button
@@ -41,8 +38,33 @@ function Home() {
                         </button>
                     ))}
                 </div>
-                <span className="home__nav-arrow">↗</span>
             </nav>
+            <div className="home__hero">
+                <div className="home__label">Software Engineer</div>
+                <h1 className="home__name">
+                    ARMANDO<br />
+                    LOCAY<span className="home__period">.</span>
+                </h1>
+                <div className="home__tagline-row">
+                    <div className="home__dash" />
+                    <span className="home__tagline">Builder · Maker · Artist</span>
+                </div>
+                <div className="home__about">
+                    <div className="home__about-iam-label">I am a</div>
+                    <div className="home__about-flip-word">
+                        <FlipLabelPool labels={IDENTITY_WORDS} />
+                    </div>
+                    <p className="home__about-bio">
+                        Software engineer with 10+ years building products across defense,
+                        tech, and more. I design and write code by day and make art,
+                        woodwork, mead, and tools by night.
+                    </p>
+                </div>
+            </div>
+            <div className="home__footer">
+                <span className="home__site-handle">alocay.github.io</span>
+                <span className="home__year">2026</span>
+            </div>
         </div>
     );
 }

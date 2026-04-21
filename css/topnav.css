@@ -2,17 +2,8 @@
   display: flex;
   align-items: center;
   gap: 20px;
-  padding: 14px 28px;
   border-bottom: 1px solid var(--color-surface);
-}
-
-.topnav__monogram {
-  font-size: 10px;
-  letter-spacing: 3px;
-  color: var(--color-accent);
-  text-transform: uppercase;
-  font-weight: 700;
-  text-decoration: none;
+  padding: 18px 28px;
 }
 
 .topnav__divider {
@@ -24,23 +15,48 @@
 
 .topnav__links {
   display: flex;
-  gap: 22px;
+  gap: 32px;
 }
 
 .topnav__link {
-  font-size: 9px;
-  color: var(--color-text-muted);
-  letter-spacing: 2px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  text-decoration: none;
+}
+
+.topnav__link-number {
+  font-size: 8px;
+  color: var(--color-accent);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.topnav__link-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.topnav__link--active .topnav__link-label {
+  color: var(--color-accent);
+}
+
+.topnav__link:hover:not(.topnav__link--active) .topnav__link-label {
+  color: var(--color-accent);
+}
+
+.topnav__home {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  color: var(--color-accent);
   text-transform: uppercase;
   text-decoration: none;
 }
 
-.topnav__link--active {
-  color: var(--color-accent);
-  border-bottom: 1px solid var(--color-accent);
-  padding-bottom: 2px;
-}
-
-.topnav__link:hover:not(.topnav__link--active) {
-  color: var(--color-text-secondary);
+.topnav__home:hover {
+  color: var(--color-text-primary);
 }
