@@ -1,19 +1,31 @@
-import React, { Component} from "react";
+import React, { Component } from 'react';
+import '../../css/contact.css';
 
-class Contact extends Component{
-  render(){
-    return(
-		<div>
-			<div className="content contact text-left">
-                <div className="text-left"><a href="mailto:alocay@gmail.com">alocay@gmail.com</a></div> 
-                <div className="text-left"><a href="http://github.com/alocay">GitHub</a></div>
-                <div className="text-left"><a href="https://www.linkedin.com/in/armandolocay">LinkedIn</a></div>
-                <div className="text-left"><a href="https://stackoverflow.com/users/278447/fizz?tab=profile">Stackoverflow</a></div>
-                <div className="text-left"><a href="https://stackoverflow.com/story/alocay">Stackoverflow Story</a></div>
-			</div>
-		</div>
-    );
-  }
+const LINKS = [
+    { platform: 'Email', label: 'alocay@gmail.com', href: 'mailto:alocay@gmail.com' },
+    { platform: 'GitHub', label: 'github.com/alocay', href: 'https://github.com/alocay' },
+    { platform: 'LinkedIn', label: 'linkedin.com/in/armandolocay', href: 'https://www.linkedin.com/in/armandolocay' },
+    { platform: 'Stack Overflow', label: 'stackoverflow.com', href: 'https://stackoverflow.com/users/278447/fizz?tab=profile' },
+];
+
+class Contact extends Component {
+    render() {
+        return (
+            <div className="contact">
+                <div className="contact__label">Get in touch</div>
+                <div className="contact__links">
+                    {LINKS.map(({ platform, label, href }) => (
+                        <div className="contact__link-row" key={platform}>
+                            <span className="contact__link-platform">{platform}</span>
+                            <a className="contact__link-value" href={href} target="_blank" rel="noopener noreferrer">
+                                {label}
+                            </a>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        );
+    }
 }
 
 export default Contact;
