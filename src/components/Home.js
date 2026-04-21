@@ -14,7 +14,6 @@ const IDENTITY_WORDS = [
     'Artist.',
     'Gamer.',
     'Woodworker.',
-    'Mead Maker.',
     'Brewer.',
     'Hiker.',
     'Traveler.',
