@@ -3,4 +3,6 @@ declare module '*.png' {
     export = src;
 }
 
+declare module '*.css' {}
+
 declare function require(module: string): any;
