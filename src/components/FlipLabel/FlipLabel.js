@@ -20,7 +20,7 @@ function FlipLabel({ label, onComplete }) {
     return (
         <div className="flip-label">
             {labelChars.map((c, i) => (
-                <FlipChar key={i} finalChar={c} delay={i * 250} onComplete={handleCharComplete} />
+                <FlipChar key={`${label}-${i}`} finalChar={c} delay={i * 250} onComplete={handleCharComplete} />
             ))}
         </div>
     );
