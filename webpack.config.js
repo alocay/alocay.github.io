@@ -7,7 +7,7 @@ module.exports = {
     output: {
         path: path.join(__dirname, "docs"),
         filename: "bundle.js",
-        clean: true,
+        clean: { keep: /superpowers/ },
     },
     module: {
         rules: [
