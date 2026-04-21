@@ -1,0 +1,161 @@
+.home {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.home__footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px 28px;
+  border-top: 1px solid var(--color-surface);
+}
+
+.home__site-handle,
+.home__year {
+  font-size: 9px;
+  letter-spacing: 3px;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+}
+
+.home__hero {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 12vh 28px 28px;
+}
+
+.home__label {
+  font-size: 9px;
+  letter-spacing: 4px;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  margin-bottom: 18px;
+}
+
+.home__name {
+  font-size: clamp(52px, 10vw, 96px);
+  font-weight: var(--font-weight-heading);
+  color: var(--color-text-primary);
+  line-height: 0.88;
+  letter-spacing: -2px;
+  margin: 0 0 20px;
+}
+
+.home__period {
+  color: var(--color-accent);
+}
+
+.home__tagline-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.home__dash {
+  width: 32px;
+  height: 2px;
+  background: var(--color-accent);
+  flex-shrink: 0;
+}
+
+.home__tagline {
+  font-size: 9px;
+  color: var(--color-text-muted);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.home__nav {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  border-bottom: 1px solid var(--color-surface);
+  padding: 18px 28px;
+}
+
+.home__nav-monogram {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  color: var(--color-accent);
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.home__nav-divider {
+  width: 1px;
+  height: 14px;
+  background: var(--color-surface);
+  flex-shrink: 0;
+}
+
+.home__nav-items {
+  display: flex;
+  gap: 32px;
+}
+
+.home__nav-item {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  text-align: left;
+}
+
+.home__nav-number {
+  font-size: 8px;
+  color: var(--color-accent);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.home__nav-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.home__nav-item:hover .home__nav-label {
+  color: var(--color-accent);
+}
+
+.home__about {
+  margin-top: 40px;
+  max-width: 480px;
+}
+
+.home__about-iam-label {
+  font-size: 9px;
+  letter-spacing: var(--letter-spacing-label);
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.home__about-flip-word {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-accent);
+  min-height: 28px;
+  margin-bottom: 28px;
+}
+
+.home__about-flip-word span {
+  color: var(--color-accent);
+}
+
+.home__about-bio {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  line-height: 1.8;
+  margin: 0;
+}
+

@@ -1,6 +1,46 @@
-div.content table {
-  width: auto; }
-  div.content table td {
-    text-align: left; }
-    div.content table td:last-child {
-      padding-left: 20px; }
+.contact {
+  padding: 32px 28px;
+  flex: 1;
+}
+
+.contact__label {
+  font-size: 9px;
+  letter-spacing: var(--letter-spacing-label);
+  color: var(--color-accent);
+  text-transform: uppercase;
+  margin-bottom: 28px;
+}
+
+.contact__links {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.contact__link-row {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+}
+
+.contact__link-platform {
+  font-size: 9px;
+  letter-spacing: var(--letter-spacing-label);
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  width: 80px;
+  flex-shrink: 0;
+}
+
+.contact__link-value {
+  font-size: 14px;
+  font-weight: var(--font-weight-heading);
+  color: var(--color-text-primary);
+  text-decoration: none;
+  letter-spacing: 0.5px;
+  transition: color 0.15s ease;
+}
+
+.contact__link-value:hover {
+  color: var(--color-accent);
+}

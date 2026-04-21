@@ -1,0 +1,11 @@
+:root {
+  --color-bg: #2b2118;
+  --color-surface: #3d2e22;
+  --color-surface-alt: #342619;
+  --color-text-primary: #f0e2d0;
+  --color-text-secondary: #7a5c45;
+  --color-text-muted: #4a3828;
+  --color-accent: #c4956a;
+  --font-weight-heading: 800;
+  --letter-spacing-label: 3px;
+}

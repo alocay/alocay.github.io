@@ -31,8 +31,14 @@ class FlipLabelPool extends Component{
     }
     
     changeToNextLabel() {
-        const newActiveLabel = (this.state.activeLabel + 1) % this.props.labels.length;
-        this.setState({ activeLabel: newActiveLabel });
+        const { labels } = this.props;
+        const { activeLabel } = this.state;
+        if (labels.length <= 1) return;
+        let next;
+        do {
+            next = Math.floor(Math.random() * labels.length);
+        } while (next === activeLabel);
+        this.setState({ activeLabel: next });
     }
     
     finalLabelShown() {

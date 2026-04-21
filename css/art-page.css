@@ -1,0 +1,23 @@
+.art-page {
+  padding: 32px 28px;
+  flex: 1;
+}
+
+.art-page__section {
+  margin-bottom: 40px;
+}
+
+.art-page__section-label {
+  font-size: 9px;
+  letter-spacing: var(--letter-spacing-label);
+  color: var(--color-accent);
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.art-page__divider {
+  width: 100%;
+  height: 1px;
+  background: var(--color-surface);
+  margin: 32px 0;
+}

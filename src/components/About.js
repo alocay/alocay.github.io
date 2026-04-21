@@ -1,37 +1,33 @@
-import React, { Component} from "react";
+import React, { Component } from 'react';
 import FlipLabelPool from './FlipLabel/FlipLabelPool.js';
-import FlipLabel from './FlipLabel/FlipLabel.js';
+import '../../css/about.css';
 
-const words = [
-    ["Developer.", "Engineer.", "Testing.", "Programmer.", "Algorithm.", ],
-    ["Artist.", "Charcoal.", "Blend.", "Lights.", "Perspective.", "Angle.", "Photography."],
-    ["Gamer.", "PC.", "Platformer.", "Dimension.", "Imagination."],
-    ["Outdoors.", "Hiking.", "Nature.", "Trek.", "Rock Climber.", "Earth."],
-    ["Travel.", "Explorer.", "Sights.", "Beyond.", "Cultures.", "Food."]
+const IDENTITY_WORDS = [
+    'Developer.',
+    'Artist.',
+    'Gamer.',
+    'Woodworker.',
+    'Mead Maker.',
+    'Hiker.',
+    'Traveler.',
 ];
 
-class About extends Component{
-    constructor(props) {
-        super(props);
-        
-        this.state = {
-            color: 'blue'
-        }
-    }
-    
-    componentDidMount() {
-    }
-    
-    render(){
-        return(
-            <div>
-                <div className="header">
-                    <ul>
-                        <li><FlipLabel label={"Armando Locay."} /></li>
-                        { words.map((w, i) => <li key={i}><FlipLabelPool labels={w} /></li>) }
-                    </ul>
+class About extends Component {
+    render() {
+        return (
+            <div className="about">
+                <div className="about__iam-label">I am a</div>
+                <div className="about__name">Armando Locay.</div>
+                <div className="about__flip-word">
+                    <FlipLabelPool labels={IDENTITY_WORDS} />
                 </div>
-                <div className="content">
+                <div className="about__bio">
+                    <div className="about__bio-rule" />
+                    <p className="about__bio-text">
+                        Software engineer with 10+ years building products across defense,
+                        tech, and more. I design and write code by day and make art,
+                        woodwork, mead, and tools by night.
+                    </p>
                 </div>
             </div>
         );
