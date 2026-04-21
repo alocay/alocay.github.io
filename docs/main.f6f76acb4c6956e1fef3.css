@@ -125,10 +125,21 @@
 }
 
 .home__tagline {
+  display: flex;
+  align-items: center;
   font-size: 9px;
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
   letter-spacing: 2px;
   text-transform: uppercase;
+}
+
+.home__tagline > div {
+  margin-left: 4px;
+}
+
+.home__tagline .flip-label {
+  display: flex;
+  color: var(--color-accent);
 }
 
 .home__nav {

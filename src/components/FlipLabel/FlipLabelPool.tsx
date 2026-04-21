@@ -8,13 +8,18 @@ interface FlipLabelPoolProps {
 }
 
 function FlipLabelPool({ labels }: FlipLabelPoolProps) {
-    const [activeLabel, setActiveLabel] = useState<number | null>(
-        labels && labels.length ? 0 : null
+    const getRandomIndex = (len: number) => Math.floor(Math.random() * len);
+
+    const [activeLabel, setActiveLabel] = useState<number | null>(() =>
+        labels && labels.length ? getRandomIndex(labels.length) : null
     );
     const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const seenRef = useRef<Set<number>>(new Set(activeLabel !== null ? [activeLabel] : []));
 
     useEffect(() => {
-        setActiveLabel(labels && labels.length ? 0 : null);
+        const initial = labels && labels.length ? getRandomIndex(labels.length) : null;
+        setActiveLabel(initial);
+        seenRef.current = new Set(initial !== null ? [initial] : []);
     }, [labels]);
 
     useEffect(() => {
@@ -26,10 +31,16 @@ function FlipLabelPool({ labels }: FlipLabelPoolProps) {
     const changeToNextLabel = () => {
         if (!labels || labels.length <= 1) return;
         setActiveLabel(prev => {
-            let next: number;
-            do {
-                next = Math.floor(Math.random() * labels.length);
-            } while (next === prev);
+            const unseen = labels
+                .map((_, i) => i)
+                .filter(i => i !== prev && !seenRef.current.has(i));
+            const pool = unseen.length > 0 ? unseen : labels.map((_, i) => i).filter(i => i !== prev);
+            if (pool.length === 0) return prev;
+            const next = pool[Math.floor(Math.random() * pool.length)];
+            seenRef.current.add(next);
+            if (seenRef.current.size >= labels.length) {
+                seenRef.current = new Set();
+            }
             return next;
         });
     };

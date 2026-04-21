@@ -9,14 +9,18 @@ const NAV_ITEMS = [
     { number: '03', label: 'Contact', to: '/contact' },
 ];
 
-const IDENTITY_WORDS = [
-    'Developer.',
-    'Artist.',
-    'Gamer.',
-    'Woodworker.',
-    'Brewer.',
-    'Hiker.',
-    'Traveler.',
+const TAGLINE_WORDS = [
+    'Artist',
+    'Gamer',
+    'Woodworker',
+    'Brewer',
+    'Hiker',
+    'Traveler',
+    'Enthusiast',
+    'Dog Lover',
+    'Reader',
+    'Photographer',
+    'Pathfinder',
 ];
 
 function Home() {
@@ -47,16 +51,15 @@ function Home() {
                 </h1>
                 <div className="home__tagline-row">
                     <div className="home__dash" />
-                    <span className="home__tagline">Builder · Maker · Artist</span>
+                    <div className="home__tagline">
+                        <span>Developer · Maker · </span>
+                        <FlipLabelPool labels={TAGLINE_WORDS} />
+                    </div>
                 </div>
                 <div className="home__about">
-                    <div className="home__about-iam-label">I am a</div>
-                    <div className="home__about-flip-word">
-                        <FlipLabelPool labels={IDENTITY_WORDS} />
-                    </div>
                     <p className="home__about-bio">
-                        Software engineer with 10+ years building products across defense,
-                        tech, and more. I design and write code by day and make art,
+                        Software engineer with 10+ years building products across tech,
+                        defense, and more. I design and write code by day and make art,
                         woodwork, mead, and tools by night.
                     </p>
                 </div>
