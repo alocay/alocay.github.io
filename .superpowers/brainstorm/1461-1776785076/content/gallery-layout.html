@@ -1,0 +1,61 @@
+<h2>Gallery Layout — Grid vs Carousel</h2>
+<p class="subtitle">How should the Artwork and Photography sections display images?</p>
+
+<div class="cards">
+
+  <div class="card" data-choice="grid" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#0d0d0d;padding:20px;min-height:200px;font-family:sans-serif;">
+      <div style="font-size:8px;letter-spacing:3px;color:#ffbe0b;text-transform:uppercase;margin-bottom:12px;">Artwork</div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:16px;">
+        <div style="background:#1a1a1a;aspect-ratio:1;border-radius:2px;"></div>
+        <div style="background:#1a1a1a;aspect-ratio:1;border-radius:2px;"></div>
+        <div style="background:#222;aspect-ratio:1;border-radius:2px;"></div>
+        <div style="background:#1a1a1a;aspect-ratio:1;border-radius:2px;"></div>
+        <div style="background:#222;aspect-ratio:1;border-radius:2px;"></div>
+        <div style="background:#1a1a1a;aspect-ratio:1;border-radius:2px;"></div>
+        <div style="background:#1a1a1a;aspect-ratio:1;border-radius:2px;"></div>
+        <div style="background:#222;aspect-ratio:1;border-radius:2px;"></div>
+      </div>
+      <div style="font-size:8px;color:#444;letter-spacing:1px;">Click any image → lightbox opens</div>
+    </div>
+    <div class="card-body">
+      <h3>A — Wrap Grid (current)</h3>
+      <p>All images visible at once in a tiled grid. Scroll down to see more. Click any to open full lightbox. Simple, scannable, no interaction needed to see the collection.</p>
+      <div class="pros-cons">
+        <div class="pros"><h4>Pros</h4><ul><li>Everything visible upfront</li><li>No extra interaction needed</li></ul></div>
+        <div class="cons"><h4>Cons</h4><ul><li>Can feel dense with many images</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" data-choice="carousel" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#0d0d0d;padding:20px;min-height:200px;font-family:sans-serif;display:flex;flex-direction:column;justify-content:space-between;">
+      <div style="font-size:8px;letter-spacing:3px;color:#ffbe0b;text-transform:uppercase;margin-bottom:12px;">Artwork</div>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div style="font-size:16px;color:#333;">‹</div>
+        <div style="flex:1;display:flex;gap:6px;overflow:hidden;">
+          <div style="background:#222;flex:0 0 32%;aspect-ratio:1;border-radius:2px;opacity:0.5;"></div>
+          <div style="background:#ffbe0b22;border:1px solid #ffbe0b44;flex:0 0 32%;aspect-ratio:1;border-radius:2px;"></div>
+          <div style="background:#1a1a1a;flex:0 0 32%;aspect-ratio:1;border-radius:2px;opacity:0.5;"></div>
+        </div>
+        <div style="font-size:16px;color:#ffbe0b;">›</div>
+      </div>
+      <div style="display:flex;justify-content:center;gap:4px;margin-top:10px;">
+        <div style="width:16px;height:2px;background:#ffbe0b;border-radius:1px;"></div>
+        <div style="width:6px;height:2px;background:#333;border-radius:1px;"></div>
+        <div style="width:6px;height:2px;background:#333;border-radius:1px;"></div>
+        <div style="width:6px;height:2px;background:#333;border-radius:1px;"></div>
+      </div>
+      <div style="font-size:8px;color:#444;letter-spacing:1px;margin-top:8px;">Click image → lightbox opens</div>
+    </div>
+    <div class="card-body">
+      <h3>B — Horizontal Carousel</h3>
+      <p>Images in a horizontal scroll strip with prev/next arrows. One focal image at a time, others partially visible. Clicking opens the lightbox. More dramatic, less overwhelming with large collections.</p>
+      <div class="pros-cons">
+        <div class="pros"><h4>Pros</h4><ul><li>Elegant with large image sets</li><li>Each image gets more focus</li></ul></div>
+        <div class="cons"><h4>Cons</h4><ul><li>Requires interaction to browse</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+</div>

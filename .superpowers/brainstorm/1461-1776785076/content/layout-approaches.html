@@ -1,0 +1,113 @@
+<h2>Layout Approaches</h2>
+<p class="subtitle">Three structural directions — all using dark background + amber accent + bold type. Which fits best?</p>
+
+<div class="cards">
+
+  <div class="card" data-choice="hero-splash" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#0d0d0d;padding:0;min-height:220px;font-family:sans-serif;overflow:hidden;display:flex;flex-direction:column;">
+      <!-- Nav bar -->
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 16px;border-bottom:1px solid #1a1a1a;">
+        <div style="font-size:9px;letter-spacing:3px;color:#ffbe0b;text-transform:uppercase;font-weight:700;">AL</div>
+        <div style="display:flex;gap:14px;">
+          <span style="font-size:8px;color:#555;letter-spacing:1px;">About</span>
+          <span style="font-size:8px;color:#555;letter-spacing:1px;">Exp</span>
+          <span style="font-size:8px;color:#555;letter-spacing:1px;">Art</span>
+          <span style="font-size:8px;color:#555;letter-spacing:1px;">Contact</span>
+        </div>
+      </div>
+      <!-- Full-bleed hero -->
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:20px 16px;">
+        <div style="font-size:10px;letter-spacing:3px;color:#555;text-transform:uppercase;margin-bottom:10px;">Software Engineer</div>
+        <div style="font-size:52px;font-weight:900;color:#fff;line-height:0.95;letter-spacing:-1px;">ARMAN<br>DO<span style="color:#ffbe0b;">.</span><br>LOCAY<span style="color:#ffbe0b;">.</span></div>
+        <div style="margin-top:14px;display:flex;gap:8px;align-items:center;">
+          <div style="width:24px;height:2px;background:#ffbe0b;"></div>
+          <div style="font-size:8px;color:#888;letter-spacing:2px;text-transform:uppercase;">Based in the US</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A — Full-Bleed Hero Splash</h3>
+      <p>The homepage <em>is</em> the statement. Giant typographic hero, minimal nav sits quietly above. Pages enter with a bold curtain/wipe transition. Each page has its own layout but shares the palette.</p>
+      <div class="pros-cons">
+        <div class="pros"><h4>Pros</h4><ul><li>Maximum visual impact</li><li>Name + identity front and center</li></ul></div>
+        <div class="cons"><h4>Cons</h4><ul><li>Hero-only pages can feel content-light</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" data-choice="split-nav" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#0d0d0d;padding:0;min-height:220px;font-family:sans-serif;overflow:hidden;display:flex;">
+      <!-- Left: Identity -->
+      <div style="width:45%;padding:16px;display:flex;flex-direction:column;justify-content:flex-end;border-right:1px solid #1a1a1a;">
+        <div style="font-size:9px;letter-spacing:3px;color:#555;text-transform:uppercase;margin-bottom:8px;">AL</div>
+        <div style="font-size:34px;font-weight:900;color:#fff;line-height:1;">AR<br>MAN<br>DO</div>
+        <div style="font-size:8px;color:#ffbe0b;letter-spacing:2px;text-transform:uppercase;margin-top:6px;">Software Eng.</div>
+      </div>
+      <!-- Right: Nav as clickable zones -->
+      <div style="flex:1;display:flex;flex-direction:column;">
+        <div style="flex:1;border-bottom:1px solid #1a1a1a;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;">
+          <span style="font-size:14px;font-weight:800;color:#fff;letter-spacing:1px;">ABOUT</span>
+          <span style="color:#ffbe0b;font-size:14px;">→</span>
+        </div>
+        <div style="flex:1;border-bottom:1px solid #1a1a1a;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;">
+          <span style="font-size:14px;font-weight:800;color:#fff;letter-spacing:1px;">EXPERIENCE</span>
+          <span style="color:#ffbe0b;font-size:14px;">→</span>
+        </div>
+        <div style="flex:1;border-bottom:1px solid #1a1a1a;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;">
+          <span style="font-size:14px;font-weight:800;color:#333;letter-spacing:1px;">ART</span>
+          <span style="color:#333;font-size:14px;">→</span>
+        </div>
+        <div style="flex:1;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;">
+          <span style="font-size:14px;font-weight:800;color:#fff;letter-spacing:1px;">CONTACT</span>
+          <span style="color:#ffbe0b;font-size:14px;">→</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B — Split-Screen Nav (my recommendation)</h3>
+      <p>Homepage splits: your name/identity on the left, navigation as large bold clickable rows on the right. Art row is visually de-emphasized. Clicking a row triggers a full-page transition. The nav <em>is</em> the homepage.</p>
+      <div class="pros-cons">
+        <div class="pros"><h4>Pros</h4><ul><li>Unique and interactive homepage</li><li>Art de-emphasis built into the layout</li><li>Instantly scannable</li></ul></div>
+        <div class="cons"><h4>Cons</h4><ul><li>Less content visible on first load</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" data-choice="editorial-grid" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#0d0d0d;padding:0;min-height:220px;font-family:sans-serif;overflow:hidden;display:flex;flex-direction:column;">
+      <!-- Nav -->
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 14px;border-bottom:1px solid #1a1a1a;">
+        <div style="font-size:9px;letter-spacing:3px;color:#ffbe0b;font-weight:700;">ARMANDO LOCAY</div>
+        <div style="display:flex;gap:12px;">
+          <span style="font-size:8px;color:#555;">About</span>
+          <span style="font-size:8px;color:#555;">Exp</span>
+          <span style="font-size:8px;color:#555;">Art</span>
+          <span style="font-size:8px;color:#555;">Contact</span>
+        </div>
+      </div>
+      <!-- Grid body -->
+      <div style="flex:1;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:1px;background:#1a1a1a;">
+        <div style="background:#0d0d0d;padding:12px;grid-column:1/2;grid-row:1/3;display:flex;flex-direction:column;justify-content:flex-end;">
+          <div style="font-size:28px;font-weight:900;color:#fff;line-height:1;">ARMANDO<br>LOCAY</div>
+          <div style="font-size:8px;color:#ffbe0b;letter-spacing:2px;text-transform:uppercase;margin-top:6px;">Software Engineer</div>
+        </div>
+        <div style="background:#0d0d0d;padding:10px;">
+          <div style="font-size:8px;color:#555;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px;">Experience</div>
+          <div style="font-size:10px;color:#888;line-height:1.5;">10+ years building products across fintech, health, and more.</div>
+        </div>
+        <div style="background:#111;padding:10px;display:flex;align-items:flex-end;">
+          <div style="font-size:8px;color:#ffbe0b;letter-spacing:2px;text-transform:uppercase;">View Work →</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C — Editorial Grid</h3>
+      <p>Homepage is a bold magazine-style grid of blocks — name, brief bio, experience teaser, contact. More content-forward, less dramatic. Inner pages still use bold typography and amber accents.</p>
+      <div class="pros-cons">
+        <div class="pros"><h4>Pros</h4><ul><li>More information on first load</li><li>Easier to extend later</li></ul></div>
+        <div class="cons"><h4>Cons</h4><ul><li>Less distinctive than A or B</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+</div>

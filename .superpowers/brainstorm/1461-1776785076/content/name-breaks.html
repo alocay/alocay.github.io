@@ -1,0 +1,55 @@
+<h2>Name Line Breaks</h2>
+<p class="subtitle">Four options for how the name breaks across lines. Which feels right?</p>
+
+<div class="cards">
+
+  <div class="card" data-choice="two-line" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#0d0d0d;padding:24px;min-height:160px;display:flex;flex-direction:column;justify-content:center;font-family:'Helvetica Neue',Arial,sans-serif;">
+      <div style="font-size:52px;font-weight:900;color:#fff;line-height:0.9;letter-spacing:-2px;">
+        ARMANDO<br>LOCAY<span style="color:#ffbe0b;">.</span>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A — Two lines</h3>
+      <p>First name / Last name. Clean and readable.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="three-line-a" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#0d0d0d;padding:24px;min-height:160px;display:flex;flex-direction:column;justify-content:center;font-family:'Helvetica Neue',Arial,sans-serif;">
+      <div style="font-size:52px;font-weight:900;color:#fff;line-height:0.9;letter-spacing:-2px;">
+        ARMAN<br>DO LO<br>CAY<span style="color:#ffbe0b;">.</span>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B — Three lines (staggered)</h3>
+      <p>Breaks mid-first-name and mid-last-name. More abstract and editorial.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="three-line-b" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#0d0d0d;padding:24px;min-height:160px;display:flex;flex-direction:column;justify-content:center;font-family:'Helvetica Neue',Arial,sans-serif;">
+      <div style="font-size:52px;font-weight:900;color:#fff;line-height:0.9;letter-spacing:-2px;">
+        ARM<br>ANDO<br>LOCAY<span style="color:#ffbe0b;">.</span>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C — Three lines (last name intact)</h3>
+      <p>Last name stays whole on its own line. First name splits for rhythm.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="big-two" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#0d0d0d;padding:24px;min-height:160px;display:flex;flex-direction:column;justify-content:center;font-family:'Helvetica Neue',Arial,sans-serif;">
+      <div style="font-size:44px;font-weight:900;color:#fff;line-height:0.9;letter-spacing:-1px;">
+        ARMANDO<br>LOCAY<span style="color:#ffbe0b;">.</span>
+      </div>
+      <div style="margin-top:14px;width:36px;height:2px;background:#ffbe0b;"></div>
+    </div>
+    <div class="card-body">
+      <h3>D — Two lines, slightly smaller</h3>
+      <p>Same split as A but sized down so both lines fit comfortably without feeling cramped.</p>
+    </div>
+  </div>
+
+</div>
