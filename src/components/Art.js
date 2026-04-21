@@ -57,6 +57,10 @@ function Art() {
                     ))}
                 </div>
             </div>
+            <div className="art-page__divider" />
+            <div className="art-page__coming-soon">
+                <p className="art-page__coming-soon-text">More projects coming soon — woodworking, mead making, and beyond.</p>
+            </div>
         </div>
     );
 }
