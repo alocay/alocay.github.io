@@ -13,11 +13,11 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.(js|jsx)$/,
+                test: /\.(js|jsx|ts|tsx)$/,
                 exclude: /(node_modules|bower_components|projects)/,
                 use: {
                     loader: 'babel-loader',
-                    options: { presets: ['@babel/preset-env', '@babel/preset-react'] }
+                    options: { presets: ['@babel/preset-env', '@babel/preset-react', '@babel/preset-typescript'] }
                 },
             },
             {
@@ -33,7 +33,7 @@ module.exports = {
             }
         ]
     },
-    resolve: { extensions: ['*', '.js', '.jsx'] },
+    resolve: { extensions: ['*', '.js', '.jsx', '.ts', '.tsx'] },
     plugins: [
         new HtmlWebpackPlugin({
             template: path.join(__dirname, "src/index.html")

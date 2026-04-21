@@ -1,9 +1,18 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import FadeInImage from './FadeInImage.js';
+import FadeInImage from './FadeInImage';
 
-function LightBox({ src, preloadSrc, caption, width, height, offsetHeight, onClose }) {
-    const onLightBoxClicked = (e) => {
+interface LightBoxProps {
+    src: string;
+    preloadSrc: string;
+    caption?: string;
+    width: number;
+    height: number;
+    offsetHeight?: boolean;
+    onClose: () => void;
+}
+
+function LightBox({ src, preloadSrc, caption, width, height, offsetHeight, onClose }: LightBoxProps) {
+    const onLightBoxClicked = (e: React.MouseEvent) => {
         e.stopPropagation();
         onClose();
     };
@@ -23,15 +32,5 @@ function LightBox({ src, preloadSrc, caption, width, height, offsetHeight, onClo
         </div>
     );
 }
-
-LightBox.propTypes = {
-    src: PropTypes.string.isRequired,
-    preloadSrc: PropTypes.string.isRequired,
-    width: PropTypes.number.isRequired,
-    height: PropTypes.number.isRequired,
-    onClose: PropTypes.func.isRequired,
-    offsetHeight: PropTypes.bool,
-    caption: PropTypes.string,
-};
 
 export default LightBox;

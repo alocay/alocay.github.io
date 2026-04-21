@@ -1,5 +1,5 @@
 import React from 'react';
-import FlipLabelPool from './FlipLabel/FlipLabelPool.js';
+import FlipLabelPool from './FlipLabel/FlipLabelPool';
 import '../../css/about.css';
 
 const IDENTITY_WORDS = [

@@ -1,5 +1,20 @@
+export interface GalleryImageDetail {
+    src: string;
+    preload: string;
+    width: number;
+    height: number;
+    caption?: string;
+}
 
-const Drawings = [
+export interface GalleryImage {
+    src: string;
+    preload: string;
+    width: number;
+    height: number;
+    big: GalleryImageDetail;
+}
+
+export const Drawings: GalleryImage[] = [
     {
         src: require("../../../assets/drawings/clothflag.png"),
         preload: require("../../../assets/drawings/clothflag_placeholder.png"),
@@ -67,7 +82,7 @@ const Drawings = [
     },
 ];
 
-const Photos = [
+export const Photos: GalleryImage[] = [
     {
         src: require("../../../assets/photos/asturia_coastal_city_2015.png"),
         preload: require("../../../assets/photos/asturia_coastal_city_2015_placeholder.png"),
@@ -212,5 +227,3 @@ const Photos = [
         }
     },
 ];
-
-export { Drawings, Photos}

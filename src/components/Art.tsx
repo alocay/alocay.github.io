@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
-import FadeInImage from './Gallery/FadeInImage.js';
-import LightBox from './Gallery/LightBox.js';
-import { Drawings, Photos } from './Gallery/GalleryImages.js';
+import FadeInImage from './Gallery/FadeInImage';
+import LightBox from './Gallery/LightBox';
+import { Drawings, Photos, GalleryImageDetail } from './Gallery/GalleryImages';
 import '../../css/art-page.css';
 
 function Art() {
-    const [lightbox, setLightbox] = useState(null);
+    const [lightbox, setLightbox] = useState<React.ReactElement | null>(null);
 
     const closeLightbox = () => setLightbox(null);
 
-    const showLightbox = (imageDetails) => {
+    const showLightbox = (imageDetails: GalleryImageDetail) => {
         setLightbox(
             <LightBox
                 src={imageDetails.src}

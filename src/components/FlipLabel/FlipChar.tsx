@@ -1,13 +1,18 @@
 import React, { useState, useEffect, useRef } from 'react';
-import PropTypes from 'prop-types';
 
 const Min = 43;
 const Max = 122;
 const Iterations = 10;
 const ChangeTimeout = 60;
 
-function FlipChar({ finalChar, delay, onComplete }) {
-    const [symbol, setSymbol] = useState(null);
+interface FlipCharProps {
+    finalChar: string;
+    delay?: number;
+    onComplete?: () => void;
+}
+
+function FlipChar({ finalChar, delay, onComplete }: FlipCharProps) {
+    const [symbol, setSymbol] = useState<string | null>(null);
     const iterationRef = useRef(0);
 
     useEffect(() => {
@@ -41,16 +46,5 @@ function FlipChar({ finalChar, delay, onComplete }) {
 
     return <span className="flip-char">{symbol}</span>;
 }
-
-FlipChar.propTypes = {
-    finalChar: PropTypes.string.isRequired,
-    delay: PropTypes.number,
-    onComplete: PropTypes.func,
-};
-
-FlipChar.defaultPropTypes = {
-    finalChar: '#',
-    delay: 0,
-};
 
 export default FlipChar;
