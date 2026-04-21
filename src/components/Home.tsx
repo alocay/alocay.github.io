@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import FlipLabelPool from './FlipLabel/FlipLabelPool.js';
+import FlipLabelPool from './FlipLabel/FlipLabelPool';
 import '../../css/home.css';
 
 const NAV_ITEMS = [
