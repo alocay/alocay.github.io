@@ -5,7 +5,7 @@ import '../../css/home.css';
 
 const NAV_ITEMS = [
     { number: '01', label: 'Experience', to: '/exp' },
-    { number: '02', label: 'Art', to: '/art' },
+    { number: '02', label: 'Maker', to: '/art' },
     { number: '03', label: 'Contact', to: '/contact' },
 ];
 
