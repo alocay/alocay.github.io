@@ -1,11 +1,11 @@
 import React from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
-import TopNav from './TopNav.js';
-import Home from './Home.js';
-import About from './About.js';
-import Exp from './Exp.js';
-import Art from './Art.js';
-import Contact from './Contact.js';
+import TopNav from './TopNav';
+import Home from './Home';
+import About from './About';
+import Exp from './Exp';
+import Art from './Art';
+import Contact from './Contact';
 import '../../css/App.css';
 import '../../css/transitions.css';
 
