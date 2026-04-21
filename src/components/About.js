@@ -8,6 +8,7 @@ const IDENTITY_WORDS = [
     'Gamer.',
     'Woodworker.',
     'Mead Maker.',
+    'Brewer.',
     'Hiker.',
     'Traveler.',
 ];
