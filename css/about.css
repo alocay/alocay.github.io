@@ -1,3 +1,50 @@
+.about {
+  padding: 36px 28px;
+  max-width: 720px;
+}
 
+.about__iam-label {
+  font-size: 9px;
+  letter-spacing: var(--letter-spacing-label);
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
 
-/*# sourceMappingURL=about.css.map */
+.about__name {
+  font-size: 28px;
+  font-weight: var(--font-weight-heading);
+  color: var(--color-text-primary);
+  margin-bottom: 16px;
+}
+
+.about__flip-word {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-accent);
+  min-height: 28px;
+}
+
+/* FlipLabel renders its own spans — target the text color */
+.about__flip-word span {
+  color: var(--color-accent);
+}
+
+.about__bio {
+  margin-top: 28px;
+}
+
+.about__bio-rule {
+  width: 24px;
+  height: 2px;
+  background: var(--color-accent);
+  margin-bottom: 16px;
+}
+
+.about__bio-text {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  line-height: 1.8;
+  margin: 0;
+  max-width: 480px;
+}
