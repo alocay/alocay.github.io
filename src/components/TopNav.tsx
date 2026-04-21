@@ -4,7 +4,7 @@ import '../../css/topnav.css';
 
 const NAV_LINKS = [
     { to: '/exp', label: 'Experience', number: '01' },
-    { to: '/art', label: 'Maker', number: '02' },
+    { to: '/maker', label: 'Maker', number: '02' },
     { to: '/contact', label: 'Contact', number: '03' },
 ];
 
