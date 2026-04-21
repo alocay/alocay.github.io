@@ -8,7 +8,7 @@ module.exports = {
         path: path.join(__dirname, "docs"),
         filename: "bundle.js",
         publicPath: '/',
-        clean: { keep: /superpowers/ },
+        clean: { keep: /(superpowers|404\.html)/ },
     },
     module: {
         rules: [
@@ -37,6 +37,11 @@ module.exports = {
     plugins: [
         new HtmlWebpackPlugin({
             template: path.join(__dirname, "src/index.html")
+        }),
+        new HtmlWebpackPlugin({
+            template: path.join(__dirname, "src/404.html"),
+            filename: "404.html",
+            inject: false,
         }),
         new MiniCssExtractPlugin({
             filename: '[name].[contenthash].css',
