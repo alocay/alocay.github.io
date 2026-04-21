@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import '../../css/exp.css';
 
 const PROFESSIONAL = [
@@ -52,40 +52,38 @@ const PROJECTS = [
     },
 ];
 
-class Exp extends Component {
-    render() {
-        return (
-            <div className="exp">
-                <div className="exp__column">
-                    <div className="exp__col-label">Professional</div>
-                    {PROFESSIONAL.map((entry) => (
-                        <div className="exp__entry" key={entry.company}>
-                            <div className="exp__entry-header">
-                                <span className="exp__company">{entry.company}</span>
-                                {entry.current && <span className="exp__current-badge">Current</span>}
-                            </div>
-                            <div className="exp__dates">{entry.dates}</div>
-                            <p className="exp__description">{entry.description}</p>
+function Exp() {
+    return (
+        <div className="exp">
+            <div className="exp__column">
+                <div className="exp__col-label">Professional</div>
+                {PROFESSIONAL.map((entry) => (
+                    <div className="exp__entry" key={entry.company}>
+                        <div className="exp__entry-header">
+                            <span className="exp__company">{entry.company}</span>
+                            {entry.current && <span className="exp__current-badge">Current</span>}
                         </div>
-                    ))}
-                </div>
-                <div className="exp__column">
-                    <div className="exp__col-label">Projects</div>
-                    {PROJECTS.map((project) => (
-                        <div className="exp__entry" key={project.name}>
-                            <div className="exp__project-company">
-                                {project.url
-                                    ? <a href={project.url} target="_blank" rel="noopener noreferrer">{project.name}</a>
-                                    : project.name}
-                            </div>
-                            <div className="exp__dates">{project.dates}</div>
-                            <p className="exp__description">{project.description}</p>
-                        </div>
-                    ))}
-                </div>
+                        <div className="exp__dates">{entry.dates}</div>
+                        <p className="exp__description">{entry.description}</p>
+                    </div>
+                ))}
             </div>
-        );
-    }
+            <div className="exp__column">
+                <div className="exp__col-label">Projects</div>
+                {PROJECTS.map((project) => (
+                    <div className="exp__entry" key={project.name}>
+                        <div className="exp__project-company">
+                            {project.url
+                                ? <a href={project.url} target="_blank" rel="noopener noreferrer">{project.name}</a>
+                                : project.name}
+                        </div>
+                        <div className="exp__dates">{project.dates}</div>
+                        <p className="exp__description">{project.description}</p>
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
 }
 
 export default Exp;

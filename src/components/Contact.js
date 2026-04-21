@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import '../../css/contact.css';
 
 const LINKS = [
@@ -8,24 +8,22 @@ const LINKS = [
     { platform: 'Stack Overflow', label: 'stackoverflow.com', href: 'https://stackoverflow.com/users/278447/fizz?tab=profile' },
 ];
 
-class Contact extends Component {
-    render() {
-        return (
-            <div className="contact">
-                <div className="contact__label">Get in touch</div>
-                <div className="contact__links">
-                    {LINKS.map(({ platform, label, href }) => (
-                        <div className="contact__link-row" key={platform}>
-                            <span className="contact__link-platform">{platform}</span>
-                            <a className="contact__link-value" href={href} target="_blank" rel="noopener noreferrer">
-                                {label}
-                            </a>
-                        </div>
-                    ))}
-                </div>
+function Contact() {
+    return (
+        <div className="contact">
+            <div className="contact__label">Get in touch</div>
+            <div className="contact__links">
+                {LINKS.map(({ platform, label, href }) => (
+                    <div className="contact__link-row" key={platform}>
+                        <span className="contact__link-platform">{platform}</span>
+                        <a className="contact__link-value" href={href} target="_blank" rel="noopener noreferrer">
+                            {label}
+                        </a>
+                    </div>
+                ))}
             </div>
-        );
-    }
+        </div>
+    );
 }
 
 export default Contact;

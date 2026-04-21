@@ -4,3 +4,5 @@ dist/
 *.db
 
 .claude/
+.superpowers/
+docs/superpowers/
