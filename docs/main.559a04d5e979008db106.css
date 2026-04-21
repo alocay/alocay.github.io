@@ -377,6 +377,17 @@
   margin: 32px 0;
 }
 
+.art-page__coming-soon {
+  padding: 24px 0;
+}
+
+.art-page__coming-soon-text {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  letter-spacing: var(--letter-spacing-label);
+  margin: 0;
+}
+
 .contact {
   padding: 32px 28px;
   flex: 1;
