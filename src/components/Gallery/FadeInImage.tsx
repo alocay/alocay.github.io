@@ -1,12 +1,21 @@
 import React, { useRef, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { sprintf } from 'sprintf-js';
 
 const calcHeightFormat = 'calc(%upx + %s)';
 const captionOffset = '0px';
 
-function FadeInImage({ src, preloadSrc, width, height, caption, offsetHeight, onClick }) {
-    const imageFinalRef = useRef(null);
+interface FadeInImageProps {
+    src: string;
+    preloadSrc: string;
+    width: number;
+    height: number;
+    caption?: string;
+    offsetHeight?: boolean;
+    onClick?: () => void;
+}
+
+function FadeInImage({ src, preloadSrc, width, height, caption, offsetHeight, onClick }: FadeInImageProps) {
+    const imageFinalRef = useRef<HTMLImageElement>(null);
 
     useEffect(() => {
         const imageLoader = new Image();
@@ -19,7 +28,7 @@ function FadeInImage({ src, preloadSrc, width, height, caption, offsetHeight, on
         };
     }, [src]);
 
-    const getImageStyle = (offset) => {
+    const getImageStyle = (offset?: string): React.CSSProperties => {
         if (!offset) offset = '0px';
         if (!offsetHeight)
             return { width, height, maxWidth: width, maxHeight: height };
@@ -44,21 +53,5 @@ function FadeInImage({ src, preloadSrc, width, height, caption, offsetHeight, on
         </div>
     );
 }
-
-FadeInImage.propTypes = {
-    src: PropTypes.string.isRequired,
-    preloadSrc: PropTypes.string.isRequired,
-    width: PropTypes.number.isRequired,
-    height: PropTypes.number.isRequired,
-    caption: PropTypes.string,
-    offsetHeight: PropTypes.bool,
-    onClick: PropTypes.func,
-};
-
-FadeInImage.defaultPropTypes = {
-    width: 215,
-    height: 215,
-    offsetHeight: false,
-};
 
 export default FadeInImage;
