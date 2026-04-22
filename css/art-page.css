@@ -73,7 +73,7 @@
 
 .art-page__coming-soon-inline {
   font-size: 11px;
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
   letter-spacing: 1px;
   padding: 4px 0 2px;
 }
