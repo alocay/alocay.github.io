@@ -6,7 +6,7 @@ const PROFESSIONAL = [
         company: 'Apollo GraphQL',
         dates: '2025 – Present',
         current: true,
-        description: 'Building developer tooling and platform features for the Apollo GraphQL ecosystem.',
+        description: 'Building the Apollo MCP Server as well as a API gateways for the Apollo ecosystem. Worked on expanding the developer tooling and platform features for the Apollo Studio ecosystem.',
     },
     {
         company: 'OfferUp',
