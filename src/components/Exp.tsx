@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import '../../css/exp.css';
+
+type Tab = 'professional' | 'projects';
 
 const PROFESSIONAL = [
     {
@@ -52,36 +54,77 @@ const PROJECTS = [
     },
 ];
 
+function getInitialTab(): Tab {
+    return window.location.hash === '#projects' ? 'projects' : 'professional';
+}
+
 function Exp() {
+    const [activeTab, setActiveTab] = useState<Tab>(getInitialTab);
+
+    useEffect(() => {
+        const onHashChange = () => {
+            setActiveTab(window.location.hash === '#projects' ? 'projects' : 'professional');
+        };
+        window.addEventListener('hashchange', onHashChange);
+        return () => window.removeEventListener('hashchange', onHashChange);
+    }, []);
+
+    function switchTab(tab: Tab) {
+        setActiveTab(tab);
+        if (tab === 'projects') {
+            history.replaceState(null, '', window.location.pathname + '#projects');
+        } else {
+            history.replaceState(null, '', window.location.pathname);
+        }
+    }
+
     return (
         <div className="exp">
-            <div className="exp__column">
-                <div className="exp__col-label">Professional</div>
-                {PROFESSIONAL.map((entry) => (
-                    <div className="exp__entry" key={entry.company}>
-                        <div className="exp__entry-header">
-                            <span className="exp__company">{entry.company}</span>
-                            {entry.current && <span className="exp__current-badge">Current</span>}
-                        </div>
-                        <div className="exp__dates">{entry.dates}</div>
-                        <p className="exp__description">{entry.description}</p>
-                    </div>
-                ))}
+            <div className="exp__tabs">
+                <button
+                    className={`exp__tab${activeTab === 'professional' ? ' exp__tab--active' : ''}`}
+                    onClick={() => switchTab('professional')}
+                >
+                    Professional
+                </button>
+                <button
+                    className={`exp__tab${activeTab === 'projects' ? ' exp__tab--active' : ''}`}
+                    onClick={() => switchTab('projects')}
+                >
+                    Projects
+                </button>
             </div>
-            <div className="exp__column">
-                <div className="exp__col-label">Projects</div>
-                {PROJECTS.map((project) => (
-                    <div className="exp__entry" key={project.name}>
-                        <div className="exp__project-company">
-                            {project.url
-                                ? <a href={project.url} target="_blank" rel="noopener noreferrer">{project.name}</a>
-                                : project.name}
+
+            {activeTab === 'professional' && (
+                <div>
+                    {PROFESSIONAL.map((entry) => (
+                        <div className="exp__entry" key={entry.company}>
+                            <div className="exp__entry-header">
+                                <span className="exp__company">{entry.company}</span>
+                                {entry.current && <span className="exp__current-badge">Current</span>}
+                            </div>
+                            <div className="exp__dates">{entry.dates}</div>
+                            <p className="exp__description">{entry.description}</p>
                         </div>
-                        <div className="exp__dates">{project.dates}</div>
-                        <p className="exp__description">{project.description}</p>
-                    </div>
-                ))}
-            </div>
+                    ))}
+                </div>
+            )}
+
+            {activeTab === 'projects' && (
+                <div>
+                    {PROJECTS.map((project) => (
+                        <div className="exp__entry" key={project.name}>
+                            <div className="exp__project-name">
+                                {project.url
+                                    ? <><a href={project.url} target="_blank" rel="noopener noreferrer">{project.name}</a><span className="exp__project-link-hint">↗</span></>
+                                    : project.name}
+                            </div>
+                            <div className="exp__dates">{project.dates}</div>
+                            <p className="exp__description">{project.description}</p>
+                        </div>
+                    ))}
+                </div>
+            )}
         </div>
     );
 }
