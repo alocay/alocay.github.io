@@ -22,7 +22,7 @@ const PROFESSIONAL = [
     },
     {
         company: 'Microsoft',
-        dates: 'June 2013 – Sep 2015',
+        dates: 'June 2011 – Sep 2015',
         description: 'Windows Phone Companion Application for Windows 8. Windows Phone Podcast Application. Microsoft Maps platform components for Windows 10 and Windows Phone.',
     },
 ];
